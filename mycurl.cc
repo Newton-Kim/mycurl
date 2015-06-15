@@ -12,8 +12,11 @@ int main(int argc, char* argv[]) {
 		if(!line) {
 			fprintf(stderr, "IO error\n");
 			return 1;
+		} else if(!line[0] || line[0] == '\n') {
+			state = MC_LANG_CONTINUE;
+		} else {
+			state = language.parse(line);
 		}
-		state = language.parse(line);
 	} while (state == MC_LANG_CONTINUE);
 	return state;
 }

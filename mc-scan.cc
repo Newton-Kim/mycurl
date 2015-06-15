@@ -6,15 +6,19 @@ struct mcSymbolTable{
 	const char* str;
 	mcTokenID id;
 } s_table[] = {
+		{"list", MC_TOKEN_LIST},
+		{"run", MC_TOKEN_RUN},
 		{"open", MC_TOKEN_OPEN},
+		{"close", MC_TOKEN_CLOSE},
+		{"leave", MC_TOKEN_LEAVE},
+		{"quit", MC_TOKEN_QUIT},
+		{"help", MC_TOKEN_HELP},
 		{"get", MC_TOKEN_GET},
 		{"put", MC_TOKEN_PUT},
 		{"post", MC_TOKEN_POST},
 		{"delete", MC_TOKEN_DELETE},
-		{"close", MC_TOKEN_CLOSE},
-		{"opt", MC_TOKEN_OPT},
-		{"quit", MC_TOKEN_QUIT},
-		{"help", MC_TOKEN_HELP},
+		{"header", MC_TOKEN_HEADER},
+		{"verbose", MC_TOKEN_VERBOSE},
 		{NULL, MC_TOKEN_NONE}
 };
 
@@ -31,7 +35,8 @@ mcToken mcScanner::scan(void) {
 	mcTokenID id;
 	string buffer;
 
-	if (*m_pos == '\n') {
+	while(*m_pos == ' ') m_pos++;
+	if (*m_pos == '\n' || !*m_pos) {
 		id = MC_TOKEN_EOL;
 		m_pos++;
 	} else {
