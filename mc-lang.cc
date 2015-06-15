@@ -1,6 +1,9 @@
 #include "mc-lang.h"
 #include <cstring>
 #include <cstdio>
+#include <cerrno>
+
+#define MC_LINE_SIZE	1024
 
 mcLanguage::mcLanguage() {
 	m_commands.push_back(NULL);		//MC_TOKEN_NONE
@@ -60,8 +63,29 @@ mcLanguageState mcLanguage::parse(const char* line){
 }
 
 mcLanguageState mcLanguage::parse_run(mcScanner& scanner){
-	fprintf(stderr, "Not implemented\n");
-	return MC_LANG_CONTINUE;
+	mcLanguageState state;
+	mcToken token = scanner.scan();
+	if(token.id != MC_TOKEN_STRING) {
+		fprintf(stderr, "Invalid argument %s\n", token.buffer.c_str());
+		return MC_LANG_CONTINUE;
+	}
+	FILE* fd = fopen(token.buffer.c_str(), "rb");
+	if(!fd) {
+		fprintf(stderr, "%s\n", strerror(errno));
+		return MC_LANG_CONTINUE;
+	}
+	char buffer[MC_LINE_SIZE];
+	do {
+		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
+		if(!line) {
+			return MC_LANG_CONTINUE;
+		} else if(!line[0] || line[0] == '\n') {
+			state = MC_LANG_CONTINUE;
+		} else {
+			state = parse(line);
+		}
+	} while (state == MC_LANG_CONTINUE);
+	return state;
 }
 
 mcLanguageState mcLanguage::parse_help(mcScanner& scanner){
