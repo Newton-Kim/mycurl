@@ -2,6 +2,9 @@
 #include <cstdio>
 
 void mcCmdOpen::help(void){
+	fprintf(stdout, "Usage: open url [! alias] \n");
+	fprintf(stdout, "  opens new url.\n");
+	fprintf(stdout, "  it enters existing url if it is opened.\n");
 }
 
 mcLanguageState mcCmdOpen::parse(mcScanner& scanner){

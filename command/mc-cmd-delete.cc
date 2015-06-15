@@ -2,6 +2,8 @@
 #include <cstdio>
 
 void mcCmdDelete::help(void){
+	fprintf(stdout, "Usage: delete\n");
+	fprintf(stdout, "  posts DELETE request to the server.");
 }
 
 mcLanguageState mcCmdDelete::parse(mcScanner& scanner){
