@@ -1,9 +1,9 @@
-#include "mc-cmd-post.h"
+#include "command/mc-cmd-put.h"
 #include <cstdio>
 #include <cstdlib>
 
-void mcCmdPost::help(void){
-	fprintf(stdout, "Usage: post [< file_in[:number]][ > file_out][ - list]\n");
+void mcCmdPut::help(void){
+	fprintf(stdout, "Usage: put [< file_in[:number]][ > file_out][ - list]\n");
 	fprintf(stdout, "  posts GET request to the server.\n");
 	fprintf(stdout, "  < operator redirects the request body from the file if there is any.\n");
 	fprintf(stdout, "  :number specifies the size of the chunk.\n");
@@ -12,7 +12,7 @@ void mcCmdPost::help(void){
 	fprintf(stdout, "  list has headers for the request. Default list is defhdr.\n");
 }
 
-mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer){
+mcLanguageState mcCmdPut::parse(mcScanner& scanner, mcIPerformer* performer){
 	string inpath, outpath, lst = "defhdr";
 	size_t chunk = 0;
 	mcToken token = scanner.scan();
@@ -56,5 +56,5 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer){
 		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 		return MC_LANG_CONTINUE;
 	}
-	return performer->post(inpath, chunk, outpath, lst);
+	return performer->put(inpath, chunk, outpath, lst);
 }

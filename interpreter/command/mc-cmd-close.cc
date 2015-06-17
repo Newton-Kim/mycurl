@@ -1,4 +1,4 @@
-#include "mc-cmd-close.h"
+#include "command/mc-cmd-close.h"
 #include <cstdio>
 
 void mcCmdClose::help(void){

@@ -1,4 +1,4 @@
-#include "mc-cmd-list.h"
+#include "command/mc-cmd-list.h"
 #include <cstdio>
 
 void mcCmdList::help(void){

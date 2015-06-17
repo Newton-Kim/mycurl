@@ -1,4 +1,4 @@
-#include "mc-cmd-open.h"
+#include "command/mc-cmd-open.h"
 #include <cstdio>
 
 void mcCmdOpen::help(void){

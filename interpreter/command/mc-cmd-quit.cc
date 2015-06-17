@@ -1,4 +1,4 @@
-#include "mc-cmd-quit.h"
+#include "command/mc-cmd-quit.h"
 #include <cstdio>
 
 void mcCmdQuit::help(void){

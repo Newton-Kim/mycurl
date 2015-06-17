@@ -1,20 +1,21 @@
 PROGRAM=mycurl
-OBJS=mycurl.o mc-lang.o mc-scan.o \
-	command/mc-cmd-list.o \
-	command/mc-cmd-open.o \
-	command/mc-cmd-close.o \
-	command/mc-cmd-leave.o \
-	command/mc-cmd-quit.o \
-	command/mc-cmd-get.o \
-	command/mc-cmd-put.o \
-	command/mc-cmd-post.o \
-	command/mc-cmd-delete.o \
-	command/mc-cmd-header.o \
-	command/mc-cmd-verbose.o \
-	curl/mc-curl.o \
-	mc-curl-performer.o
+OBJS=mycurl.o \
+	interpreter/mc-lang.o interpreter/mc-scan.o \
+	interpreter/command/mc-cmd-list.o \
+	interpreter/command/mc-cmd-open.o \
+	interpreter/command/mc-cmd-close.o \
+	interpreter/command/mc-cmd-leave.o \
+	interpreter/command/mc-cmd-quit.o \
+	interpreter/command/mc-cmd-get.o \
+	interpreter/command/mc-cmd-put.o \
+	interpreter/command/mc-cmd-post.o \
+	interpreter/command/mc-cmd-delete.o \
+	interpreter/command/mc-cmd-header.o \
+	interpreter/command/mc-cmd-verbose.o \
+	performer/curl/mc-curl.o \
+	performer/mc-curl-performer.o
 
-CXXFLAGS=-g -O2 -I. -Iinclude
+CXXFLAGS=-g -O2 -Iinclude -Iperformer
 
 all: $(PROGRAM)
 

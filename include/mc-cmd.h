@@ -1,5 +1,6 @@
 #pragma once
 
+#include "mc-scan.h"
 #include "mc-types.h"
 #include "mc-scan.h"
 #include <string>

@@ -1,5 +1,5 @@
 #include "mc-lang.h"
-#include "mc-curl-performer.h"
+#include "performer/mc-curl-performer.h"
 #include <cstdio>
 
 #define LINE_SIZE	1024

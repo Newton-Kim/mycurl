@@ -1,4 +1,4 @@
-#include "mc-cmd-leave.h"
+#include "command/mc-cmd-leave.h"
 #include <cstdio>
 
 void mcCmdLeave::help(void){

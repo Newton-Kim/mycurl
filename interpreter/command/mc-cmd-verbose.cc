@@ -1,4 +1,4 @@
-#include "mc-cmd-verbose.h"
+#include "command/mc-cmd-verbose.h"
 #include <cstdio>
 
 void mcCmdVerbose::help(void){
@@ -13,8 +13,12 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner, mcIPerformer* performer)
 		bool onoff;
 		performer->verbose(onoff);
 		fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
-	} else if(token.id == MC_TOKEN_ON || token.id == MC_TOKEN_OFF) {
-		performer->verbose((token.id == MC_TOKEN_ON) ? true : false);
+	} else if(token.id == MC_TOKEN_ON) {
+		performer->verbose_on();
+		token = scanner.scan();
+		if(token.id != MC_TOKEN_EOL) fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+	} else if(token.id == MC_TOKEN_OFF) {
+		performer->verbose_off();
 		token = scanner.scan();
 		if(token.id != MC_TOKEN_EOL) fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 	} else {

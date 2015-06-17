@@ -1,4 +1,4 @@
-#include "mc-cmd-delete.h"
+#include "command/mc-cmd-delete.h"
 #include <cstdio>
 
 void mcCmdDelete::help(void){

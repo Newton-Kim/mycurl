@@ -1,4 +1,4 @@
-#include "mc-cmd-get.h"
+#include "command/mc-cmd-get.h"
 #include <cstdio>
 
 void mcCmdGet::help(void){
