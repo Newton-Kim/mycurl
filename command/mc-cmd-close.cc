@@ -6,7 +6,11 @@ void mcCmdClose::help(void){
 	fprintf(stdout, "  closes current url.\n");
 }
 
-mcLanguageState mcCmdClose::parse(mcScanner& scanner){
-	fprintf(stderr, "Not implemented\n");
-	return MC_LANG_CONTINUE;
+mcLanguageState mcCmdClose::parse(mcScanner& scanner, mcIPerformer* performer){
+	mcToken token = scanner.scan();
+	if(token.id != MC_TOKEN_EOL) {
+		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+		return MC_LANG_CONTINUE;
+	}
+	return performer->close();
 }

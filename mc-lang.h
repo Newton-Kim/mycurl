@@ -19,6 +19,7 @@ using namespace std;
 
 class mcLanguage {
 	private:
+		mcIPerformer* m_performer;
 		vector<mcCommand*> m_commands;
 		mcCmdList m_cmd_list;
 		mcCmdOpen m_cmd_open;
@@ -33,7 +34,9 @@ class mcLanguage {
 		mcCmdVerbose m_cmd_verbose;
 		mcLanguageState parse_run(mcScanner& scanner);
 		mcLanguageState parse_help(mcScanner& scanner);
-	public:
-		mcLanguage();
 		mcLanguageState parse(const char* line);
+	public:
+		mcLanguage(mcIPerformer* performer);
+		mcLanguageState run(string path);
+		mcLanguageState prompt(void);
 };

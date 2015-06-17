@@ -2,10 +2,12 @@
 #include <cstring>
 #include <cstdio>
 #include <cerrno>
+#include <stdexcept>
 
 #define MC_LINE_SIZE	1024
 
-mcLanguage::mcLanguage() {
+mcLanguage::mcLanguage(mcIPerformer* performer):m_performer(performer) {
+	if(!m_performer) throw runtime_error("invalid performer");
 	m_commands.push_back(NULL);		//MC_TOKEN_NONE
 	m_commands.push_back(&m_cmd_list);	//MC_TOKEN_LIST
 	m_commands.push_back(NULL);		//MC_TOKEN_RUN
@@ -20,6 +22,45 @@ mcLanguage::mcLanguage() {
 	m_commands.push_back(&m_cmd_delete);	//MC_TOKEN_DELETE
 	m_commands.push_back(&m_cmd_header);	//MC_TOKEN_HEADER
 	m_commands.push_back(&m_cmd_verbose);	//MC_TOKEN_VERBOSE
+}
+
+mcLanguageState mcLanguage::run(string path){
+	mcLanguageState state;
+	FILE* fd = fopen(path.c_str(), "rb");
+	if(!fd) {
+		fprintf(stderr, "%s\n", strerror(errno));
+		return MC_LANG_CONTINUE;
+	}
+	char buffer[MC_LINE_SIZE];
+	do {
+		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
+		if(!line) {
+			return MC_LANG_HANG;
+		} else if(!line[0] || line[0] == '\n') {
+			state = MC_LANG_CONTINUE;
+		} else {
+			state = parse(line);
+		}
+	} while (state == MC_LANG_CONTINUE);
+	return state;
+}
+
+mcLanguageState mcLanguage::prompt(void){
+	mcLanguageState state;
+	char buffer[MC_LINE_SIZE];
+	do {
+		fprintf(stdout, "%s> ", m_performer->current().c_str());
+		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
+		if(!line) {
+			fprintf(stderr, "IO error\n");
+			return MC_LANG_HANG;
+		} else if(!line[0] || line[0] == '\n') {
+			state = MC_LANG_CONTINUE;
+		} else {
+			state = parse(line);
+		}
+	} while (state == MC_LANG_CONTINUE);
+	return state;
 }
 
 mcLanguageState mcLanguage::parse(const char* line){
@@ -50,7 +91,7 @@ mcLanguageState mcLanguage::parse(const char* line){
 					fprintf(stderr, "%s is not available\n", token.buffer.c_str());
 					state = MC_LANG_CONTINUE;
 				} else {
-					state = cmd->parse(scanner);
+					state = cmd->parse(scanner, m_performer);
 				}
 			}
 			break;
@@ -64,27 +105,14 @@ mcLanguageState mcLanguage::parse(const char* line){
 
 mcLanguageState mcLanguage::parse_run(mcScanner& scanner){
 	mcLanguageState state;
-	mcToken token = scanner.scan();
-	if(token.id != MC_TOKEN_STRING) {
-		fprintf(stderr, "Invalid argument %s\n", token.buffer.c_str());
-		return MC_LANG_CONTINUE;
+	mcToken token;
+	while(token = scanner.scan(), token.id == MC_TOKEN_STRING) {
+		state = run(token.buffer);
 	}
-	FILE* fd = fopen(token.buffer.c_str(), "rb");
-	if(!fd) {
-		fprintf(stderr, "%s\n", strerror(errno));
-		return MC_LANG_CONTINUE;
+	if (token.id != MC_TOKEN_EOL) {
+		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+		state = MC_LANG_ERROR;
 	}
-	char buffer[MC_LINE_SIZE];
-	do {
-		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
-		if(!line) {
-			return MC_LANG_CONTINUE;
-		} else if(!line[0] || line[0] == '\n') {
-			state = MC_LANG_CONTINUE;
-		} else {
-			state = parse(line);
-		}
-	} while (state == MC_LANG_CONTINUE);
 	return state;
 }
 
@@ -96,6 +124,7 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner){
 			fprintf(stdout, "Available sub commands:\n");
 			for(vector<mcCommand*>::iterator it = m_commands.begin() ; it != m_commands.end() ; it++)
 				if (*it) fprintf(stdout, "%s\n", (*it)->command().c_str());
+			return MC_LANG_CONTINUE;
 			break;
 		case MC_TOKEN_LIST:
 		case MC_TOKEN_OPEN:
@@ -110,10 +139,20 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner){
 		case MC_TOKEN_VERBOSE:
 			if(m_commands[token.id]) m_commands[token.id]->help();
 			break;
+		case MC_TOKEN_RUN:
+			fprintf(stdout, "Usage: run [file]...\n");
+			fprintf(stdout, "  runs macro files\n");
+			break;
 		default:
 			fprintf(stderr, "Invalid command %s\n", token.buffer.c_str());
 			break;
 	}
-	return MC_LANG_CONTINUE;
+	mcLanguageState state = MC_LANG_CONTINUE;
+	token = scanner.scan();
+	if (token.id != MC_TOKEN_EOL) {
+		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+		state = MC_LANG_ERROR;
+	}
+	return state;
 }
 

@@ -7,7 +7,18 @@ void mcCmdVerbose::help(void){
 	fprintf(stdout, "  it returns current mode of verbosness when no argument is given.\n");
 }
 
-mcLanguageState mcCmdVerbose::parse(mcScanner& scanner){
-	fprintf(stderr, "Not implemented\n");
+mcLanguageState mcCmdVerbose::parse(mcScanner& scanner, mcIPerformer* performer){
+	mcToken token = scanner.scan();
+	if(token.id == MC_TOKEN_EOL) {
+		bool onoff;
+		performer->verbose(onoff);
+		fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
+	} else if(token.id == MC_TOKEN_ON || token.id == MC_TOKEN_OFF) {
+		performer->verbose((token.id == MC_TOKEN_ON) ? true : false);
+		token = scanner.scan();
+		if(token.id != MC_TOKEN_EOL) fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+	} else {
+		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+	}
 	return MC_LANG_CONTINUE;
 }

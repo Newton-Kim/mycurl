@@ -10,7 +10,9 @@ OBJS=mycurl.o mc-lang.o mc-scan.o \
 	command/mc-cmd-post.o \
 	command/mc-cmd-delete.o \
 	command/mc-cmd-header.o \
-	command/mc-cmd-verbose.o
+	command/mc-cmd-verbose.o \
+	curl/mc-curl.o \
+	mc-curl-performer.o
 
 CXXFLAGS=-g -O2 -I. -Iinclude
 

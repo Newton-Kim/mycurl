@@ -6,5 +6,5 @@ class mcCmdList : public mcCommand {
 	public:
 		string command(void) { return "list"; }
 		void help(void);
-		mcLanguageState parse(mcScanner& scanner);
+		mcLanguageState parse(mcScanner& scanner, mcIPerformer* performer);
 };

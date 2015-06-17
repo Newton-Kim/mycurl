@@ -6,6 +6,11 @@ void mcCmdQuit::help(void){
 	fprintf(stdout, "  end this program.\n");
 }
 
-mcLanguageState mcCmdQuit::parse(mcScanner& scanner){
+mcLanguageState mcCmdQuit::parse(mcScanner& scanner, mcIPerformer* performer){
+	mcToken token = scanner.scan();
+	if(token.id != MC_TOKEN_EOL) {
+		fprintf(stderr, "invalid argument \"%s\"\n", token.buffer.c_str());
+		return MC_LANG_CONTINUE;
+	}
 	return MC_LANG_END;
 }

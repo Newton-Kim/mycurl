@@ -7,7 +7,32 @@ void mcCmdHeader::help(void){
 	fprintf(stdout, "  Default list is defhdr.\n");
 }
 
-mcLanguageState mcCmdHeader::parse(mcScanner& scanner){
-	fprintf(stderr, "Not implemented\n");
-	return MC_LANG_CONTINUE;
+mcLanguageState mcCmdHeader::parse(mcScanner& scanner, mcIPerformer* performer){
+	string key, val, lst = "defhdr";
+	mcToken token = scanner.scan();
+	if(token.id != MC_TOKEN_STRING) {
+		fprintf(stderr, "key is missing\n");
+		return MC_LANG_CONTINUE;
+	} else {
+		key = token.buffer;
+	}
+	token = scanner.scan();
+	if(token.id != MC_TOKEN_STRING) {
+		fprintf(stderr, "value is missing\n");
+		return MC_LANG_CONTINUE;
+	} else {
+		val = token.buffer;
+	}
+	token = scanner.scan();
+	if(token.id == MC_TOKEN_GT) {
+		token = scanner.scan();
+		if(token.id == MC_TOKEN_STRING) {
+			lst = token.buffer;
+		} else {
+			fprintf(stderr, "list name is missing\n");
+			return MC_LANG_CONTINUE;
+		}
+		token = scanner.scan();
+	}
+	return performer->header(key, val, lst);
 }

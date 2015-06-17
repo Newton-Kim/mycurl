@@ -19,6 +19,8 @@ struct mcSymbolTable{
 		{"delete", MC_TOKEN_DELETE},
 		{"header", MC_TOKEN_HEADER},
 		{"verbose", MC_TOKEN_VERBOSE},
+		{"on", MC_TOKEN_ON},
+		{"off", MC_TOKEN_OFF},
 		{NULL, MC_TOKEN_NONE}
 };
 
@@ -36,17 +38,41 @@ mcToken mcScanner::scan(void) {
 	string buffer;
 
 	while(*m_pos == ' ') m_pos++;
-	if (*m_pos == '\n' || !*m_pos) {
-		id = MC_TOKEN_EOL;
-		m_pos++;
-	} else {
-		while (*m_pos && *m_pos != '\n' && *m_pos != ' ') {
+	switch(*m_pos) {
+		case '!':
+			id = MC_TOKEN_EXCLAMATION;
 			buffer += *m_pos;
 			m_pos++;
-		}
-		id = MC_TOKEN_STRING;
-		map<string, mcTokenID>::iterator it = s_map.find(buffer);
-		if(it != s_map.end()) id = it->second;
+			break;
+		case '<':
+			id = MC_TOKEN_LT;
+			buffer += *m_pos;
+			m_pos++;
+			break;
+		case '>':
+			id = MC_TOKEN_GT;
+			buffer += *m_pos;
+			m_pos++;
+			break;
+		case '-':
+			id = MC_TOKEN_HIPEN;
+			buffer += *m_pos;
+			m_pos++;
+			break;
+		default:
+			if (*m_pos == '\n' || !*m_pos) {
+				id = MC_TOKEN_EOL;
+				m_pos++;
+			} else {
+				while (*m_pos && *m_pos != '\n' && *m_pos != ' ') {
+					buffer += *m_pos;
+					m_pos++;
+				}
+				id = MC_TOKEN_STRING;
+				map<string, mcTokenID>::iterator it = s_map.find(buffer);
+				if(it != s_map.end()) id = it->second;
+			}
+			break;
 	}
 	mcToken token(id, buffer);
 	return token;

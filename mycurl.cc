@@ -1,22 +1,16 @@
 #include "mc-lang.h"
+#include "mc-curl-performer.h"
 #include <cstdio>
 
 #define LINE_SIZE	1024
 int main(int argc, char* argv[]) {
 	char buffer[LINE_SIZE];
-	mcLanguage language;
+	mcCurlPerformer performer;
+	mcLanguage language(&performer);
 	mcLanguageState state = MC_LANG_CONTINUE;
-	do {
-		fprintf(stdout, "mycurl> ");
-		char* line = fgets(buffer, LINE_SIZE, stdin);
-		if(!line) {
-			fprintf(stderr, "IO error\n");
-			return 1;
-		} else if(!line[0] || line[0] == '\n') {
-			state = MC_LANG_CONTINUE;
-		} else {
-			state = language.parse(line);
-		}
-	} while (state == MC_LANG_CONTINUE);
-	return state;
+	for(int i = 1 ; i < argc && state == MC_LANG_CONTINUE ; i++) {
+		state = language.run(argv[i]);
+	}
+	if(state != MC_LANG_CONTINUE && state != MC_LANG_HANG) return state;
+	return language.prompt();
 }

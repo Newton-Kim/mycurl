@@ -23,15 +23,22 @@ typedef enum {
 	MC_TOKEN_VERBOSE,
 	//parsing tokens
 	MC_TOKEN_STRING,
+	MC_TOKEN_EXCLAMATION,
+	MC_TOKEN_HIPEN,
+	MC_TOKEN_LT,
+	MC_TOKEN_GT,
+	MC_TOKEN_ON,
+	MC_TOKEN_OFF,
 	MC_TOKEN_EOL
 } mcTokenID;
 
 class mcToken {
 	public:
-		const string buffer;
-		const mcTokenID id;
+		string buffer;
+		mcTokenID id;
 		mcToken(mcTokenID tid = MC_TOKEN_NONE, string str = ""): id(tid), buffer(str) {}
 		mcToken(const mcToken& token):id(token.id), buffer(token.buffer) {}
+		mcToken operator= (mcToken token) {id = token.id; buffer = token.buffer; return *this; }
 };
 
 class mcScanner {
