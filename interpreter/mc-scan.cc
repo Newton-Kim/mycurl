@@ -34,6 +34,15 @@ mcScanner::mcScanner(const char* line):m_line(line), m_pos((char*)line) {
 }
 
 mcToken mcScanner::scan(void) {
+	mcToken token = tokenize();
+	if(token.id = MC_TOKEN_STRING) {
+		map<string, mcTokenID>::iterator it = s_map.find(token.buffer);
+		if(it != s_map.end()) token.id = it->second;
+	}
+	return token;
+}
+
+mcToken mcScanner::tokenize(void) {
 	mcTokenID id;
 	string buffer;
 
@@ -69,8 +78,6 @@ mcToken mcScanner::scan(void) {
 					m_pos++;
 				}
 				id = MC_TOKEN_STRING;
-				map<string, mcTokenID>::iterator it = s_map.find(buffer);
-				if(it != s_map.end()) id = it->second;
 			}
 			break;
 	}

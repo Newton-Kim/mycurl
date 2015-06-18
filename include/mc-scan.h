@@ -47,5 +47,6 @@ class mcScanner {
 		char* m_pos;
 	public:
 		mcScanner(const char* line);
+		mcToken tokenize(void);
 		mcToken scan(void);
 };

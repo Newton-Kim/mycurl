@@ -15,9 +15,9 @@ void mcCmdPut::help(void){
 mcLanguageState mcCmdPut::parse(mcScanner& scanner, mcIPerformer* performer){
 	string inpath, outpath, lst = "defhdr";
 	size_t chunk = 0;
-	mcToken token = scanner.scan();
+	mcToken token = scanner.tokenize();
 	if(token.id == MC_TOKEN_LT) {
-		token = scanner.scan();
+		token = scanner.tokenize();
 		if(token.id == MC_TOKEN_STRING) {
 			size_t pos = token.buffer.find(':');
 			if(pos == string::npos) {
@@ -30,27 +30,27 @@ mcLanguageState mcCmdPut::parse(mcScanner& scanner, mcIPerformer* performer){
 			fprintf(stderr, "in file path is missing\n");
 			return MC_LANG_CONTINUE;
 		}
-		token = scanner.scan();
+		token = scanner.tokenize();
 	}
 	if(token.id == MC_TOKEN_GT) {
-		token = scanner.scan();
+		token = scanner.tokenize();
 		if(token.id == MC_TOKEN_STRING) {
 			outpath = token.buffer;
 		} else {
 			fprintf(stderr, "out file path is missing\n");
 			return MC_LANG_CONTINUE;
 		}
-		token = scanner.scan();
+		token = scanner.tokenize();
 	}
 	if(token.id == MC_TOKEN_HIPEN) {
-		token = scanner.scan();
+		token = scanner.tokenize();
 		if(token.id == MC_TOKEN_STRING) {
 			lst = token.buffer;
 		} else {
 			fprintf(stderr, "list name is missing\n");
 			return MC_LANG_CONTINUE;
 		}
-		token = scanner.scan();
+		token = scanner.tokenize();
 	}
 	if(token.id != MC_TOKEN_EOL) {
 		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());

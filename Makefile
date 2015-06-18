@@ -15,12 +15,16 @@ OBJS=mycurl.o \
 	performer/curl/mc-curl.o \
 	performer/mc-curl-performer.o
 
-CXXFLAGS=-g -O2 -Iinclude -Iperformer
+CXXFLAGS=-g -O2 -Iinclude -Iperformer `pkg-config --cflags libcurl`
+LIBS=`pkg-config --libs libcurl`
 
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJS)
-	$(CXX) -o $@ $^
+	$(CXX) -o $@ $^ $(LIBS)
+
+install: $(PROGRAM)
+	install -m 755 $(PROGRAM) $(DIST_DIR)/usr/bin
 
 clean:
 	rm -f $(OBJS) $(PROGRAM)

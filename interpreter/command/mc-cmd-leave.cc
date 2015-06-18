@@ -8,7 +8,7 @@ void mcCmdLeave::help(void){
 }
 
 mcLanguageState mcCmdLeave::parse(mcScanner& scanner, mcIPerformer* performer){
-	mcToken token = scanner.scan();
+	mcToken token = scanner.tokenize();
 	if(token.id != MC_TOKEN_EOL) {
 		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 		return MC_LANG_CONTINUE;

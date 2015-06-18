@@ -24,6 +24,7 @@ mcLanguageState mcCurlPerformer::close(void){
 		fprintf(stderr, "invalid handle\n");
 	} else {
 		m_map[m_current->mnymonic()] = NULL;
+		m_map.erase(m_current->mnymonic());
 		delete m_current;
 		m_current = NULL;
 	}

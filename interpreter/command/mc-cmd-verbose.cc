@@ -15,11 +15,11 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner, mcIPerformer* performer)
 		fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
 	} else if(token.id == MC_TOKEN_ON) {
 		performer->verbose_on();
-		token = scanner.scan();
+		token = scanner.tokenize();
 		if(token.id != MC_TOKEN_EOL) fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 	} else if(token.id == MC_TOKEN_OFF) {
 		performer->verbose_off();
-		token = scanner.scan();
+		token = scanner.tokenize();
 		if(token.id != MC_TOKEN_EOL) fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 	} else {
 		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
