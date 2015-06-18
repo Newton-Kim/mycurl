@@ -3,6 +3,10 @@
 #include <cstdio>
 
 #define LINE_SIZE	1024
+void show_banner(void) {
+	fprintf(stdout, "mycurl version 1.0 by Newton Kim\n");
+}
+
 int main(int argc, char* argv[]) {
 	char buffer[LINE_SIZE];
 	mcCurlPerformer performer;
@@ -12,5 +16,6 @@ int main(int argc, char* argv[]) {
 		state = language.run(argv[i]);
 	}
 	if(state != MC_LANG_CONTINUE && state != MC_LANG_HANG) return state;
+	show_banner();
 	return language.prompt();
 }
