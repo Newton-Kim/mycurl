@@ -29,11 +29,11 @@ mcLanguageState mcLanguage::run(string path){
 	FILE* fd = fopen(path.c_str(), "rb");
 	if(!fd) {
 		fprintf(stderr, "%s\n", strerror(errno));
-		return MC_LANG_CONTINUE;
+		return MC_LANG_HANG;
 	}
 	char buffer[MC_LINE_SIZE];
 	do {
-		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
+		char* line = fgets(buffer, MC_LINE_SIZE, fd);
 		if(!line) {
 			return MC_LANG_HANG;
 		} else if(!line[0] || line[0] == '\n') {
