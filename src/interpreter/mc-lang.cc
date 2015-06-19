@@ -3,10 +3,57 @@
 #include <cstdio>
 #include <cerrno>
 #include <stdexcept>
+#include <cstring>
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #define MC_LINE_SIZE	1024
+
+static vector<string> s_commands;
+
+/* Generator function for command completion.  STATE lets us know whether
+   to start from scratch; without any state (i.e. STATE == 0), then we
+   start at the top of the list. */
+char * mycurl_command_generator (const char *text, int state) {
+	static int list_index, len;
+
+	/* If this is a new word to complete, initialize now.  This includes
+	   saving the length of TEXT for efficiency, and initializing the index
+	   variable to 0. */
+	if (!state) {
+		list_index = 0;
+		len = strlen (text);
+	}
+
+	/* Return the next name which partially matches from the command list. */
+//	while (name = s_commands[list_index].name.c_str()) {
+	while (list_index < s_commands.size()) {
+		const char *name = s_commands[list_index].c_str();
+		list_index++;
+
+		if (strncmp (name, text, len) == 0)
+			return (strdup(name));
+	}
+
+	/* If no names matched, then return NULL. */
+	return ((char *)NULL);
+}
+
+/* Attempt to complete on the contents of TEXT.  START and END show the
+   region of TEXT that contains the word to complete.  We can use the
+   entire line in case we want to do some simple parsing.  Return the
+   array of matches, or NULL if there aren't any. */
+char ** mycurl_completion (const char *text, int start, int end) {
+	char **matches = (char **)NULL;
+
+	/* If this word is at the start of the line, then it is a command
+	   to complete.  Otherwise it is the name of a file in the current
+	   directory. */
+	if (start == 0)
+		matches = rl_completion_matches (text, mycurl_command_generator);
+
+	return (matches);
+}
 
 mcLanguage::mcLanguage(mcIPerformer* performer):m_performer(performer) {
 	if(!m_performer) throw runtime_error("invalid performer");
@@ -49,6 +96,12 @@ mcLanguageState mcLanguage::run(string path){
 
 mcLanguageState mcLanguage::prompt(void){
 	mcLanguageState state;
+	if(s_commands.empty()) {
+		for(vector<mcCommand*>::iterator it = m_commands.begin() ; it != m_commands.end() ; it++)
+			if(*it) s_commands.push_back((*it)->command());
+	}
+	/* Tell the completer that we want a crack first. */
+	rl_attempted_completion_function = mycurl_completion;
 	char* line = NULL;
 	do {
 		if(line) {
