@@ -18,7 +18,7 @@ OBJS=src/mycurl.o \
 	src/performer/mc-curl-performer.o
 
 CXXFLAGS=-g -O2 -Iinclude -Iperformer `pkg-config --cflags libcurl`
-LIBS=`pkg-config --libs libcurl`
+LIBS=`pkg-config --libs libcurl` -lreadline
 
 all:
 	$(MAKE) $(PROGRAM) -j$(CORE)

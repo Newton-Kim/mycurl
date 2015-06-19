@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <cerrno>
 #include <stdexcept>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define MC_LINE_SIZE	1024
 
@@ -47,14 +49,20 @@ mcLanguageState mcLanguage::run(string path){
 
 mcLanguageState mcLanguage::prompt(void){
 	mcLanguageState state;
-	char buffer[MC_LINE_SIZE];
+	char* line = NULL;
 	do {
-		fprintf(stdout, "%s> ", m_performer->current().c_str());
-		char* line = fgets(buffer, MC_LINE_SIZE, stdin);
+		if(line) {
+			delete line;
+			line = NULL;
+		}
+		string prompt = m_performer->current() + "> ";
+		line = readline(prompt.c_str());
 		if(!line) {
 			fprintf(stderr, "IO error\n");
 			return MC_LANG_HANG;
-		} else if(!line[0] || line[0] == '\n' || line[0] == '#') {
+		}
+		add_history(line);
+		if(!line[0] || line[0] == '\n' || line[0] == '#') {
 			state = MC_LANG_CONTINUE;
 		} else {
 			state = parse(line);
