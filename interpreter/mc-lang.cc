@@ -36,7 +36,7 @@ mcLanguageState mcLanguage::run(string path){
 		char* line = fgets(buffer, MC_LINE_SIZE, fd);
 		if(!line) {
 			return MC_LANG_HANG;
-		} else if(!line[0] || line[0] == '\n') {
+		} else if(!line[0] || line[0] == '\n' || line[0] == '#') {
 			state = MC_LANG_CONTINUE;
 		} else {
 			state = parse(line);
@@ -54,7 +54,7 @@ mcLanguageState mcLanguage::prompt(void){
 		if(!line) {
 			fprintf(stderr, "IO error\n");
 			return MC_LANG_HANG;
-		} else if(!line[0] || line[0] == '\n') {
+		} else if(!line[0] || line[0] == '\n' || line[0] == '#') {
 			state = MC_LANG_CONTINUE;
 		} else {
 			state = parse(line);
