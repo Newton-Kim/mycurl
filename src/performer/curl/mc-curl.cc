@@ -64,7 +64,7 @@ void mcCurl::get(string path, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, fd);
 	} else {
 		curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
-		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, NULL);
+		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
 	}
 	curl_easy_perform(m_curl);
 	if(fd) fclose(fd);
@@ -96,7 +96,7 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, infd);
 	} else {
 		curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
-		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, NULL);
+		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
 	}
 	if(outpath.size()) {
 		outfd = new mcCurlFile (outpath.c_str(), (const char*)"rb", chunk);
@@ -105,7 +105,7 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_READDATA, outfd);
 	} else {
 		curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, NULL);
-		curl_easy_setopt(m_curl, CURLOPT_READDATA, NULL);
+		curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
 	}
 	curl_easy_perform(m_curl);
 	if(infd) fclose(infd);
@@ -128,7 +128,7 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, infd);
 	} else {
 		curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
-		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, NULL);
+		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
 	}
 	if(outpath.size()) {
 		outfd = new mcCurlFile (outpath.c_str(), (const char*)"rb", chunk);
@@ -137,7 +137,7 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_READDATA, outfd);
 	} else {
 		curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, NULL);
-		curl_easy_setopt(m_curl, CURLOPT_READDATA, NULL);
+		curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
 	}
 	curl_easy_perform(m_curl);
 	if(infd) fclose(infd);
