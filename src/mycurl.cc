@@ -13,6 +13,10 @@ int main(int argc, char* argv[]) {
 	mcLanguage language(&performer);
 	mcLanguageState state = MC_LANG_CONTINUE;
 	for(int i = 1 ; i < argc && state == MC_LANG_CONTINUE ; i++) {
+		if(argv[i][0] == '-') {
+			fprintf(stderr, "invalid argument %s\n", argv[i]);
+			return 1;
+		}
 		state = language.run(argv[i]);
 	}
 	if(state != MC_LANG_CONTINUE && state != MC_LANG_HANG) return state;
