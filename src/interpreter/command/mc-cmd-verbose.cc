@@ -10,9 +10,7 @@ void mcCmdVerbose::help(void){
 mcLanguageState mcCmdVerbose::parse(mcScanner& scanner, mcIPerformer* performer){
 	mcToken token = scanner.scan();
 	if(token.id == MC_TOKEN_EOL) {
-		bool onoff;
-		performer->verbose(onoff);
-		fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
+		//grammatically OK, but nothing need doing.
 	} else if(token.id == MC_TOKEN_ON) {
 		performer->verbose_on();
 		token = scanner.tokenize();
@@ -24,5 +22,8 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner, mcIPerformer* performer)
 	} else {
 		fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
 	}
+	bool onoff;
+	performer->verbose(onoff);
+	fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
 	return MC_LANG_CONTINUE;
 }

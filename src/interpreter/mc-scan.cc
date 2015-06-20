@@ -46,7 +46,7 @@ mcToken mcScanner::tokenize(void) {
 	mcTokenID id;
 	string buffer;
 
-	while(*m_pos == ' ') m_pos++;
+	while(*m_pos == ' ' || *m_pos == '\t') m_pos++;
 	if (*m_pos == '#') while (*m_pos && *m_pos != '\n') m_pos++;
 	switch(*m_pos) {
 		case '!':
@@ -74,7 +74,7 @@ mcToken mcScanner::tokenize(void) {
 				id = MC_TOKEN_EOL;
 				m_pos++;
 			} else {
-				while (*m_pos && *m_pos != '#' && *m_pos != '\n' && *m_pos != ' ') {
+				while (*m_pos && *m_pos != '#' && *m_pos != '\n' && *m_pos != ' ' && *m_pos != '\t') {
 					buffer += *m_pos;
 					m_pos++;
 				}
