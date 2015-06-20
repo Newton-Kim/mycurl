@@ -1,4 +1,5 @@
 #include "mc-curl.h"
+#include "mc-curl-file.h"
 #include <stdexcept>
 #include <cstring>
 #include <cerrno>
@@ -12,9 +13,9 @@ size_t mcCurlWriteCallback(char *ptr, size_t size, size_t nmemb, void *userdata)
 }
 
 size_t mcCurlReadCallback(char *buffer, size_t size, size_t nitems, void *instream){
-	FILE* fd = (FILE*)instream;
+	mcCurlFile* fd = (mcCurlFile*)instream;
 	if(!fd) throw runtime_error("invalid userdata in the write callback");
-	return fread(buffer, size, nitems, fd);
+	return fd->fread(buffer, size, nitems);
 }
 
 mcCurl::mcCurl(string url, string mnymonic):m_url(url), m_mnymonic(mnymonic), m_verbose(false){
@@ -86,7 +87,8 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst){
 	curl_easy_setopt(m_curl, CURLOPT_POST, 1);
 	curl_easy_setopt(m_curl, CURLOPT_PUT, 0);
 	curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, NULL);
-	FILE *infd = NULL, *outfd = NULL;
+	FILE *infd = NULL;
+	mcCurlFile *outfd = NULL;
 	if(inpath.size()) {
 		infd = fopen(inpath.c_str(), "wb");
 		if(!infd) throw runtime_error(strerror(errno));
@@ -97,7 +99,7 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, NULL);
 	}
 	if(outpath.size()) {
-		outfd = fopen(outpath.c_str(), "rb");
+		outfd = new mcCurlFile (outpath.c_str(), (const char*)"rb", chunk);
 		if(!outfd) throw runtime_error(strerror(errno));
 		curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, mcCurlReadCallback);
 		curl_easy_setopt(m_curl, CURLOPT_READDATA, outfd);
@@ -107,7 +109,7 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst){
 	}
 	curl_easy_perform(m_curl);
 	if(infd) fclose(infd);
-	if(outfd) fclose(outfd);
+	if(outfd) delete outfd;
 }
 
 void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
@@ -117,7 +119,8 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
 	curl_easy_setopt(m_curl, CURLOPT_POST, 0);
 	curl_easy_setopt(m_curl, CURLOPT_PUT, 1);
 	curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, NULL);
-	FILE *infd = NULL, *outfd = NULL;
+	FILE *infd = NULL;
+	mcCurlFile *outfd = NULL;
 	if(inpath.size()) {
 		infd = fopen(inpath.c_str(), "wb");
 		if(!infd) throw runtime_error(strerror(errno));
@@ -128,7 +131,7 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
 		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, NULL);
 	}
 	if(outpath.size()) {
-		outfd = fopen(outpath.c_str(), "rb");
+		outfd = new mcCurlFile (outpath.c_str(), (const char*)"rb", chunk);
 		if(!outfd) throw runtime_error(strerror(errno));
 		curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, mcCurlReadCallback);
 		curl_easy_setopt(m_curl, CURLOPT_READDATA, outfd);
@@ -138,7 +141,7 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst){
 	}
 	curl_easy_perform(m_curl);
 	if(infd) fclose(infd);
-	if(outfd) fclose(outfd);
+	if(outfd) delete outfd;
 }
 
 void mcCurl::header(string key, string value, string lst){

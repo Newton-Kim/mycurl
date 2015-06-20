@@ -15,6 +15,7 @@ OBJS=src/mycurl.o \
 	src/interpreter/command/mc-cmd-header.o \
 	src/interpreter/command/mc-cmd-verbose.o \
 	src/performer/curl/mc-curl.o \
+	src/performer/curl/mc-curl-file.o \
 	src/performer/mc-curl-performer.o
 
 CXXFLAGS=-g -O2 -Iinclude -Iperformer `pkg-config --cflags libcurl`
