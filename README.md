@@ -5,14 +5,15 @@ make
 # Tutorial
 ## Downloading a content
 You can get a ontent from a server and close
-{code}
+```
 open www.google.com
 get
 close
-{code}
+```
+
 You may want to leave the connection to reuse or do another work with the address.
-{code}
+```
 open www.google.com
 get
 leave
-{code}
+```
