@@ -7,12 +7,12 @@ sudo make install
 ```
 # Tutorial
 ## How to start
-Just type 'mycurl' then you will see following prompt
+Just type 'mycurl' then you will see following prompt.
 ```
 mycurl> 
 ```
 ## Downloading a content
-You can get a ontent from a server and close
+You can get a ontent from a server and close.
 ```
 open www.google.com
 get
