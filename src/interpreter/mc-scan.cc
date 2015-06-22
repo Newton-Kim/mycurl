@@ -19,6 +19,7 @@ struct mcSymbolTable{
 		{"delete", MC_TOKEN_DELETE},
 		{"header", MC_TOKEN_HEADER},
 		{"verbose", MC_TOKEN_VERBOSE},
+		{"follow", MC_TOKEN_FOLLOW},
 		{"on", MC_TOKEN_ON},
 		{"off", MC_TOKEN_OFF},
 		{NULL, MC_TOKEN_NONE}

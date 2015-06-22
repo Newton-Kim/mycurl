@@ -24,6 +24,7 @@ mcLanguage::mcLanguage(mcIPerformer* performer):m_performer(performer) {
 	m_commands.push_back(&m_cmd_delete);	//MC_TOKEN_DELETE
 	m_commands.push_back(&m_cmd_header);	//MC_TOKEN_HEADER
 	m_commands.push_back(&m_cmd_verbose);	//MC_TOKEN_VERBOSE
+	m_commands.push_back(&m_cmd_follow);	//MC_TOKEN_FOLLOW
 }
 
 mcLanguageState mcLanguage::run(string path){
@@ -93,6 +94,7 @@ mcLanguageState mcLanguage::parse(const char* line){
 		case MC_TOKEN_DELETE:
 		case MC_TOKEN_HEADER:
 		case MC_TOKEN_VERBOSE:
+		case MC_TOKEN_FOLLOW:
 			{
 				mcCommand* cmd = m_commands[token.id];
 				if(!cmd) {
@@ -145,6 +147,7 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner){
 		case MC_TOKEN_DELETE:
 		case MC_TOKEN_HEADER:
 		case MC_TOKEN_VERBOSE:
+		case MC_TOKEN_FOLLOW:
 			if(m_commands[token.id]) m_commands[token.id]->help();
 			break;
 		case MC_TOKEN_RUN:

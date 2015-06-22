@@ -14,6 +14,7 @@ OBJS=mycurl.o \
 	interpreter/command/mc-cmd-delete.o \
 	interpreter/command/mc-cmd-header.o \
 	interpreter/command/mc-cmd-verbose.o \
+	interpreter/command/mc-cmd-follow.o \
 	performer/curl/mc-curl.o \
 	performer/curl/mc-curl-file.o \
 	performer/mc-curl-performer.o
