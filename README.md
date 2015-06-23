@@ -6,12 +6,10 @@ make
 sudo make install
 ```
 # Tutorial
-## How to start
 Just type 'mycurl' then you will see following prompt.
 ```
 mycurl> 
 ```
-## Downloading a content
 You can get a ontent from a server and close.
 ```
 open www.google.com
@@ -22,5 +20,18 @@ You may want to leave the connection to reuse or do another work with the addres
 ```
 open www.google.com
 get
+leave
+```
+You don't get the home page of Goole because it is redirected.
+```
+open www.google.com
+follow on
+get
+```
+If you want to see the log, you switch on verbose.
+```
+open www.google.com
+get
+verbose on
 leave
 ```
