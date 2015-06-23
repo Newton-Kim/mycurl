@@ -58,6 +58,33 @@ mcLanguageState mcCurlPerformer::verbose_off(void){
 	return MC_LANG_CONTINUE;
 }
 
+mcLanguageState mcCurlPerformer::follow(bool& onoff){
+	if(!m_current) {
+		fprintf(stderr, "invalid handle\n");
+	} else {
+		onoff = m_current->follow();
+	}
+	return MC_LANG_CONTINUE;
+}
+
+mcLanguageState mcCurlPerformer::follow_on(void){
+	if(!m_current) {
+		fprintf(stderr, "invalid handle\n");
+	} else {
+		m_current->follow(true);
+	}
+	return MC_LANG_CONTINUE;
+}
+
+mcLanguageState mcCurlPerformer::follow_off(void){
+	if(!m_current) {
+		fprintf(stderr, "invalid handle\n");
+	} else {
+		m_current->follow(false);
+	}
+	return MC_LANG_CONTINUE;
+}
+
 mcLanguageState mcCurlPerformer::leave(void){
 	if(!m_current) {
 		fprintf(stderr, "invalid handle\n");

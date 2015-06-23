@@ -18,6 +18,9 @@ class mcIPerformer {
 		virtual mcLanguageState verbose(bool& onoff) = 0;
 		virtual mcLanguageState verbose_on(void) = 0;
 		virtual mcLanguageState verbose_off(void) = 0;
+		virtual mcLanguageState follow(bool& onoff) = 0;
+		virtual mcLanguageState follow_on(void) = 0;
+		virtual mcLanguageState follow_off(void) = 0;
 		virtual mcLanguageState leave(void) = 0;
 		virtual mcLanguageState list(void) = 0;
 		virtual mcLanguageState get(string path, string lst) = 0;

@@ -21,6 +21,7 @@ typedef enum {
 	//CURL setting commands
 	MC_TOKEN_HEADER,
 	MC_TOKEN_VERBOSE,
+	MC_TOKEN_FOLLOW,
 	//parsing tokens
 	MC_TOKEN_STRING,
 	MC_TOKEN_EXCLAMATION,

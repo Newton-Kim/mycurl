@@ -13,6 +13,9 @@ class mcCurlPerformer : public mcIPerformer {
 		mcLanguageState verbose(bool& onoff);
 		mcLanguageState verbose_on(void);
 		mcLanguageState verbose_off(void);
+		mcLanguageState follow(bool& onoff);
+		mcLanguageState follow_on(void);
+		mcLanguageState follow_off(void);
 		mcLanguageState leave(void);
 		mcLanguageState list(void);
 		mcLanguageState get(string path, string lst);
