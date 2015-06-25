@@ -5,7 +5,13 @@ NGINX_DIR=nginx-1.9.2
 NGINX=$(NGINX_DIR)/objs/nginx
 WORK_DIR=tmp
 
-all: $(NGINX)
+all:
+
+install:
+	install -d $(DIST_DIR)/usr/share/mycurl
+	install -m 664 *.mc $(DIST_DIR)/usr/share/mycurl
+
+test: $(NGINX)
 
 $(NGINX_DIR):
 	tar -zxvf $(TEST_SERVER)/$@.tar.gz

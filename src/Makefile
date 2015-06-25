@@ -1,5 +1,9 @@
 CORE=$(shell cat /proc/cpuinfo | grep processor | wc -l)
 PROGRAM=mycurl
+version.h:
+	echo "#pragma once" > $@
+	echo "#define VERSION \"$(VERSION)\"" >> $@
+mycurl.o:version.h
 OBJS=mycurl.o \
 	interpreter/mc-lang.o \
 	interpreter/mc-scan.o \
@@ -29,7 +33,8 @@ $(PROGRAM): $(OBJS)
 	$(CXX) -o $@ $^ $(LIBS)
 
 install: $(PROGRAM)
+	install -d $(DIST_DIR)/usr/bin
 	install -m 755 $(PROGRAM) $(DIST_DIR)/usr/bin
 
 clean:
-	rm -f $(OBJS) $(PROGRAM)
+	rm -f $(OBJS) $(PROGRAM) version.h

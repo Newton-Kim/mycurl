@@ -1,0 +1,11 @@
+Package: mycurl
+Version: @version@
+Section: utils
+Priority: optional
+Architecture: @arch@
+Installed-Size: @size@
+Depends: libcurl4-openssl-dev, libreadline6
+Maintainer: Newton Kim <newton.s.kim@gmail.google.com>
+Description: Handy interactive curl client
+ mycurl is a handy interactive curl client written in C++.
+ You can an http server using this client.

@@ -1,10 +1,11 @@
 #include "mc-lang.h"
 #include "performer/mc-curl-performer.h"
+#include "version.h"
 #include <cstdio>
 
 #define LINE_SIZE	1024
 void show_banner(void) {
-	fprintf(stdout, "mycurl version 1.0 by Newton Kim\n");
+	fprintf(stdout, "mycurl version %s by Newton Kim\n", VERSION);
 }
 
 int main(int argc, char* argv[]) {
