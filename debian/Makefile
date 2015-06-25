@@ -21,9 +21,9 @@ $(PKG): $(DIST_DIR) $(DIST_DIR)/DEBIAN/control
 $(DIST_DIR)/DEBIAN:
 	mkdir -p $@
 
-$(DIST_DIR)/DEBIAN/control: $(DIST_DIR)/DEBIAN
+$(DIST_DIR)/DEBIAN/control: control.in $(DIST_DIR)/DEBIAN
 	sed "s#@version@#$(VERSION)#g; \
                 s#@arch@#$(DEB_ARCH)#g; \
                 s#@size@#$(SIZE)#g; \
-        " < control.in > $@
+        " < $< > $@
 

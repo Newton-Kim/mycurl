@@ -1,0 +1,22 @@
+beautify (1.2) raring; urgency=low
+
+  * New options
+    - excluding option has been added
+
+ -- Newton Kim <newton.s.kim@gmail.com>  Sat, 9 Aug 2014 16:26:30 +0900
+
+beautify (1.1) raring; urgency=low
+
+  * New features
+    - clearing up line endings
+    - line ends with \r\n in object-c files
+
+ -- Newton Kim <newton.s.kim@gmail.com>  Fri, 30 May 2014 12:20:23 +0900
+
+beautify (1.0) raring; urgency=low
+
+  * The first distribution
+    - command line tool
+
+ -- Newton Kim <newton.s.kim@gmail.com>  Wed, 28 May 2014 15:50:22 +0900
+
