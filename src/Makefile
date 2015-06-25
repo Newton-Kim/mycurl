@@ -34,7 +34,7 @@ $(PROGRAM): $(OBJS)
 
 install: $(PROGRAM)
 	install -d $(DIST_DIR)/usr/bin
-	install -m 755 $(PROGRAM) $(DIST_DIR)/usr/bin
+	install -m 755 -s $(PROGRAM) $(DIST_DIR)/usr/bin
 
 clean:
 	rm -f $(OBJS) $(PROGRAM) version.h

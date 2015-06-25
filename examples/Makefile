@@ -9,7 +9,7 @@ all:
 
 install:
 	install -d $(DIST_DIR)/usr/share/mycurl
-	install -m 664 *.mc $(DIST_DIR)/usr/share/mycurl
+	install -m 644 *.mc $(DIST_DIR)/usr/share/mycurl
 
 test: $(NGINX)
 
