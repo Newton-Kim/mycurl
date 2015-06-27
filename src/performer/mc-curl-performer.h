@@ -19,9 +19,5 @@ class mcCurlPerformer : public mcIPerformer {
   mcLanguageState follow_off(void);
   mcLanguageState leave(void);
   mcLanguageState list(void);
-  mcLanguageState del(string lst);
-  mcLanguageState post(string inpath, size_t chunk, string outpath, string lst);
-  mcLanguageState put(string inpath, size_t chunk, string outpath, string lst);
   mcIConnection* current(void);
-  mcLanguageState header(string key, string value, string lst);
 };

@@ -36,5 +36,11 @@ mcLanguageState mcCmdHeader::parse(mcScanner& scanner,
     }
     token = scanner.tokenize();
   }
-  return performer->header(key, val, lst);
+  mcIConnection* conn = performer->current();
+  if(!conn) {
+    fprintf(stderr, "invalid handle\n");
+    return MC_LANG_CONTINUE;
+  }
+  conn->header(key, val, lst);
+  return MC_LANG_CONTINUE;
 }

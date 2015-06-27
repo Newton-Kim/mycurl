@@ -30,60 +30,6 @@ mcLanguageState mcCurlPerformer::close(mcIConnection* conn) {
   return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformer::verbose(bool& onoff) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    onoff = m_current->verbose();
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::verbose_on(void) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->verbose(true);
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::verbose_off(void) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->verbose(false);
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow(bool& onoff) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    onoff = m_current->follow();
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow_on(void) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->follow(true);
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow_off(void) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->follow(false);
-  }
-  return MC_LANG_CONTINUE;
-}
-
 mcLanguageState mcCurlPerformer::leave(void) {
   if (!m_current) {
     fprintf(stderr, "invalid handle\n");
@@ -104,44 +50,7 @@ mcLanguageState mcCurlPerformer::list(void) {
   return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformer::del(string lst) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->del(lst);
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::post(string inpath, size_t chunk,
-                                      string outpath, string lst) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->post(inpath, chunk, outpath, lst);
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::put(string inpath, size_t chunk,
-                                     string outpath, string lst) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->put(inpath, chunk, outpath, lst);
-  }
-  return MC_LANG_CONTINUE;
-}
-
 mcIConnection* mcCurlPerformer::current(void) {
   return m_current;
 }
 
-mcLanguageState mcCurlPerformer::header(string key, string value, string lst) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->header(key, value, lst);
-  }
-  return MC_LANG_CONTINUE;
-}

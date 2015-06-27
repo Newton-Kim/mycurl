@@ -61,5 +61,11 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  return performer->post(inpath, chunk, outpath, lst);
+  mcIConnection* conn = performer->current();
+  if(!conn) {
+    fprintf(stderr, "invalid handle\n");
+    return MC_LANG_CONTINUE;
+  }
+  conn->post(inpath, chunk, outpath, lst);
+  return MC_LANG_CONTINUE;
 }

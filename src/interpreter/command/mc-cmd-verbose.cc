@@ -12,24 +12,28 @@ void mcCmdVerbose::help(void) {
 
 mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
                                     mcIPerformer* performer) {
+  mcIConnection* conn = performer->current();
+  if(!conn) {
+    fprintf(stderr, "invalid handle\n");
+    return MC_LANG_CONTINUE;
+  }
   mcToken token = scanner.scan();
   if (token.id == MC_TOKEN_EOL) {
     //grammatically OK, but nothing need doing.
   } else if (token.id == MC_TOKEN_ON) {
-    performer->verbose_on();
+    conn->verbose(true);
     token = scanner.tokenize();
     if (token.id != MC_TOKEN_EOL)
       fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
   } else if (token.id == MC_TOKEN_OFF) {
-    performer->verbose_off();
+    conn->verbose(false);
     token = scanner.tokenize();
     if (token.id != MC_TOKEN_EOL)
       fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
   } else {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
   }
-  bool onoff;
-  performer->verbose(onoff);
+  bool onoff = conn->verbose();
   fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
   return MC_LANG_CONTINUE;
 }
