@@ -1,5 +1,9 @@
 CORE=$(shell cat /proc/cpuinfo | grep processor | wc -l)
 PROGRAM=mycurl
+COPYRIGHT=copyright
+COPYRIGHT_IN=$(COPYRIGHT).in
+CHANGELOG=changelog
+CHANGELOG_GZ=$(CHANGELOG).gz
 version.h:
 	echo "#pragma once" > $@
 	echo "#define VERSION \"$(VERSION)\"" >> $@
@@ -32,9 +36,18 @@ all:
 $(PROGRAM): $(OBJS)
 	$(CXX) -o $@ $^ $(LIBS)
 
-install: $(PROGRAM)
+install: $(PROGRAM) $(COPYRIGHT) $(CHANGELOG).gz
 	install -d $(DIST_DIR)/usr/bin
 	install -m 755 -s $(PROGRAM) $(DIST_DIR)/usr/bin
+	install -d $(DIST_DIR)/usr/share/doc/$(PROGRAM)
+	install -m 644 $(COPYRIGHT) $(DIST_DIR)/usr/share/doc/$(PROGRAM)
+	install -m 644 $(CHANGELOG_GZ) $(DIST_DIR)/usr/share/doc/$(PROGRAM)
+
+$(COPYRIGHT): $(COPYRIGHT_IN)
+	sed "s#@year@#`date +%Y`#g" < $< > $@
+
+$(CHANGELOG_GZ): $(CHANGELOG)
+	gzip -9 $<
 
 clean:
-	rm -f $(OBJS) $(PROGRAM) version.h
+	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ)
