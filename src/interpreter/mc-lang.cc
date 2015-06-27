@@ -200,11 +200,14 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
     case MC_TOKEN_HEADER:
     case MC_TOKEN_VERBOSE:
     case MC_TOKEN_FOLLOW:
-      if (m_commands[token.id]) m_commands[token.id]->help();
+      if (m_commands[token.id]) {
+        fprintf(stdout, "  %s command:\n", m_commands[token.id]->command().c_str());
+        m_commands[token.id]->help();
+      }
       break;
     case MC_TOKEN_RUN:
-      fprintf(stdout, "Usage: run [file]...\n");
-      fprintf(stdout, "  runs macro files\n");
+      fprintf(stdout, "  Usage: run [file]...\n");
+      fprintf(stdout, "    runs macro files\n");
       break;
     default:
       fprintf(stderr, "Invalid command %s\n", token.buffer.c_str());
@@ -217,4 +220,14 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
     state = MC_LANG_ERROR;
   }
   return state;
+}
+
+void mcLanguage::show_help(void) {
+  for (vector<mcCommand*>::iterator it = m_commands.begin();
+      it != m_commands.end(); it++) {
+    if (*it) {
+      fprintf(stdout, "  %s command:\n", (*it)->command().c_str());
+      (*it)->help();
+    }
+  }
 }

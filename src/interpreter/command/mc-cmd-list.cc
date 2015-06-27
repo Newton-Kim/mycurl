@@ -2,8 +2,8 @@
 #include <cstdio>
 
 void mcCmdList::help(void) {
-  fprintf(stdout, "Usage: list\n");
-  fprintf(stdout, "  lists opend urls or alias\n");
+  fprintf(stdout, "  Usage: list\n");
+  fprintf(stdout, "    lists opend urls or alias\n");
 }
 
 mcLanguageState mcCmdList::parse(mcScanner& scanner, mcIPerformer* performer) {

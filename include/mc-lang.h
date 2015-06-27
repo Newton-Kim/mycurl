@@ -42,4 +42,5 @@ class mcLanguage {
   mcLanguage(mcIPerformer* performer);
   mcLanguageState run(string path);
   mcLanguageState prompt(void);
+  void show_help(void);
 };

@@ -2,9 +2,10 @@
 #include <cstdio>
 
 void mcCmdFollow::help(void) {
-  fprintf(stdout, "Usage: follow [on | off]\n");
-  fprintf(stdout, "  turn on or off a follow mode.\n");
-  fprintf(stdout, "  it returns current mode of following location when no "
+  fprintf(stdout, "  Usage: follow [on | off]\n");
+  fprintf(stdout, "  Option:\n");
+  fprintf(stdout, "    turn on or off a follow mode.\n");
+  fprintf(stdout, "    it returns current mode of following location when no "
                   "argument is given.\n");
 }
 

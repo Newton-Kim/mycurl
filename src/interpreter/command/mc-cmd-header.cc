@@ -2,9 +2,10 @@
 #include <cstdio>
 
 void mcCmdHeader::help(void) {
-  fprintf(stdout, "Usage: header key value [> list]\n");
-  fprintf(stdout, "  sets a header to a list.\n");
-  fprintf(stdout, "  Default list is defhdr.\n");
+  fprintf(stdout, "  Usage: header key value [> list]\n");
+  fprintf(stdout, "  Option:\n");
+  fprintf(stdout, "    sets a header to a list.\n");
+  fprintf(stdout, "    Default list is defhdr.\n");
 }
 
 mcLanguageState mcCmdHeader::parse(mcScanner& scanner,

@@ -22,12 +22,17 @@ void show_version(void) {
     fprintf(stdout, "%s\n", VERSION);
 }
 
-void show_help(void) {
+void show_help(mcLanguage& language) {
   fprintf(stdout, "Usage: mycurl [option]... [script]...\n");
   fprintf(stdout, "\n");
   fprintf(stdout, "Option:\n");
   fprintf(stdout, "  -h, --help     shows this help screen.\n");
   fprintf(stdout, "  -v, --version  shows the version.\n");
+  fprintf(stdout, "\n");
+  fprintf(stdout, "Mycul langugage:\n");
+  language.show_help();
+  fprintf(stdout, "\n");
+  fprintf(stdout, "Report bugs to <newton.s.kim@gmail.com>\n");
 }
 
 int main(int argc, char* argv[]) {
@@ -38,7 +43,7 @@ int main(int argc, char* argv[]) {
   for (int i = 1; i < argc && state == MC_LANG_CONTINUE; i++) {
     if (!strcmp(argv[i], "--help") || !strcmp(argv[i], "-h")) {
       show_banner();
-      show_help();
+      show_help(language);
       return 0;
     } else if (!strcmp(argv[i], "--version") || !strcmp(argv[i], "-v")) {
       show_version();

@@ -2,10 +2,11 @@
 #include <cstdio>
 
 void mcCmdDelete::help(void) {
-  fprintf(stdout, "Usage: delete [- list]\n");
-  fprintf(stdout, "  posts DELETE request to the server.");
+  fprintf(stdout, "  Usage: delete [- list]\n");
+  fprintf(stdout, "  Option:\n");
+  fprintf(stdout, "    posts DELETE request to the server.\n");
   fprintf(stdout,
-          "  list has headers for the request. Default list is defhdr.\n");
+          "    list has headers for the request. Default list is defhdr.\n");
 }
 
 mcLanguageState mcCmdDelete::parse(mcScanner& scanner,
