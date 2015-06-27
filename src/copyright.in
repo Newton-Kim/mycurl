@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: http://www.gnu.org/software/autoconf/
-Upstream-Name: beautify
-Upstream-Contact: beautify Maintainers <newton.s.kim@gmail.com>
+Upstream-Name: @program@ 
+Upstream-Contact: @program@ Maintainers <newton.s.kim@gmail.com>
 
 Files: *
 Copyright: @year@ Newton Kim (newton.s.kim@gmail.com)
