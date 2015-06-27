@@ -3,7 +3,7 @@ SIZE=$(shell du -d 0 $(DIST_DIR) | cut -f1)
 RELEASE=$(shell grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//')
 ARCH=$(shell uname -p)
 DEB_ARCH=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
-PKG=../mycurl-$(VERSION)-$(OS)-$(RELEASE)-$(ARCH).deb
+PKG=../mycurl-v$(VERSION)-$(OS)-$(RELEASE)-$(ARCH).deb
 
 all:
 

@@ -54,14 +54,14 @@ $(COPYRIGHT): $(COPYRIGHT_IN)
 $(CHANGELOG_GZ): $(CHANGELOG)
 $(MANPAGE_GZ): $(MANPAGE)
 
-$(CHANGELOG_GZ) $(MANPAGE):
+$(CHANGELOG_GZ) $(MANPAGE_GZ):
 	gzip -9 $<
 
 $(CHANGELOG): $(CHANGELOG_IN)
 	cp $< $@
 
 $(MANPAGE): $(PROGRAM)
-	help2man $< > $@
+	help2man ./$< > $@
 
 clean:
-	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE)
+	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ)
