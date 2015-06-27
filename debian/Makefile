@@ -1,8 +1,7 @@
 OS=$(shell grep DISTRIB_ID /etc/lsb-release | sed 's/DISTRIB_ID=//')
 SIZE=$(shell du -d 0 $(DIST_DIR) | cut -f1)
 RELEASE=$(shell grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//')
-ARCH=$(shell uname -p)
-DEB_ARCH=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
+ARCH=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 PKG=../mycurl-v$(VERSION)-$(OS)-$(RELEASE)-$(ARCH).deb
 
 all:
@@ -23,7 +22,7 @@ $(DIST_DIR)/DEBIAN:
 
 $(DIST_DIR)/DEBIAN/control: control.in $(DIST_DIR)/DEBIAN
 	sed "s#@version@#$(VERSION)#g; \
-                s#@arch@#$(DEB_ARCH)#g; \
+                s#@arch@#$(ARCH)#g; \
                 s#@size@#$(SIZE)#g; \
         " < $< > $@
 
