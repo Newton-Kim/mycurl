@@ -18,14 +18,14 @@ mcLanguageState mcCurlPerformer::open(string url, string alias) {
   return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformer::close(void) {
-  if (!m_current) {
+mcLanguageState mcCurlPerformer::close(mcIConnection* conn) {
+  if(!conn) {
     fprintf(stderr, "invalid handle\n");
   } else {
-    m_map[m_current->mnymonic()] = NULL;
-    m_map.erase(m_current->mnymonic());
-    delete m_current;
-    m_current = NULL;
+    if(m_current == conn) m_current = NULL;
+    m_map[conn->mnymonic()] = NULL;
+    m_map.erase(conn->mnymonic());
+    delete conn;
   }
   return MC_LANG_CONTINUE;
 }
@@ -104,15 +104,6 @@ mcLanguageState mcCurlPerformer::list(void) {
   return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformer::get(string path, string lst) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current->get(path, lst);
-  }
-  return MC_LANG_CONTINUE;
-}
-
 mcLanguageState mcCurlPerformer::del(string lst) {
   if (!m_current) {
     fprintf(stderr, "invalid handle\n");
@@ -142,8 +133,8 @@ mcLanguageState mcCurlPerformer::put(string inpath, size_t chunk,
   return MC_LANG_CONTINUE;
 }
 
-string mcCurlPerformer::current(void) {
-  return m_current ? m_current->mnymonic() : "mycurl";
+mcIConnection* mcCurlPerformer::current(void) {
+  return m_current;
 }
 
 mcLanguageState mcCurlPerformer::header(string key, string value, string lst) {

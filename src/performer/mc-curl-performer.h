@@ -10,7 +10,7 @@ class mcCurlPerformer : public mcIPerformer {
  public:
   mcCurlPerformer();
   mcLanguageState open(string url, string alias);
-  mcLanguageState close(void);
+  mcLanguageState close(mcIConnection* conn);
   mcLanguageState verbose(bool& onoff);
   mcLanguageState verbose_on(void);
   mcLanguageState verbose_off(void);
@@ -19,10 +19,9 @@ class mcCurlPerformer : public mcIPerformer {
   mcLanguageState follow_off(void);
   mcLanguageState leave(void);
   mcLanguageState list(void);
-  mcLanguageState get(string path, string lst);
   mcLanguageState del(string lst);
   mcLanguageState post(string inpath, size_t chunk, string outpath, string lst);
   mcLanguageState put(string inpath, size_t chunk, string outpath, string lst);
-  string current(void);
+  mcIConnection* current(void);
   mcLanguageState header(string key, string value, string lst);
 };

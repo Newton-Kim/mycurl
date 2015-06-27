@@ -1,12 +1,13 @@
 #pragma once
 
+#include "mc-types.h"
 #include <map>
 #include <string>
 #include <curl/curl.h>
 
 using namespace std;
 
-class mcCurl {
+class mcCurl : public mcIConnection {
  private:
   map<string, curl_slist*> m_headers;
   CURL* m_curl;
