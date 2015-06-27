@@ -8,8 +8,9 @@
 using namespace std;
 
 class mcCommand {
-	public:
-		virtual string command(void) = 0;
-		virtual void help(void) = 0;
-		virtual mcLanguageState parse(mcScanner& scanner, mcIPerformer* performer) = 0;
+ public:
+  virtual string command(void) = 0;
+  virtual void help(void) = 0;
+  virtual mcLanguageState parse(mcScanner& scanner,
+                                mcIPerformer* performer) = 0;
 };

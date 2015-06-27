@@ -49,7 +49,7 @@ install: $(PROGRAM) $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ)
 	install -m 644 $(MANPAGE_GZ) $(DIST_DIR)/usr/share/man/man1
 
 $(COPYRIGHT): $(COPYRIGHT_IN)
-	sed "s#@year@#`date +%Y`#g" < $< > $@
+	sed "s#@program@#$(PROGRAM)#g; s#@year@#`date +%Y`#g;" < $< > $@
 
 $(CHANGELOG_GZ): $(CHANGELOG)
 $(MANPAGE_GZ): $(MANPAGE)
