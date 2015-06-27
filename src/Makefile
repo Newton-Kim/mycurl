@@ -3,7 +3,10 @@ PROGRAM=mycurl
 COPYRIGHT=copyright
 COPYRIGHT_IN=$(COPYRIGHT).in
 CHANGELOG=changelog
+CHANGELOG_IN=$(CHANGELOG).in
 CHANGELOG_GZ=$(CHANGELOG).gz
+MANPAGE=$(PROGRAM).1
+MANPAGE_GZ=$(MANPAGE).gz
 version.h:
 	echo "#pragma once" > $@
 	echo "#define VERSION \"$(VERSION)\"" >> $@
@@ -36,18 +39,29 @@ all:
 $(PROGRAM): $(OBJS)
 	$(CXX) -o $@ $^ $(LIBS)
 
-install: $(PROGRAM) $(COPYRIGHT) $(CHANGELOG).gz
+install: $(PROGRAM) $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ)
 	install -d $(DIST_DIR)/usr/bin
 	install -m 755 -s $(PROGRAM) $(DIST_DIR)/usr/bin
 	install -d $(DIST_DIR)/usr/share/doc/$(PROGRAM)
 	install -m 644 $(COPYRIGHT) $(DIST_DIR)/usr/share/doc/$(PROGRAM)
 	install -m 644 $(CHANGELOG_GZ) $(DIST_DIR)/usr/share/doc/$(PROGRAM)
+	install -d $(DIST_DIR)/usr/share/man/man1
+	install -m 644 $(MANPAGE_GZ) $(DIST_DIR)/usr/share/man/man1
 
 $(COPYRIGHT): $(COPYRIGHT_IN)
 	sed "s#@year@#`date +%Y`#g" < $< > $@
 
 $(CHANGELOG_GZ): $(CHANGELOG)
+$(MANPAGE_GZ): $(MANPAGE)
+
+$(CHANGELOG_GZ) $(MANPAGE):
 	gzip -9 $<
 
+$(CHANGELOG): $(CHANGELOG_IN)
+	cp $< $@
+
+$(MANPAGE): $(PROGRAM)
+	help2man $< > $@
+
 clean:
-	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ)
+	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE)
