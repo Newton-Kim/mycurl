@@ -1,5 +1,5 @@
 # mycurl
-mycurl is a simple interactive client based on libcurl written in C++. It has been developed to test a newly developed server or a feature of the server.
+mycurl is a simple interactive client based on libcurl written in C++. It has been developed to test a newly developed server or its feature.
 # License
 MIT License(http//opensource.org/licenses/MIT)
 # Usage
