@@ -1,5 +1,5 @@
 CORE=$(shell cat /proc/cpuinfo | grep processor | wc -l)
-NGINX_MAK=nginx-1.9.2.mak
+NGINX_MAK=nginx-1.2.9.mak
 
 all:
 

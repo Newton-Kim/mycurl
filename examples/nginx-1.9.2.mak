@@ -17,7 +17,7 @@ clean:
 $(NGINX):$(NGINX_DIR)/Makefile
 	cd $(NGINX_DIR) && $(MAKE) -j$(CORE)
 
-$(NGINX_DIR):
+$(NGINX_DIR): $(NGINX_DIR).tar.gz
 	tar -zxvf $(TEST_SERVER)/$@.tar.gz
 
 $(NGINX_DIR)/Makefile:$(NGINX_DIR)
