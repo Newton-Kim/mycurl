@@ -7,6 +7,7 @@ CHANGELOG_IN=$(CHANGELOG).in
 CHANGELOG_GZ=$(CHANGELOG).gz
 MANPAGE=$(PROGRAM).1
 MANPAGE_GZ=$(MANPAGE).gz
+MAKE_DEPS=Makefile.deps
 version.h:
 	echo "#pragma once" > $@
 	echo "#define VERSION \"$(VERSION)\"" >> $@
@@ -30,11 +31,19 @@ OBJS=mycurl.o \
 	performer/curl/mc-curl-file.o \
 	performer/mc-curl-performer.o
 
-CXXFLAGS=-g -O2 -I../include -Iperformer `pkg-config --cflags libcurl`
+SRCS=${OBJS:.o=.cc}
+
+-include Makefile.deps
+
+INCLUDES=-I../include -Iperformer `pkg-config --cflags libcurl`
+CXXFLAGS=-g -O2 $(INCLUDES)
 LIBS=`pkg-config --libs libcurl` -lreadline
 
-all:
+all: $(MAKE_DEPS)
 	$(MAKE) $(PROGRAM) -j$(CORE)
+
+$(MAKE_DEPS): $(SRCS)
+	$(CXX) -MM $(INCLUDES) $^ > $(MAKE_DEPS)
 
 $(PROGRAM): $(OBJS)
 	$(CXX) -o $@ $^ $(LIBS)
@@ -64,4 +73,4 @@ $(MANPAGE): $(PROGRAM)
 	help2man ./$< > $@
 
 clean:
-	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ)
+	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ) $(MAKE_DEPS)
