@@ -30,6 +30,8 @@ $(WORK_DIR):
 	mkdir $@
 	mkdir $@/logs
 	mkdir $@/html
+	mkdir $@/tmp
+	cd $@/tmp && mkdir 1 2 3 4 5 6 7 8 9 0
 	cp $(TEST_SERVER)/*.html $(WORK_DIR)/html
 
 $(WORK_DIR)/$(NGINX_CONF): $(TEST_SERVER)/$(NGINX_192_CONF)
