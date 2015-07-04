@@ -66,9 +66,6 @@ void mcCurl::perform(void) {
 void mcCurl::get(string path, string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   set_header(lst);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
-  curl_easy_setopt(m_curl, CURLOPT_PUT, 0);
-  curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, NULL);
   FILE *fd = NULL;
   if (path.size()) {
     fd = fopen(path.c_str(), "wb");
@@ -86,9 +83,6 @@ void mcCurl::get(string path, string lst) {
 void mcCurl::del(string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   set_header(lst);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
-  curl_easy_setopt(m_curl, CURLOPT_PUT, 0);
   curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, "DELETE");
   perform();
 }
@@ -96,10 +90,7 @@ void mcCurl::del(string lst) {
 void mcCurl::post(string inpath, size_t chunk, string outpath, string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   set_header(lst);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
   curl_easy_setopt(m_curl, CURLOPT_POST, 1);
-  curl_easy_setopt(m_curl, CURLOPT_PUT, 0);
-  curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, NULL);
   FILE *infd = NULL;
   mcCurlFile *outfd = NULL;
   if (inpath.size()) {
@@ -128,10 +119,7 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst) {
 void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   set_header(lst);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
-  curl_easy_setopt(m_curl, CURLOPT_POST, 0);
   curl_easy_setopt(m_curl, CURLOPT_PUT, 1);
-  curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, NULL);
   FILE *infd = NULL;
   mcCurlFile *outfd = NULL;
   if (inpath.size()) {
