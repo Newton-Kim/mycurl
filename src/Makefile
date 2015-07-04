@@ -11,6 +11,7 @@ MAKE_DEPS=Makefile.deps
 version.h:
 	echo "#pragma once" > $@
 	echo "#define VERSION \"$(VERSION)\"" >> $@
+
 mycurl.o:version.h
 OBJS=mycurl.o \
 	interpreter/mc-lang.o \
@@ -33,7 +34,7 @@ OBJS=mycurl.o \
 
 SRCS=${OBJS:.o=.cc}
 
--include Makefile.deps
+include $(MAKE_DEPS)
 
 INCLUDES=-I../include -Iperformer `pkg-config --cflags libcurl`
 CXXFLAGS=-g -O2 $(INCLUDES)
@@ -42,7 +43,7 @@ LIBS=`pkg-config --libs libcurl` -lreadline
 all: $(MAKE_DEPS)
 	$(MAKE) $(PROGRAM) -j$(CORE)
 
-$(MAKE_DEPS): $(SRCS)
+$(MAKE_DEPS): $(SRCS) version.h
 	$(CXX) -MM $(INCLUDES) $^ > $(MAKE_DEPS)
 
 $(PROGRAM): $(OBJS)
@@ -73,4 +74,4 @@ $(MANPAGE): $(PROGRAM)
 	help2man ./$< > $@
 
 clean:
-	rm -f $(OBJS) $(PROGRAM) version.h $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ) $(MAKE_DEPS)
+	rm -f $(OBJS) $(PROGRAM) $(COPYRIGHT) $(CHANGELOG_GZ) $(MANPAGE_GZ) $(MAKE_DEPS) version.h

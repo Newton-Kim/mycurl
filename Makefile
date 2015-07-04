@@ -2,17 +2,19 @@ VERSION=1.2.0
 DIST_DIR=dist
 all install:
 	$(MAKE) -C src $@ VERSION=$(VERSION)
-	$(MAKE) -C examples $@
+	$(MAKE) -C conformance $@
+	$(MAKE) -C tutorials $@
 	$(MAKE) -C debian $@ VERSION=$(VERSION)
 
 clean:
 	$(MAKE) -C src $@ VERSION=$(VERSION)
-	$(MAKE) -C examples $@
+	$(MAKE) -C conformance $@
+	$(MAKE) -C tutorials $@
 	$(MAKE) -C debian $@ VERSION=$(VERSION)
 	rm -rf $(DIST_DIR)
 
-test: all
-	$(MAKE) -C examples $@
+test start stop server:
+	$(MAKE) -C conformance $@
 
 $(DIST_DIR):
 	mkdir -p $@
