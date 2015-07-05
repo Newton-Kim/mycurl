@@ -10,6 +10,8 @@ using namespace std;
 class mcCurl : public mcIConnection {
  private:
   map<string, curl_slist*> m_headers;
+  map<string, struct curl_httppost*> m_formhead;
+  map<string, struct curl_httppost*> m_formend;
   CURL* m_curl;
   string m_url;
   string m_mnymonic;
@@ -31,4 +33,5 @@ class mcCurl : public mcIConnection {
   void post(string inpath, size_t chunk, string outpath, string lst);
   void put(string inpath, size_t chunk, string outpath, string lst);
   void header(string key, string value, string lst);
+  void form(string key, string value, string lst);
 };

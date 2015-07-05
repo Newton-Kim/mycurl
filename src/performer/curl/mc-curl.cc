@@ -31,6 +31,9 @@ mcCurl::~mcCurl() {
   for (map<string, curl_slist *>::iterator it = m_headers.begin();
        it != m_headers.end(); it++)
     curl_slist_free_all(it->second);
+  for (map<string, curl_httppost*>::iterator it = m_formhead.begin();
+       it != m_formhead.end(); it++)
+    curl_formfree(it->second);
   if (m_curl) curl_easy_cleanup(m_curl);
 }
 
@@ -151,4 +154,14 @@ void mcCurl::header(string key, string value, string lst) {
   curl_slist *slist = (it != m_headers.end()) ? it->second : NULL;
   slist = curl_slist_append(slist, hdr.c_str());
   m_headers[lst] = slist;
+}
+
+void mcCurl::form(string key, string value, string lst) {
+  map<string, curl_httppost *>::iterator ith = m_formhead.find(lst);
+  curl_httppost *post = (ith != m_formhead.end()) ? ith->second : NULL;
+  map<string, curl_httppost *>::iterator ite = m_formend.find(lst);
+  curl_httppost *end = (ite != m_formend.end()) ? ite->second : NULL;
+  curl_formadd(&post, &end, CURLFORM_COPYNAME, key.c_str(), CURLFORM_COPYCONTENTS, value.c_str(), CURLFORM_END);
+  m_formhead[lst] = post;
+  m_formend[lst] = end;
 }

@@ -23,6 +23,7 @@ class mcIConnection {
   virtual void follow(bool onoff) = 0;
   virtual bool follow(void) = 0;
   virtual void header(string key, string value, string lst) = 0;
+  virtual void form(string key, string value, string lst) = 0;
 };
 
 class mcIPerformer {
