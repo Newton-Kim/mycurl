@@ -16,7 +16,7 @@ class mcIConnection {
   virtual string mnymonic(void) = 0;
   virtual void get(string path, string lst) = 0;
   virtual void del(string lst) = 0;
-  virtual void post(string inpath, size_t chunk, string outpath, string lst) = 0;
+  virtual void post(string inpath, size_t chunk, string outpath, string lst, string frm) = 0;
   virtual void put(string inpath, size_t chunk, string outpath, string lst) = 0;
   virtual void verbose(bool onoff) = 0;
   virtual bool verbose(void) = 0;

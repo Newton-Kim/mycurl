@@ -14,6 +14,7 @@
 #include "command/mc-cmd-header.h"
 #include "command/mc-cmd-verbose.h"
 #include "command/mc-cmd-follow.h"
+#include "command/mc-cmd-form.h"
 #include <vector>
 
 using namespace std;
@@ -34,6 +35,7 @@ class mcLanguage {
   mcCmdHeader m_cmd_header;
   mcCmdVerbose m_cmd_verbose;
   mcCmdFollow m_cmd_follow;
+  mcCmdForm m_cmd_form;
   mcLanguageState parse_run(mcScanner& scanner);
   mcLanguageState parse_help(mcScanner& scanner);
   mcLanguageState parse(const char* line);

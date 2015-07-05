@@ -61,6 +61,12 @@ void mcCurl::set_header(string lst) {
   if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
 }
 
+void mcCurl::set_form(string lst) {
+  map<string, curl_httppost*>::iterator it = m_formhead.find(lst);
+  struct curl_httppost *post = (it != m_formhead.end()) ? it->second : NULL;
+  if (post) curl_easy_setopt(m_curl, CURLOPT_HTTPPOST, post);
+}
+
 void mcCurl::perform(void) {
   CURLcode ret = curl_easy_perform(m_curl);
   if (ret != CURLE_OK) fprintf(stderr, "%s", curl_easy_strerror(ret));
@@ -90,9 +96,10 @@ void mcCurl::del(string lst) {
   perform();
 }
 
-void mcCurl::post(string inpath, size_t chunk, string outpath, string lst) {
+void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, string frm) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   set_header(lst);
+  set_form(frm);
   curl_easy_setopt(m_curl, CURLOPT_POST, 1);
   FILE *infd = NULL;
   mcCurlFile *outfd = NULL;

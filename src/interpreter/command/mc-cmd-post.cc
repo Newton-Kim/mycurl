@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 void mcCmdPost::help(void) {
-  fprintf(stdout, "  Usage: post [< file_in[:number]][ > file_out][ - list]\n");
+  fprintf(stdout, "  Usage: post [< file_in[:number]][ > file_out][ - list][ + form]\n");
   fprintf(stdout, "  Option:\n");
   fprintf(stdout, "    posts GET request to the server.\n");
   fprintf(stdout, "    < operator redirects the request body from the file if "
@@ -15,10 +15,12 @@ void mcCmdPost::help(void) {
                   "there is any.\n");
   fprintf(stdout,
           "    list has headers for the request. Default list is defhdr.\n");
+  fprintf(stdout,
+          "    form has headers for the chunks of the request. Default form is deffrm.\n");
 }
 
 mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
-  string inpath, outpath, lst = "defhdr";
+  string inpath, outpath, lst = "defhdr", frm = "deffrm";
   size_t chunk = 0;
   mcToken token = scanner.tokenize();
   if (token.id == MC_TOKEN_LT) {
@@ -57,6 +59,16 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     }
     token = scanner.tokenize();
   }
+  if (token.id == MC_TOKEN_PLUS) {
+    token = scanner.tokenize();
+    if (token.id == MC_TOKEN_STRING) {
+      frm = token.buffer;
+    } else {
+      fprintf(stderr, "form name is missing\n");
+      return MC_LANG_CONTINUE;
+    }
+    token = scanner.tokenize();
+  }
   if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
@@ -66,6 +78,6 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     fprintf(stderr, "invalid handle\n");
     return MC_LANG_CONTINUE;
   }
-  conn->post(inpath, chunk, outpath, lst);
+  conn->post(inpath, chunk, outpath, lst, frm);
   return MC_LANG_CONTINUE;
 }
