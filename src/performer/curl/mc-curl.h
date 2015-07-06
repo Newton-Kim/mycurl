@@ -33,5 +33,6 @@ class mcCurl : public mcIConnection {
   void post(string inpath, size_t chunk, string outpath, string lst, string frm);
   void put(string inpath, size_t chunk, string outpath, string lst);
   void header(string key, string value, string lst);
+  void header(string key, size_t value, string lst);
   void form(string key, string value, string lst);
 };
