@@ -10,4 +10,6 @@ class mcCurlFile {
   mcCurlFile(const char* path, const char* mode, size_t chunk);
   ~mcCurlFile();
   size_t fread(void* buffer, size_t size, size_t nmemb);
+  size_t fwrite(void* buffer, size_t size, size_t nmemb);
+  size_t fsize(void);
 };

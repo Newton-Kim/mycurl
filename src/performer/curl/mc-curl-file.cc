@@ -3,6 +3,9 @@
 #include <cerrno>
 #include <cstring>
 #include <cmath>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -17,6 +20,18 @@ mcCurlFile::~mcCurlFile() {
 }
 
 size_t mcCurlFile::fread(void* buffer, size_t size, size_t nmemb) {
-  size_t nitems = min(nmemb, m_chunk);
+  size_t nitems = (m_chunk) ? min(nmemb, m_chunk) : nmemb;
   return ::fread(buffer, size, nmemb, m_fd);
+}
+
+size_t mcCurlFile::fwrite(void* buffer, size_t size, size_t nmemb) {
+  return ::fread(buffer, size, nmemb, m_fd);
+}
+
+size_t mcCurlFile::fsize(void) {
+  size_t pos = ftell(m_fd);
+  fseek(m_fd, 0, SEEK_END);
+  size_t sz = ftell(m_fd);
+  fseek(m_fd, pos, SEEK_SET);
+  return sz;
 }
