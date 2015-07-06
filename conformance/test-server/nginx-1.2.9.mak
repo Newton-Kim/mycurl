@@ -1,4 +1,4 @@
-CORE=$(shell cat /proc/cpuinfo | grep processors | wc -l)
+CORE=$(shell cat /proc/cpuinfo | grep processor | wc -l)
 TEST_SERVER=test-server
 NGINX_192_CONF=nginx-1.2.9.conf
 NGINX_CONF=nginx.conf
