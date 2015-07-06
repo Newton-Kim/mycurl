@@ -22,3 +22,6 @@ $(DIST_DIR):
 deb: $(DIST_DIR)
 	$(MAKE) install DIST_DIR=../$<
 	$(MAKE) -C debian $@ DIST_DIR=../$< VERSION=$(VERSION)
+
+nightly:
+	tar -zcvf ../mycurl-$(VERSION)-src-`date +%Y%m%dT%H%M`.tar.gz . --exclude=.git
