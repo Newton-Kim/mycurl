@@ -31,9 +31,9 @@ mcCurl::~mcCurl() {
   for (map<string, curl_slist *>::iterator it = m_headers.begin();
        it != m_headers.end(); it++)
     curl_slist_free_all(it->second);
-  for (map<string, curl_httppost*>::iterator it = m_formhead.begin();
-       it != m_formhead.end(); it++)
-    curl_formfree(it->second);
+  for (map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.begin();
+       it != m_form.end(); it++)
+    curl_formfree(it->second.second);
   if (m_curl) curl_easy_cleanup(m_curl);
 }
 
@@ -62,9 +62,10 @@ void mcCurl::set_header(string lst) {
 }
 
 void mcCurl::set_form(string lst) {
-  map<string, curl_httppost*>::iterator it = m_formhead.find(lst);
-  struct curl_httppost *post = (it != m_formhead.end()) ? it->second : NULL;
-  if (post) curl_easy_setopt(m_curl, CURLOPT_HTTPPOST, post);
+  map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.find(lst);
+  if (it == m_form.end()) return;
+  pair<struct curl_httppost *, struct curl_httppost *> post = it->second;
+  if (post.first) curl_easy_setopt(m_curl, CURLOPT_HTTPPOST, post.first);
 }
 
 void mcCurl::perform(void) {
@@ -101,29 +102,29 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, strin
   set_header(lst);
   set_form(frm);
   curl_easy_setopt(m_curl, CURLOPT_POST, 1);
-  FILE *infd = NULL;
-  mcCurlFile *outfd = NULL;
+  FILE *outfd = NULL;
+  mcCurlFile *infd = NULL;
   if (inpath.size()) {
-    infd = fopen(inpath.c_str(), "wb");
+    infd = new mcCurlFile(inpath.c_str(), (const char *)"rb", chunk);
     if (!infd) throw runtime_error(strerror(errno));
-    curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, mcCurlWriteCallback);
-    curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, infd);
-  } else {
-    curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
-    curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
-  }
-  if (outpath.size()) {
-    outfd = new mcCurlFile(outpath.c_str(), (const char *)"rb", chunk);
-    if (!outfd) throw runtime_error(strerror(errno));
     curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, mcCurlReadCallback);
-    curl_easy_setopt(m_curl, CURLOPT_READDATA, outfd);
+    curl_easy_setopt(m_curl, CURLOPT_READDATA, infd);
   } else {
     curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
   }
+  if (outpath.size()) {
+    outfd = fopen(outpath.c_str(), "wb");
+    if (!infd) throw runtime_error(strerror(errno));
+    curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, mcCurlWriteCallback);
+    curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, outfd);
+  } else {
+    curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
+    curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
+  }
   perform();
-  if (infd) fclose(infd);
-  if (outfd) delete outfd;
+  if (infd) delete infd;
+  if (outfd) fclose(outfd);
 }
 
 void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
@@ -164,11 +165,9 @@ void mcCurl::header(string key, string value, string lst) {
 }
 
 void mcCurl::form(string key, string value, string lst) {
-  map<string, curl_httppost *>::iterator ith = m_formhead.find(lst);
-  curl_httppost *post = (ith != m_formhead.end()) ? ith->second : NULL;
-  map<string, curl_httppost *>::iterator ite = m_formend.find(lst);
-  curl_httppost *end = (ite != m_formend.end()) ? ite->second : NULL;
+  map<string, pair<struct curl_httppost *, struct curl_httppost *> >::iterator it = m_form.find(lst);
+  curl_httppost *post = (it != m_form.end()) ? it->second.first : NULL;
+  curl_httppost *end = (it != m_form.end()) ? it->second.second : NULL;
   curl_formadd(&post, &end, CURLFORM_COPYNAME, key.c_str(), CURLFORM_COPYCONTENTS, value.c_str(), CURLFORM_END);
-  m_formhead[lst] = post;
-  m_formend[lst] = end;
+  m_form[lst] = make_pair<struct curl_httppost *, struct curl_httppost *>(post, end);
 }

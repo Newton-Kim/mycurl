@@ -10,7 +10,7 @@ void mcCmdPost::help(void) {
                   "there is any.\n");
   fprintf(stdout, "    :number specifies the size of the chunk.\n");
   fprintf(stdout, "    Transfer-Encoding:chunked header is automatically "
-                  "attached when specified.\n");
+                  "attached when it is negative.\n");
   fprintf(stdout, "    > operator redirects the response body to the file if "
                   "there is any.\n");
   fprintf(stdout,
