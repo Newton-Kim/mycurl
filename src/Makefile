@@ -29,15 +29,15 @@ OBJS=mycurl.o \
 	interpreter/command/mc-cmd-verbose.o \
 	interpreter/command/mc-cmd-follow.o \
 	interpreter/command/mc-cmd-form.o \
-	performer/curl/mc-curl.o \
-	performer/curl/mc-curl-file.o \
+	curl/mc-curl.o \
+	curl/mc-curl-file.o \
 	performer/mc-curl-performer.o
 
 SRCS=${OBJS:.o=.cc}
 
 include $(MAKE_DEPS)
 
-INCLUDES=-I../include -Iperformer `pkg-config --cflags libcurl`
+INCLUDES=-I../include -Iperformer -Icurl `pkg-config --cflags libcurl`
 CXXFLAGS=-g -O2 $(INCLUDES)
 LIBS=`pkg-config --libs libcurl` -lreadline
 

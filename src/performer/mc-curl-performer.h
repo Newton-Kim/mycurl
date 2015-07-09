@@ -1,6 +1,6 @@
 #pragma once
 #include "mc-types.h"
-#include "curl/mc-curl.h"
+#include "mc-curl.h"
 
 class mcCurlPerformer : public mcIPerformer {
  private:
