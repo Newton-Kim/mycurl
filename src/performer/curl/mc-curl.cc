@@ -57,9 +57,6 @@ mcCurl::mcCurl(string url, string mnymonic)
 }
 
 mcCurl::~mcCurl() {
-  for (map<string, curl_slist *>::iterator it = m_headers.begin();
-       it != m_headers.end(); it++)
-    curl_slist_free_all(it->second);
   for (map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.begin();
        it != m_form.end(); it++)
     curl_formfree(it->second.second);
@@ -85,12 +82,6 @@ void mcCurl::follow(bool onoff) {
 
 bool mcCurl::follow(void) { return m_follow; }
 
-void mcCurl::set_header(string lst) {
-  map<string, curl_slist *>::iterator it = m_headers.find(lst);
-  curl_slist *slist = (it != m_headers.end()) ? it->second : NULL;
-  if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
-}
-
 void mcCurl::set_form(string lst) {
   map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.find(lst);
   if (it == m_form.end()) return;
@@ -98,14 +89,24 @@ void mcCurl::set_form(string lst) {
   if (post.first) curl_easy_setopt(m_curl, CURLOPT_HTTPPOST, post.first);
 }
 
-void mcCurl::perform(void) {
+void mcCurl::perform(string hdr) {
+  curl_slist* slist = NULL;
+  map<string, map<string, string> >::iterator it = m_headers.find(hdr);
+  if(it != m_headers.end()) {
+    map<string, string>& headers = it->second;
+    for(map<string, string>::iterator ith = headers.begin() ; ith != headers.end() ; ith++) {
+      string line = ith->first + ": " + ith->second;
+      slist = curl_slist_append(slist, line.c_str());
+    }
+    if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
+  }
   CURLcode ret = curl_easy_perform(m_curl);
   if (ret != CURLE_OK) fprintf(stderr, "%s", curl_easy_strerror(ret));
+  if(slist) curl_slist_free_all(slist);
 }
 
 void mcCurl::get(string path, string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
-  set_header(lst);
   FILE *fd = NULL;
   if (path.size()) {
     fd = fopen(path.c_str(), "wb");
@@ -116,15 +117,14 @@ void mcCurl::get(string path, string lst) {
     curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
   }
-  perform();
+  perform(lst);
   if (fd) fclose(fd);
 }
 
 void mcCurl::del(string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
-  set_header(lst);
   curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-  perform();
+  perform(lst);
 }
 
 void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, string frm) {
@@ -157,16 +157,14 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, strin
     header("Content-Length", infd->fsize(), lst);
     header("Expect", "", lst);
   }
-  set_header(lst);
   set_form(frm);
-  perform();
+  perform(lst);
   if (infd) delete infd;
   if (outfd) delete outfd;
 }
 
 void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
   if (!m_curl) throw runtime_error("invalid curl handle");
-  set_header(lst);
   curl_easy_setopt(m_curl, CURLOPT_PUT, 1);
   FILE *infd = NULL;
   mcCurlFile *outfd = NULL;
@@ -188,7 +186,7 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
     curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
   }
-  perform();
+  perform(lst);
   if (infd) fclose(infd);
   if (outfd) delete outfd;
 }
@@ -200,11 +198,15 @@ void mcCurl::header(string key, size_t value, string lst) {
 }
 
 void mcCurl::header(string key, string value, string lst) {
-  map<string, curl_slist *>::iterator it = m_headers.find(lst);
-  string hdr = key + ": " + value;
-  curl_slist *slist = (it != m_headers.end()) ? it->second : NULL;
-  slist = curl_slist_append(slist, hdr.c_str());
-  m_headers[lst] = slist;
+  map<string, map<string, string> >::iterator it = m_headers.find(lst);
+  if(it == m_headers.end()) {
+    map<string, string> headers;
+    headers[key] = value;
+    m_headers[lst] = headers;
+  } else {
+    map<string, string>& headers = it->second;
+    headers[key] = value;
+  }
 }
 
 void mcCurl::form(string key, string value, string lst) {

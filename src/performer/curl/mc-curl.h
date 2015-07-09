@@ -9,16 +9,16 @@ using namespace std;
 
 class mcCurl : public mcIConnection {
  private:
-  map<string, curl_slist*> m_headers;
+//  map<string, curl_slist*> m_headers;
+  map<string, map<string, string> > m_headers;
   map<string, pair<struct curl_httppost*, struct curl_httppost*> > m_form;
   CURL* m_curl;
   string m_url;
   string m_mnymonic;
   bool m_verbose;
   bool m_follow;
-  void set_header(string lst);
   void set_form(string lst);
-  void perform(void);
+  void perform(string hdr);
 
  public:
   mcCurl(string url, string mnymonic);
