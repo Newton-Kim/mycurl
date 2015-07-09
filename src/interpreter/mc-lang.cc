@@ -110,10 +110,7 @@ mcLanguageState mcLanguage::prompt(void) {
       delete line;
       line = NULL;
     }
-    mcIConnection* conn = m_performer->current();
-    string current = "mycurl";
-    if(conn) current = conn->mnymonic();
-    string prompt = current + "> ";
+    string prompt = m_performer->mnymonic() + "> ";
     line = readline(prompt.c_str());
     if (!line) {
       fprintf(stderr, "IO error\n");

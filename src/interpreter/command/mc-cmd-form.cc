@@ -36,11 +36,5 @@ mcLanguageState mcCmdForm::parse(mcScanner& scanner,
     }
     token = scanner.tokenize();
   }
-  mcIConnection* conn = performer->current();
-  if(!conn) {
-    fprintf(stderr, "invalid handle\n");
-    return MC_LANG_CONTINUE;
-  }
-  conn->form(key, val, lst);
-  return MC_LANG_CONTINUE;
+  return performer->form(key, val, lst);
 }

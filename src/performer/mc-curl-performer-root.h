@@ -4,11 +4,10 @@
 
 class mcCurlPerformer : public mcIPerformer {
  private:
-  vector<mcIPerformer*> m_prompt;
+  map<string, mcCurl*> m_map;
 
  public:
   mcCurlPerformer();
-  ~mcCurlPerformer();
   mcLanguageState open(string url, string alias);
   mcLanguageState close(void);
   mcLanguageState verbose(bool& onoff);

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class mcCurl : public mcIConnection {
+class mcCurl {
  private:
 //  map<string, curl_slist*> m_headers;
   map<string, map<string, string> > m_headers;
