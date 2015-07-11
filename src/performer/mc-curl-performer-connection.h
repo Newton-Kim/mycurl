@@ -8,6 +8,7 @@ class mcCurlPerformerConnection : public mcIStackFrame{
 
  public:
   mcCurlPerformerConnection(string url, string alias);
+  ~mcCurlPerformerConnection();
   void verbose(bool& onoff);
   bool verbose(void);
   void follow(bool& onoff);

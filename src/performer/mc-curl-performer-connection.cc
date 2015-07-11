@@ -7,6 +7,10 @@ mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
 	m_curl(new mcCurl(url, alias))
 {}
 
+mcCurlPerformerConnection::mcCurlPerformerConnection() {
+	delete m_curl;
+}
+
 void mcCurlPerformerConnection::list(void) {
   fprintf(stdout, "header\nform\n");
 }

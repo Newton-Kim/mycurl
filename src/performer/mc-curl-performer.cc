@@ -8,7 +8,7 @@ mcCurlPerformer::mcCurlPerformer() : m_stack(NULL) {
 mcCurlPerformer::~mcCurlPerformer() {
   for(map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin() ; it != m_pool.end() ; it++) {
     vector<mcIStackFrame*>& stack = it->second;
-    for(vector<mcIStackFrame*>::iterator its = stack.begin() ; its != stack.end() ; it++)
+    for(vector<mcIStackFrame*>::iterator its = stack.begin() ; its != stack.end() ; its++)
       delete *its;
   }
 }
@@ -31,6 +31,11 @@ mcLanguageState mcCurlPerformer::close(void) {
   if(!m_stack) {
     fprintf(stderr, "invalid handle\n");
     return MC_LANG_CONTINUE;
+  } else {
+    mcIStackFrame* stkfrm = m_stack->back();
+    delete stkfrm;
+    m_stack->pop_back();
+    if (m_stack->empty()) m_stack = NULL;
   }
   return MC_LANG_CONTINUE;
 }
@@ -56,7 +61,8 @@ string mcCurlPerformer::mnymonic(void){
   string ret = "mycurl";
   if(m_stack) {
     for(vector<mcIStackFrame*>::iterator it = m_stack->begin() ; it != m_stack->end() ; it++) {
-      ret += "/" + (*it)->mnymonic();
+      ret += "/";
+      ret += (*it)->mnymonic();
     }
   }
   return ret;
