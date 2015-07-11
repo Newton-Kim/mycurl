@@ -14,11 +14,12 @@ mcCurlPerformer::~mcCurlPerformer() {
 }
 
 mcLanguageState mcCurlPerformer::open(string url, string alias) {
+  string mnymonic = (alias.empty()) ? url : alias;
   if(m_stack) {
-    fprintf(stderr, "A handle cannot be opened in another handle");
+    mcIStackFrame* stkfrm = m_stack->back()->open(url, mnymonic);
+    if(stkfrm) m_stack->push_back(stkfrm);
     return MC_LANG_CONTINUE;
   }
-  string mnymonic = (alias.empty()) ? url : alias;
   if (m_pool.find(mnymonic) == m_pool.end()) {
     mcIStackFrame* stkfrm = new mcCurlPerformerConnection(url, mnymonic);
     m_pool[mnymonic].push_back(stkfrm);
@@ -107,13 +108,4 @@ mcLanguageState mcCurlPerformer::follow_off(void){
 mcLanguageState mcCurlPerformer::follow(bool& onoff){
   return MC_LANG_CONTINUE;
 }
-
-mcLanguageState mcCurlPerformer::header(string key, string value, string lst){
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::form(string key, string value, string lst){
-  return MC_LANG_CONTINUE;
-}
-
 

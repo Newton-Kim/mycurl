@@ -10,9 +10,8 @@ struct mcSymbolTable {
                 { "leave", MC_TOKEN_LEAVE }, { "quit", MC_TOKEN_QUIT },
                 { "help", MC_TOKEN_HELP }, { "get", MC_TOKEN_GET },
                 { "put", MC_TOKEN_PUT }, { "post", MC_TOKEN_POST },
-                { "delete", MC_TOKEN_DELETE }, { "header", MC_TOKEN_HEADER },
                 { "verbose", MC_TOKEN_VERBOSE }, { "follow", MC_TOKEN_FOLLOW },
-                { "form", MC_TOKEN_FORM },
+                { "delete", MC_TOKEN_DELETE },
                 { "on", MC_TOKEN_ON }, { "off", MC_TOKEN_OFF },
                 { NULL, MC_TOKEN_NONE } };
 

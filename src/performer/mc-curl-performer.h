@@ -30,6 +30,4 @@ class mcCurlPerformer : public mcIPerformer {
   mcLanguageState post(string inpath, size_t chunk, string outpath, string lst, string frm);
   mcLanguageState put(string inpath, size_t chunk, string outpath, string lst);
   bool follow(void);
-  mcLanguageState header(string key, string value, string lst);
-  mcLanguageState form(string key, string value, string lst);
 };

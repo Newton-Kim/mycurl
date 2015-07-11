@@ -28,6 +28,4 @@ class mcIPerformer {
   virtual mcLanguageState follow_on(void) = 0;
   virtual mcLanguageState follow_off(void) = 0;
   virtual mcLanguageState follow(bool& onoff) = 0;
-  virtual mcLanguageState header(string key, string value, string lst) = 0;
-  virtual mcLanguageState form(string key, string value, string lst) = 0;
 };

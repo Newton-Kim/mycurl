@@ -11,6 +11,10 @@ mcCurlPerformerConnection::~mcCurlPerformerConnection() {
 	delete m_curl;
 }
 
+mcIStackFrame* mcCurlPerformerConnection::open(string url, string alias) {
+  return NULL;
+}
+
 void mcCurlPerformerConnection::list(void) {
   fprintf(stdout, "header\nform\n");
 }
@@ -50,13 +54,4 @@ bool mcCurlPerformerConnection::follow(void){
 void mcCurlPerformerConnection::follow(bool& onoff){
   m_curl->follow(onoff);
 }
-
-mcIStackFrame* mcCurlPerformerConnection::header(void){
-  return new mcCurlPerformerHeader(m_curl);
-}
-
-mcIStackFrame* mcCurlPerformerConnection::form(void){
-  return new mcCurlPerformerForm(m_curl);
-}
-
 

@@ -11,10 +11,8 @@
 #include "command/mc-cmd-put.h"
 #include "command/mc-cmd-post.h"
 #include "command/mc-cmd-delete.h"
-#include "command/mc-cmd-header.h"
 #include "command/mc-cmd-verbose.h"
 #include "command/mc-cmd-follow.h"
-#include "command/mc-cmd-form.h"
 #include <vector>
 
 using namespace std;
@@ -32,10 +30,8 @@ class mcLanguage {
   mcCmdPut m_cmd_put;
   mcCmdPost m_cmd_post;
   mcCmdDelete m_cmd_delete;
-  mcCmdHeader m_cmd_header;
   mcCmdVerbose m_cmd_verbose;
   mcCmdFollow m_cmd_follow;
-  mcCmdForm m_cmd_form;
   mcLanguageState parse_run(mcScanner& scanner);
   mcLanguageState parse_help(mcScanner& scanner);
   mcLanguageState parse(const char* line);

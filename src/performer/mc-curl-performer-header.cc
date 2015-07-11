@@ -11,6 +11,10 @@ string mcCurlPerformerHeader::mnymonic(void){
   return "header";
 }
 
+mcIStackFrame* mcCurlPerformerHeader::open(string url, string alias){
+  return NULL;
+}
+
 void mcCurlPerformerHeader::get(string path, string lst){
   fprintf(stderr, "invalid\n");
 }
@@ -42,15 +46,4 @@ bool mcCurlPerformerHeader::follow(void){
 void mcCurlPerformerHeader::follow(bool& onoff){
   fprintf(stderr, "invalid\n");
 }
-
-mcIStackFrame* mcCurlPerformerHeader::header(void){
-  fprintf(stderr, "invalid\n");
-  return NULL;
-}
-
-mcIStackFrame* mcCurlPerformerHeader::form(void){
-  fprintf(stderr, "invalid\n");
-  return NULL;
-}
-
 
