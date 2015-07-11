@@ -20,7 +20,7 @@ mcLanguageState mcCurlPerformer::open(string url, string alias) {
   }
   string mnymonic = (alias.empty()) ? url : alias;
   if (m_pool.find(mnymonic) == m_pool.end()) {
-    mcIStackFrame* stkfrm = new mcCurlPerformerConnection(url, alias);
+    mcIStackFrame* stkfrm = new mcCurlPerformerConnection(url, mnymonic);
     m_pool[mnymonic].push_back(stkfrm);
   }
   m_stack = &m_pool[mnymonic];

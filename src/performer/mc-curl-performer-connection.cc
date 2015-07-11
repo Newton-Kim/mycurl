@@ -7,7 +7,7 @@ mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
 	m_curl(new mcCurl(url, alias))
 {}
 
-mcCurlPerformerConnection::mcCurlPerformerConnection() {
+mcCurlPerformerConnection::~mcCurlPerformerConnection() {
 	delete m_curl;
 }
 
