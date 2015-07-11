@@ -31,6 +31,9 @@ OBJS=mycurl.o \
 	interpreter/command/mc-cmd-form.o \
 	curl/mc-curl.o \
 	curl/mc-curl-file.o \
+	performer/mc-curl-performer-connection.o \
+	performer/mc-curl-performer-header.o \
+	performer/mc-curl-performer-form.o \
 	performer/mc-curl-performer.o
 
 SRCS=${OBJS:.o=.cc}

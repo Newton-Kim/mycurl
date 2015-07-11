@@ -1,10 +1,15 @@
 #pragma once
 #include "mc-types.h"
-#include "mc-curl.h"
+#include "mc-curl-stack-frame.h"
+#include <vector>
+#include <map>
+
+using namespace std;
 
 class mcCurlPerformer : public mcIPerformer {
  private:
-  vector<mcIPerformer*> m_prompt;
+  map<string, vector<mcIStackFrame*> > m_pool;
+  vector<mcIStackFrame*>* m_stack;
 
  public:
   mcCurlPerformer();

@@ -1,166 +1,56 @@
-#include "mc-curl-performer.h"
+#include "mc-curl-performer-header.h"
 #include <cstdio>
 
-mcCurlPerformer::mcCurlPerformer() : m_current(NULL) {}
+mcCurlPerformerHeader::mcCurlPerformerHeader(mcCurl* curl) : m_curl(curl) {}
 
-mcLanguageState mcCurlPerformer::open(string url, string alias) {
-  if (m_current) {
-    fprintf(stderr, "A handle cannot be opened in another handle");
-  } else {
-    string mnymonic = (alias.empty()) ? url : alias;
-    if (m_map.find(mnymonic) == m_map.end()) {
-      m_current = new mcCurl(url, mnymonic);
-      m_map[mnymonic] = m_current;
-    } else {
-      m_current = m_map[mnymonic];
-    }
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::list(void) {
+  //TODO:print headers
 }
 
-mcLanguageState mcCurlPerformer::close(void) {
-  if(!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_map[m_current->mnymonic()] = NULL;
-    m_map.erase(m_current->mnymonic());
-    delete m_current;
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+string mcCurlPerformerHeader::mnymonic(void){
+  return "header";
 }
 
-mcLanguageState mcCurlPerformer::leave(void) {
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::get(string path, string lst){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::list(void) {
-  if (m_current) {
-    fprintf(stderr, "A handles cannot be listed in another handle");
-  } else {
-    for (map<string, mcCurl*>::iterator it = m_map.begin(); it != m_map.end();
-         it++)
-      fprintf(stdout, "%s\n", it->second->mnymonic().c_str());
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::del(string lst){
+  fprintf(stderr, "invalid\n");
 }
 
-string mcCurlPerformer::mnymonic(void){
-  if (!m_current) return "mycurl";
-  return m_current->mnymonic();
+void mcCurlPerformerHeader::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::get(string path, string lst){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::put(string inpath, size_t chunk, string outpath, string lst){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::del(string lst){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+bool mcCurlPerformerHeader::verbose(void){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::verbose(bool& onoff){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::put(string inpath, size_t chunk, string outpath, string lst){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+bool mcCurlPerformerHeader::follow(void){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::verbose_on(void){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+void mcCurlPerformerHeader::follow(bool& onoff){
+  fprintf(stderr, "invalid\n");
 }
 
-mcLanguageState mcCurlPerformer::verbose_off(void){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+mcIStackFrame* mcCurlPerformerHeader::header(void){
+  fprintf(stderr, "invalid\n");
+  return NULL;
 }
 
-mcLanguageState mcCurlPerformer::verbose(bool& onoff){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow_on(void){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow_off(void){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::follow(bool& onoff){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::header(string key, string value, string lst){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
-}
-
-mcLanguageState mcCurlPerformer::form(string key, string value, string lst){
-  if (!m_current) {
-    fprintf(stderr, "invalid handle\n");
-  } else {
-    m_current = NULL;
-  }
-  return MC_LANG_CONTINUE;
+mcIStackFrame* mcCurlPerformerHeader::form(void){
+  fprintf(stderr, "invalid\n");
+  return NULL;
 }
 
 
