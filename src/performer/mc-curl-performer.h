@@ -1,12 +1,13 @@
 #pragma once
 #include "mc-types.h"
+#include "mc-curl-performer-context.h"
 #include "stackframe/mc-curl-stack-frame.h"
 #include <vector>
 #include <map>
 
 using namespace std;
 
-class mcCurlPerformer : public mcIPerformer {
+class mcCurlPerformer : public mcIPerformer, public mcICurlPerformerContext {
  private:
   map<string, vector<mcIStackFrame*> > m_pool;
   vector<mcIStackFrame*>* m_stack;
@@ -14,6 +15,7 @@ class mcCurlPerformer : public mcIPerformer {
  public:
   mcCurlPerformer();
   ~mcCurlPerformer();
+  void set_context(mcContextState state);
   mcLanguageState open(string url, string alias);
   mcLanguageState close(void);
   mcLanguageState verbose(bool& onoff);

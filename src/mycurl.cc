@@ -1,5 +1,5 @@
 #include "mc-lang.h"
-#include "performer/mc-curl-performer.h"
+#include "performer/mc-curl-performer-factory.h"
 #include "version.h"
 #include <cstdio>
 #include <ctime>
@@ -37,8 +37,8 @@ void show_help(mcLanguage& language) {
 
 int main(int argc, char* argv[]) {
   char buffer[LINE_SIZE];
-  mcCurlPerformer performer;
-  mcLanguage language(&performer);
+  mcIPerformer* performer = mcCurlPerformerFactory::create();
+  mcLanguage language(performer);
   mcLanguageState state = MC_LANG_CONTINUE;
   for (int i = 1; i < argc && state == MC_LANG_CONTINUE; i++) {
     if (!strcmp(argv[i], "--help") || !strcmp(argv[i], "-h")) {
@@ -56,5 +56,7 @@ int main(int argc, char* argv[]) {
   }
   if (state != MC_LANG_CONTINUE && state != MC_LANG_HANG) return state;
   show_banner();
-  return language.prompt();
+  int ret = language.prompt();
+  delete performer;
+  return ret;
 }

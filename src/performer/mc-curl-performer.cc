@@ -13,6 +13,9 @@ mcCurlPerformer::~mcCurlPerformer() {
   }
 }
 
+void mcCurlPerformer::set_context(mcContextState state){
+}
+
 mcLanguageState mcCurlPerformer::open(string url, string alias) {
   string mnymonic = (alias.empty()) ? url : alias;
   if(m_stack) {
