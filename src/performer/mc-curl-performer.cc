@@ -1,5 +1,5 @@
 #include "mc-curl-performer.h"
-#include "mc-curl-performer-connection.h"
+#include "stackframe/mc-curl-performer-connection.h"
 #include <cstdio>
 
 mcCurlPerformer::mcCurlPerformer() : m_stack(NULL) {
