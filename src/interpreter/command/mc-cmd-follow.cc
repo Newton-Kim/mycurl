@@ -15,16 +15,25 @@ mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
   if (token.id == MC_TOKEN_EOL) {
     //grammatically OK, but nothing need doing.
   } else if (token.id == MC_TOKEN_ON) {
-    performer->follow_on();
-    token = scanner.tokenize();
-    if (token.id != MC_TOKEN_EOL)
-      fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    try {
+      performer->follow_on();
+    } catch (exception& e) {
+      fprintf(stderr, "%s\n", e.what());
+      return MC_LANG_CONTINUE;
+    }
   } else if (token.id == MC_TOKEN_OFF) {
-    performer->follow_off();
-    token = scanner.tokenize();
-    if (token.id != MC_TOKEN_EOL)
-      fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
-  } else {
+    try {
+      performer->follow_off();
+    } catch (exception& e) {
+      fprintf(stderr, "%s\n", e.what());
+      return MC_LANG_CONTINUE;
+    }
+  } else if (token.id == MC_TOKEN_EOL) {
+    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    return MC_LANG_CONTINUE;
+  }
+  token = scanner.tokenize();
+  if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }

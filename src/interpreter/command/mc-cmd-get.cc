@@ -38,5 +38,6 @@ mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  return performer->get(path, lst);
+  performer->get(path, lst);
+  return MC_LANG_CONTINUE;
 }
