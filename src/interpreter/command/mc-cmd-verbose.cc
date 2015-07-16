@@ -27,6 +27,7 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
       fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
   } else {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    return MC_LANG_CONTINUE;
   }
   bool onoff;
   performer->verbose(onoff);

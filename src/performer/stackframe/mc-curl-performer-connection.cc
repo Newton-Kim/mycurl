@@ -43,7 +43,7 @@ bool mcCurlPerformerConnection::verbose(void){
   return m_curl->verbose();
 }
 
-void mcCurlPerformerConnection::verbose(bool& onoff){
+void mcCurlPerformerConnection::verbose(bool onoff){
   m_curl->verbose(onoff);
 }
 
@@ -51,7 +51,7 @@ bool mcCurlPerformerConnection::follow(void){
   return m_curl->follow();
 }
 
-void mcCurlPerformerConnection::follow(bool& onoff){
+void mcCurlPerformerConnection::follow(bool onoff){
   m_curl->follow(onoff);
 }
 

@@ -33,6 +33,8 @@ OBJS=mycurl.o \
 	performer/stackframe/mc-curl-performer-header.o \
 	performer/stackframe/mc-curl-performer-form.o \
 	performer/mc-curl-performer-factory.o \
+	performer/mc-curl-performer-state-root.o \
+	performer/mc-curl-performer-state-connected.o \
 	performer/mc-curl-performer.o
 
 SRCS=${OBJS:.o=.cc}

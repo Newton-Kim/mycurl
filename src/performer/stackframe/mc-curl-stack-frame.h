@@ -6,9 +6,9 @@ using namespace std;
 class mcIStackFrame {
  public:
   virtual mcIStackFrame* open(string url, string alias) = 0;
-  virtual void verbose(bool& onoff) = 0;
+  virtual void verbose(bool onoff) = 0;
   virtual bool verbose(void) = 0;
-  virtual void follow(bool& onoff) = 0;
+  virtual void follow(bool onoff) = 0;
   virtual bool follow(void) = 0;
   virtual void list(void) = 0;
   virtual string mnymonic(void) = 0;

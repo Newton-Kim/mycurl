@@ -35,7 +35,7 @@ bool mcCurlPerformerHeader::verbose(void){
   fprintf(stderr, "invalid\n");
 }
 
-void mcCurlPerformerHeader::verbose(bool& onoff){
+void mcCurlPerformerHeader::verbose(bool onoff){
   fprintf(stderr, "invalid\n");
 }
 
@@ -43,7 +43,7 @@ bool mcCurlPerformerHeader::follow(void){
   fprintf(stderr, "invalid\n");
 }
 
-void mcCurlPerformerHeader::follow(bool& onoff){
+void mcCurlPerformerHeader::follow(bool onoff){
   fprintf(stderr, "invalid\n");
 }
 

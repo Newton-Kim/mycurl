@@ -7,16 +7,14 @@
 
 using namespace std;
 
-class mcCurlPerformer : public mcIPerformer, public mcICurlPerformerContext {
+class mcCurlPerformerStateConnected : public mcIPerformer {
  private:
-  mcIPerformer* m_state_root;
-  mcIPerformer* m_state_connected;
-  mcIPerformer* m_current_state;
+  mcICurlPerformerContext* m_context;
+  vector<mcIStackFrame*>* m_stack;
 
  public:
-  mcCurlPerformer();
-  ~mcCurlPerformer();
-  void set_context(mcContextState state, vector<mcIStackFrame*>* stack);
+  mcCurlPerformerStateConnected(mcICurlPerformerContext* context, vector<mcIStackFrame*>* stack);
+  ~mcCurlPerformerStateConnected();
   mcLanguageState open(string url, string alias);
   mcLanguageState close(void);
   mcLanguageState verbose(bool& onoff);

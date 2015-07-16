@@ -35,7 +35,7 @@ bool mcCurlPerformerForm::verbose(void){
   fprintf(stderr, "invalid\n");
 }
 
-void mcCurlPerformerForm::verbose(bool& onoff){
+void mcCurlPerformerForm::verbose(bool onoff){
   fprintf(stderr, "invalid\n");
 }
 
@@ -43,7 +43,7 @@ bool mcCurlPerformerForm::follow(void){
   fprintf(stderr, "invalid\n");
 }
 
-void mcCurlPerformerForm::follow(bool& onoff){
+void mcCurlPerformerForm::follow(bool onoff){
   fprintf(stderr, "invalid\n");
 }
 

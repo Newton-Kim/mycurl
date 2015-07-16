@@ -9,9 +9,9 @@ class mcCurlPerformerForm : public mcIStackFrame{
  public:
   mcCurlPerformerForm(mcCurl* curl);
   mcIStackFrame* open(string url, string alias);
-  void verbose(bool& onoff);
+  void verbose(bool onoff);
   bool verbose(void);
-  void follow(bool& onoff);
+  void follow(bool onoff);
   bool follow(void);
   void list(void);
   string mnymonic(void);
