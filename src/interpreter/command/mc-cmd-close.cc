@@ -1,21 +1,21 @@
 #include "command/mc-cmd-close.h"
-#include <cstdio>
+#include <iostream>
 
 void mcCmdClose::help(void) {
-  fprintf(stdout, "  Usage: close\n");
-  fprintf(stdout, "    closes current url.\n");
+  cout <<  "  Usage: close" << endl;
+  cout <<  "    closes current url." << endl;
 }
 
 mcLanguageState mcCmdClose::parse(mcScanner& scanner, mcIPerformer* performer) {
   mcToken token = scanner.tokenize();
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument %s" << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
     performer->close();
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr << e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }

@@ -1,12 +1,12 @@
 #include "command/mc-cmd-follow.h"
-#include <cstdio>
+#include <iostream>
 
 void mcCmdFollow::help(void) {
-  fprintf(stdout, "  Usage: follow [on | off]\n");
-  fprintf(stdout, "  Option:\n");
-  fprintf(stdout, "    turn on or off a follow mode.\n");
-  fprintf(stdout, "    it returns current mode of following location when no "
-                  "argument is given.\n");
+  cout << "  Usage: follow [on | off]" << endl;
+  cout << "  Option:" << endl;
+  cout << "    turn on or off a follow mode." << endl;
+  cout << "    it returns current mode of following location when no "
+                  "argument is given." << endl;
 }
 
 mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
@@ -18,7 +18,7 @@ mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
     try {
       performer->follow_on();
     } catch (exception& e) {
-      fprintf(stderr, "%s\n", e.what());
+      cerr <<  e.what() << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -26,24 +26,24 @@ mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
     try {
       performer->follow_off();
     } catch (exception& e) {
-      fprintf(stderr, "%s\n", e.what());
+      cerr <<  e.what() << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
   } else if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   bool onoff;
   try {
     performer->follow(onoff);
-    fprintf(stdout, "follow %s\n", (onoff ? "on" : "off"));
+    cout <<  "follow " << (onoff ? "on" : "off") << endl;
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr <<  e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }

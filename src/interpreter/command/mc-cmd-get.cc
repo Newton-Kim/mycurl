@@ -1,14 +1,14 @@
 #include "command/mc-cmd-get.h"
-#include <cstdio>
+#include <iostream>
 
 void mcCmdGet::help(void) {
-  fprintf(stdout, "  Usage: get [> file] [- list]\n");
-  fprintf(stdout, "  Option:\n");
-  fprintf(stdout, "    posts GET request to the server.\n");
-  fprintf(stdout, "    > operator redirects the response body to the file if "
-                  "there is any.\n");
-  fprintf(stdout,
-          "    list has headers for the request. Default list is defhdr.\n");
+  cout <<  "  Usage: get [> file] [- list]" << endl;
+  cout <<  "  Option:" << endl;
+  cout <<  "    posts GET request to the server." << endl;
+  cout <<  "    > operator redirects the response body to the file if "
+                  "there is any." << endl;
+  cout << 
+          "    list has headers for the request. Default list is defhdr." << endl;
 }
 
 mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
@@ -19,7 +19,7 @@ mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
     if (token.id == MC_TOKEN_STRING) {
       path = token.buffer;
     } else {
-      fprintf(stderr, "file path is missing\n");
+      cerr <<  "file path is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -29,19 +29,19 @@ mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
     if (token.id == MC_TOKEN_STRING) {
       lst = token.buffer;
     } else {
-      fprintf(stderr, "list name is missing\n");
+      cerr <<  "list name is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
     performer->get(path, lst);
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr << e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }

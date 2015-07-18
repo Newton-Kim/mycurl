@@ -1,12 +1,12 @@
 #include "command/mc-cmd-delete.h"
-#include <cstdio>
+#include <iostream>
 
 void mcCmdDelete::help(void) {
-  fprintf(stdout, "  Usage: delete [- list]\n");
-  fprintf(stdout, "  Option:\n");
-  fprintf(stdout, "    posts DELETE request to the server.\n");
-  fprintf(stdout,
-          "    list has headers for the request. Default list is defhdr.\n");
+  cout << "  Usage: delete [- list]" << endl;
+  cout << "  Option:" << endl;
+  cout << "    posts DELETE request to the server." << endl;
+  cout << 
+          "    list has headers for the request. Default list is defhdr." << endl;
 }
 
 mcLanguageState mcCmdDelete::parse(mcScanner& scanner,
@@ -18,19 +18,19 @@ mcLanguageState mcCmdDelete::parse(mcScanner& scanner,
     if (token.id == MC_TOKEN_STRING) {
       lst = token.buffer;
     } else {
-      fprintf(stderr, "list name is missing\n");
+      cerr << "list name is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
     performer->del(lst);
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr << e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }

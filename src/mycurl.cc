@@ -1,38 +1,39 @@
 #include "mc-lang.h"
 #include "performer/mc-curl-performer-factory.h"
 #include "version.h"
-#include <cstdio>
+#include <iostream>
 #include <ctime>
 #include <cstring>
 
 #define LINE_SIZE 1024
 void show_banner(void) {
-  fprintf(stdout, "mycurl %s\n", VERSION);
+  cout <<  "mycurl %s\n", VERSION;
   {
     time_t rawtime;
     time (&rawtime);
     struct tm * timeinfo = localtime(&rawtime);
-    fprintf(stdout, "Copyright(C) %d Newton Kim (newton.s.kim@gmail.com)\n", timeinfo->tm_year + 1900);
-    fprintf(stdout, "License MIT: MIT License(http://opensource.org/licenses/MIT)\n");
+    cout << "Copyright(C) " << timeinfo->tm_year + 1900;
+    cout << " Newton Kim (newton.s.kim@gmail.com)" << endl;
+    cout << "License MIT: MIT License(http://opensource.org/licenses/MIT)" << endl;
   }
-  fprintf(stdout, "\n");
+  cout << endl;
 }
 
 void show_version(void) {
-    fprintf(stdout, "%s\n", VERSION);
+    cout << VERSION << endl;
 }
 
 void show_help(mcLanguage& language) {
-  fprintf(stdout, "Usage: mycurl [option]... [script]...\n");
-  fprintf(stdout, "\n");
-  fprintf(stdout, "Option:\n");
-  fprintf(stdout, "  -h, --help     shows this help screen.\n");
-  fprintf(stdout, "  -v, --version  shows the version.\n");
-  fprintf(stdout, "\n");
-  fprintf(stdout, "Mycul langugage:\n");
+  cout <<  "Usage: mycurl [option]... [script]..." << endl;
+  cout <<  endl;
+  cout <<  "Option:" << endl;
+  cout <<  "  -h, --help     shows this help screen." << endl;
+  cout <<  "  -v, --version  shows the version." << endl;
+  cout <<  endl;
+  cout <<  "Mycul langugage:" << endl;
   language.show_help();
-  fprintf(stdout, "\n");
-  fprintf(stdout, "Report bugs to <newton.s.kim@gmail.com>\n");
+  cout <<  endl;
+  cout <<  "Report bugs to <newton.s.kim@gmail.com>" << endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -49,7 +50,7 @@ int main(int argc, char* argv[]) {
       show_version();
       return 0;
     } else if (argv[i][0] == '-') {
-      fprintf(stderr, "invalid argument %s\n", argv[i]);
+      cerr << "invalid argument " << argv[i] << endl;
       return 1;
     }
     state = language.run(argv[i]);

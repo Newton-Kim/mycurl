@@ -1,22 +1,22 @@
 #include "command/mc-cmd-post.h"
-#include <cstdio>
+#include <iostream>
 #include <cstdlib>
 
 void mcCmdPost::help(void) {
-  fprintf(stdout, "  Usage: post [< file_in[:number]][ > file_out][ - list][ + form]\n");
-  fprintf(stdout, "  Option:\n");
-  fprintf(stdout, "    posts GET request to the server.\n");
-  fprintf(stdout, "    < operator redirects the request body from the file if "
-                  "there is any.\n");
-  fprintf(stdout, "    :number specifies the size of the chunk.\n");
-  fprintf(stdout, "    Transfer-Encoding:chunked header is automatically "
-                  "attached when it is specified.\n");
-  fprintf(stdout, "    > operator redirects the response body to the file if "
-                  "there is any.\n");
-  fprintf(stdout,
-          "    list has headers for the request. Default list is defhdr.\n");
-  fprintf(stdout,
-          "    form has headers for the chunks of the request. Default form is deffrm.\n");
+  cout <<  "  Usage: post [< file_in[:number]][ > file_out][ - list][ + form]" << endl;
+  cout <<  "  Option:" << endl;
+  cout <<  "    posts GET request to the server." << endl;
+  cout <<  "    < operator redirects the request body from the file if "
+                  "there is any." << endl;
+  cout <<  "    :number specifies the size of the chunk." << endl;
+  cout <<  "    Transfer-Encoding:chunked header is automatically "
+                  "attached when it is specified." << endl;
+  cout <<  "    > operator redirects the response body to the file if "
+                  "there is any." << endl;
+  cout << 
+          "    list has headers for the request. Default list is defhdr." << endl;
+  cout << 
+          "    form has headers for the chunks of the request. Default form is deffrm." << endl;
 }
 
 mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
@@ -34,7 +34,7 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
         chunk = atoi(token.buffer.substr(pos + 1).c_str());
       }
     } else {
-      fprintf(stderr, "in file path is missing\n");
+      cerr <<  "in file path is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -44,7 +44,7 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     if (token.id == MC_TOKEN_STRING) {
       outpath = token.buffer;
     } else {
-      fprintf(stderr, "out file path is missing\n");
+      cerr <<  "out file path is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -54,7 +54,7 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     if (token.id == MC_TOKEN_STRING) {
       lst = token.buffer;
     } else {
-      fprintf(stderr, "list name is missing\n");
+      cerr <<  "list name is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -64,19 +64,19 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     if (token.id == MC_TOKEN_STRING) {
       frm = token.buffer;
     } else {
-      fprintf(stderr, "form name is missing\n");
+      cerr <<  "form name is missing" << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
     performer->post(inpath, chunk, outpath, lst, frm);
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr << e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }

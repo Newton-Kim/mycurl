@@ -2,6 +2,7 @@
 #include "mc-curl-file.h"
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
 #include <cstring>
 #include <cerrno>
 
@@ -24,27 +25,27 @@ int mcCurlDebugCallback(CURL *handle, curl_infotype type, char *data, size_t siz
   switch (type) {
     case CURLINFO_TEXT:
       for(size_t i = 0 ; i < size ; i++) {
-        fprintf(stdout, "%c", data[i]);
-        if (data[i] == '\n') fprintf(stdout, "* ");
+        cout << data[i];
+        if (data[i] == '\n') cout <<  "* ";
       }
       break;
     case CURLINFO_HEADER_IN:
       for(size_t i = 0 ; i < size ; i++) {
-        fprintf(stdout, "%c", data[i]);
-        if (data[i] == '\n') fprintf(stdout, "< ");
+        cout << data[i];
+        if (data[i] == '\n') cout <<  "< ";
       }
       break;
     case CURLINFO_HEADER_OUT:
       for(size_t i = 0 ; i < size ; i++) {
-        fprintf(stdout, "%c", data[i]);
-        if (data[i] == '\n') fprintf(stdout, "> ");
+        cout << data[i];
+        if (data[i] == '\n') cout <<  "> ";
       }
       break;
     case CURLINFO_DATA_IN:
     case CURLINFO_DATA_OUT:
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
-      for(size_t i = 0 ; i < size ; i++) fprintf(stdout, "%c", data[i]);
+      for(size_t i = 0 ; i < size ; i++) cout << data[i];
       break;
   }
 }
@@ -101,7 +102,7 @@ void mcCurl::perform(string hdr) {
     if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
   }
   CURLcode ret = curl_easy_perform(m_curl);
-  if (ret != CURLE_OK) fprintf(stderr, "%s", curl_easy_strerror(ret));
+  if (ret != CURLE_OK) cerr << curl_easy_strerror(ret);
   if(slist) curl_slist_free_all(slist);
 }
 

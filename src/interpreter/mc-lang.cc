@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cerrno>
 #include <stdexcept>
-#include <cstring>
+#include <iostream>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -78,7 +78,7 @@ mcLanguageState mcLanguage::run(string path) {
   mcLanguageState state;
   FILE* fd = fopen(path.c_str(), "rb");
   if (!fd) {
-    fprintf(stderr, "%s\n", strerror(errno));
+    cerr << strerror(errno) << endl;
     return MC_LANG_HANG;
   }
   char buffer[MC_LINE_SIZE];
@@ -113,7 +113,7 @@ mcLanguageState mcLanguage::prompt(void) {
     string prompt = m_performer->mnymonic() + "> ";
     line = readline(prompt.c_str());
     if (!line) {
-      fprintf(stderr, "IO error\n");
+      cerr << "IO error" << endl;
       return MC_LANG_HANG;
     }
     add_history(line);
@@ -152,14 +152,14 @@ mcLanguageState mcLanguage::parse(const char* line) {
     case MC_TOKEN_FORM: {
       mcCommand* cmd = m_commands[token.id];
       if (!cmd) {
-        fprintf(stderr, "%s is not available\n", token.buffer.c_str());
+        cerr << token.buffer << " is not available" << endl;
         state = MC_LANG_CONTINUE;
       } else {
         state = cmd->parse(scanner, m_performer);
       }
     } break;
     default:
-      fprintf(stderr, "unknown instruction %s\n", token.buffer.c_str());
+      cerr << "unknown instruction " << token.buffer << endl;
       state = MC_LANG_CONTINUE;
       break;
   }
@@ -173,7 +173,7 @@ mcLanguageState mcLanguage::parse_run(mcScanner& scanner) {
     state = run(token.buffer);
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr << "invalid argument " << token.buffer << endl;
     state = MC_LANG_ERROR;
   }
   return state;
@@ -183,11 +183,11 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
   mcToken token = scanner.scan();
   switch (token.id) {
     case MC_TOKEN_EOL:
-      fprintf(stdout, "type help <command> for help on a specific command\n");
-      fprintf(stdout, "Available sub commands:\n");
+      cout << "type help <command> for help on a specific command" << endl;
+      cout << "Available sub commands:" << endl;
       for (vector<mcCommand*>::iterator it = m_commands.begin();
            it != m_commands.end(); it++)
-        if (*it) fprintf(stdout, "%s\n", (*it)->command().c_str());
+        if (*it) cout << (*it)->command() << endl;
       return MC_LANG_CONTINUE;
       break;
     case MC_TOKEN_LIST:
@@ -203,22 +203,22 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
     case MC_TOKEN_VERBOSE:
     case MC_TOKEN_FOLLOW:
       if (m_commands[token.id]) {
-        fprintf(stdout, "  %s command:\n", m_commands[token.id]->command().c_str());
+        cout <<  m_commands[token.id]->command() << " command:" << endl;
         m_commands[token.id]->help();
       }
       break;
     case MC_TOKEN_RUN:
-      fprintf(stdout, "  Usage: run [file]...\n");
-      fprintf(stdout, "    runs macro files\n");
+      cout <<  "  Usage: run [file]..." << endl;
+      cout <<  "    runs macro files" << endl;
       break;
     default:
-      fprintf(stderr, "Invalid command %s\n", token.buffer.c_str());
+      cerr << "Invalid command " << token.buffer << endl;
       break;
   }
   mcLanguageState state = MC_LANG_CONTINUE;
   token = scanner.scan();
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr << "invalid argument " << token.buffer << endl;
     state = MC_LANG_ERROR;
   }
   return state;
@@ -228,7 +228,7 @@ void mcLanguage::show_help(void) {
   for (vector<mcCommand*>::iterator it = m_commands.begin();
       it != m_commands.end(); it++) {
     if (*it) {
-      fprintf(stdout, "  %s command:\n", (*it)->command().c_str());
+      cout <<  "  " << (*it)->command() << " command:" << endl ;
       (*it)->help();
     }
   }

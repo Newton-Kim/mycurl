@@ -1,13 +1,12 @@
 #include "command/mc-cmd-verbose.h"
-#include <cstdio>
+#include <iostream>
 
 void mcCmdVerbose::help(void) {
-  fprintf(stdout, "  Usage: verbose [on | off]\n");
-  fprintf(stdout, "  Option:\n");
-  fprintf(stdout, "    turn on or off a verbose mode.\n");
-  fprintf(
-      stdout,
-      "  it returns current mode of verbosness when no argument is given.\n");
+  cout <<  "  Usage: verbose [on | off]" << endl;
+  cout <<  "  Option:" << endl;
+  cout <<  "    turn on or off a verbose mode." << endl;
+  cout <<
+      "  it returns current mode of verbosness when no argument is given." << endl;
 }
 
 mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
@@ -19,7 +18,7 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
     try {
       performer->verbose_on();
     } catch (exception& e) {
-      fprintf(stderr, "%s\n", e.what());
+      cerr <<  e.what() << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
@@ -27,24 +26,24 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
     try {
       performer->verbose_off();
     } catch (exception& e) {
-      fprintf(stderr, "%s\n", e.what());
+      cerr <<  e.what() << endl;
       return MC_LANG_CONTINUE;
     }
     token = scanner.tokenize();
   } else if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument "<< token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   if (token.id != MC_TOKEN_EOL) {
-    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   bool onoff;
   try {
     performer->verbose(onoff);
-    fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
+    cout <<  "verbose " << (onoff ? "on" : "off") << endl;
   } catch (exception& e) {
-    fprintf(stderr, "%s\n", e.what());
+    cerr <<  e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }
