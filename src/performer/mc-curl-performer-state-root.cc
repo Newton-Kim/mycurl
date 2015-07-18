@@ -2,6 +2,7 @@
 #include "mc-curl-performer-state-root.h"
 #include "stackframe/mc-curl-performer-connection.h"
 #include <cstdio>
+#include <stdexcept>
 
 mcCurlPerformerStateRoot::mcCurlPerformerStateRoot(mcICurlPerformerContext* context):m_context(context) {
 }
@@ -24,11 +25,11 @@ void mcCurlPerformerStateRoot::open(string url, string alias) {
 }
 
 void mcCurlPerformerStateRoot::close(void) {
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::leave(void) {
-  fprintf(stderr, "already in root\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::list(void) {
@@ -42,42 +43,42 @@ string mcCurlPerformerStateRoot::mnymonic(void){
 }
 
 void mcCurlPerformerStateRoot::get(string path, string lst){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::del(string lst){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::put(string inpath, size_t chunk, string outpath, string lst){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::verbose_on(void){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::verbose_off(void){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::verbose(bool& onoff){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::follow_on(void){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::follow_off(void){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 
 void mcCurlPerformerStateRoot::follow(bool& onoff){
-  fprintf(stderr, "invalid handle\n");
+  throw runtime_error("invalid handle");
 }
 

@@ -1,5 +1,6 @@
 #include "mc-curl-performer-form.h"
 #include <cstdio>
+#include <stdexcept>
 
 mcCurlPerformerForm::mcCurlPerformerForm(mcCurl* curl) : m_curl(curl) {}
 
@@ -16,34 +17,34 @@ mcIStackFrame* mcCurlPerformerForm::open(string url, string alias) {
 }
 
 void mcCurlPerformerForm::get(string path, string lst){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerForm::del(string lst){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerForm::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerForm::put(string inpath, size_t chunk, string outpath, string lst){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 bool mcCurlPerformerForm::verbose(void){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerForm::verbose(bool onoff){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 bool mcCurlPerformerForm::follow(void){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerForm::follow(bool onoff){
-  fprintf(stderr, "invalid\n");
+  throw runtime_error("invalid command");
 }
 
