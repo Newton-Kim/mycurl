@@ -217,3 +217,10 @@ void mcCurl::form(string key, string value, string lst) {
   curl_formadd(&post, &end, CURLFORM_COPYNAME, key.c_str(), CURLFORM_COPYCONTENTS, value.c_str(), CURLFORM_END);
   m_form[lst] = make_pair<struct curl_httppost *, struct curl_httppost *>(post, end);
 }
+
+void mcCurl::list_header(ostream& stream){
+}
+
+void mcCurl::list_form(ostream& stream){
+}
+

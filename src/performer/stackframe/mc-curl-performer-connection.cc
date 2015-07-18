@@ -15,8 +15,8 @@ mcIStackFrame* mcCurlPerformerConnection::open(string url, string alias) {
   return NULL;
 }
 
-void mcCurlPerformerConnection::list(void) {
-  cout << "header" << endl << "form" << endl;
+void mcCurlPerformerConnection::list(ostream& stream) {
+  stream << "header" << endl << "form" << endl;
 }
 
 string mcCurlPerformerConnection::mnymonic(void){

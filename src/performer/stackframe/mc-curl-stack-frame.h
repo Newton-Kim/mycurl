@@ -10,7 +10,7 @@ class mcIStackFrame {
   virtual bool verbose(void) = 0;
   virtual void follow(bool onoff) = 0;
   virtual bool follow(void) = 0;
-  virtual void list(void) = 0;
+  virtual void list(ostream& stream) = 0;
   virtual string mnymonic(void) = 0;
   virtual void get(string path, string lst) = 0;
   virtual void del(string lst) = 0;

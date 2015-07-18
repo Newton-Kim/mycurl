@@ -1,7 +1,7 @@
 #include "mc-curl-performer.h"
 #include "mc-curl-performer-state-connected.h"
 #include "stackframe/mc-curl-performer-connection.h"
-#include <cstdio>
+#include <iostream>
 
 mcCurlPerformerStateConnected::mcCurlPerformerStateConnected(mcICurlPerformerContext* context, vector<mcIStackFrame*>* stack) : m_context(context), m_stack(stack) {
 }
@@ -26,7 +26,7 @@ void mcCurlPerformerStateConnected::leave(void) {
 }
 
 void mcCurlPerformerStateConnected::list(void) {
-  m_stack->back()->list();
+  m_stack->back()->list(cout);
 }
 
 string mcCurlPerformerStateConnected::mnymonic(void){

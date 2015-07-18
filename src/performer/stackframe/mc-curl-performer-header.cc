@@ -3,8 +3,8 @@
 
 mcCurlPerformerHeader::mcCurlPerformerHeader(mcCurl* curl) : m_curl(curl) {}
 
-void mcCurlPerformerHeader::list(void) {
-  //TODO:print headers
+void mcCurlPerformerHeader::list(ostream& stream) {
+  m_curl->list_header(stream);
 }
 
 string mcCurlPerformerHeader::mnymonic(void){

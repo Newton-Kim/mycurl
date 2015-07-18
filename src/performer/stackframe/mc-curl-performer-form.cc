@@ -4,8 +4,8 @@
 
 mcCurlPerformerForm::mcCurlPerformerForm(mcCurl* curl) : m_curl(curl) {}
 
-void mcCurlPerformerForm::list(void) {
-  //TODO:print headers
+void mcCurlPerformerForm::list(ostream& stream) {
+  m_curl->list_form(stream);
 }
 
 string mcCurlPerformerForm::mnymonic(void){

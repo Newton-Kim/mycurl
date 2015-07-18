@@ -14,7 +14,7 @@ class mcCurlPerformerConnection : public mcIStackFrame{
   bool verbose(void);
   void follow(bool onoff);
   bool follow(void);
-  void list(void);
+  void list(ostream& stream);
   string mnymonic(void);
   void get(string path, string lst);
   void del(string lst);

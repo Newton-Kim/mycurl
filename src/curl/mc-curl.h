@@ -3,6 +3,7 @@
 #include "mc-types.h"
 #include <map>
 #include <string>
+#include <iostream>
 #include <curl/curl.h>
 
 using namespace std;
@@ -35,4 +36,6 @@ class mcCurl {
   void header(string key, string value, string lst);
   void header(string key, size_t value, string lst);
   void form(string key, string value, string lst);
+  void list_header(ostream& stream);
+  void list_form(ostream& stream);
 };
