@@ -42,7 +42,7 @@ void mcCurlPerformer::list(void) {
 }
 
 string mcCurlPerformer::mnymonic(void){
-  m_current_state->mnymonic();
+  return m_current_state->mnymonic();
 }
 
 void mcCurlPerformer::get(string path, string lst){

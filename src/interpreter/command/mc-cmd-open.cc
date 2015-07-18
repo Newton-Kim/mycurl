@@ -38,4 +38,5 @@ mcLanguageState mcCmdOpen::parse(mcScanner& scanner, mcIPerformer* performer) {
   } catch (exception& e) {
     fprintf(stderr, "%s\n", e.what());
   }
+  return MC_LANG_CONTINUE;
 }

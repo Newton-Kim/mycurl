@@ -40,6 +40,7 @@ void mcCurlPerformerStateRoot::list(void) {
 }
 
 string mcCurlPerformerStateRoot::mnymonic(void){
+  return "mycurl";
 }
 
 void mcCurlPerformerStateRoot::get(string path, string lst){

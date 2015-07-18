@@ -22,6 +22,7 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
       fprintf(stderr, "%s\n", e.what());
       return MC_LANG_CONTINUE;
     }
+    token = scanner.tokenize();
   } else if (token.id == MC_TOKEN_OFF) {
     try {
       performer->verbose_off();
@@ -29,11 +30,11 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
       fprintf(stderr, "%s\n", e.what());
       return MC_LANG_CONTINUE;
     }
+    token = scanner.tokenize();
   } else if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  token = scanner.tokenize();
   if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
