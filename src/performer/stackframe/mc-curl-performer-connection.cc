@@ -1,7 +1,7 @@
 #include "mc-curl-performer-connection.h"
 #include "mc-curl-performer-header.h"
 #include "mc-curl-performer-form.h"
-#include <cstdio>
+#include <iostream>
 
 mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
 	m_curl(new mcCurl(url, alias))
@@ -16,7 +16,7 @@ mcIStackFrame* mcCurlPerformerConnection::open(string url, string alias) {
 }
 
 void mcCurlPerformerConnection::list(void) {
-  fprintf(stdout, "header\nform\n");
+  cout << "header" << endl << "form" << endl;
 }
 
 string mcCurlPerformerConnection::mnymonic(void){

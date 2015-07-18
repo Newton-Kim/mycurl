@@ -1,7 +1,7 @@
 #include "mc-curl-performer.h"
 #include "mc-curl-performer-state-root.h"
 #include "stackframe/mc-curl-performer-connection.h"
-#include <cstdio>
+#include <iostream>
 #include <stdexcept>
 
 mcCurlPerformerStateRoot::mcCurlPerformerStateRoot(mcICurlPerformerContext* context):m_context(context) {
@@ -35,7 +35,7 @@ void mcCurlPerformerStateRoot::leave(void) {
 void mcCurlPerformerStateRoot::list(void) {
   for(map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin() ; it != m_pool.end() ; it++) {
     if(it->second.empty()) continue;
-    fprintf(stdout, "%s\n", it->first.c_str());
+    cout << it->first << endl;
   }
 }
 

@@ -1,5 +1,5 @@
 #include "mc-curl-performer-header.h"
-#include <cstdio>
+#include <iostream>
 
 mcCurlPerformerHeader::mcCurlPerformerHeader(mcCurl* curl) : m_curl(curl) {}
 
@@ -16,34 +16,34 @@ mcIStackFrame* mcCurlPerformerHeader::open(string url, string alias){
 }
 
 void mcCurlPerformerHeader::get(string path, string lst){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 void mcCurlPerformerHeader::del(string lst){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 void mcCurlPerformerHeader::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 void mcCurlPerformerHeader::put(string inpath, size_t chunk, string outpath, string lst){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 bool mcCurlPerformerHeader::verbose(void){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 void mcCurlPerformerHeader::verbose(bool onoff){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 bool mcCurlPerformerHeader::follow(void){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
 void mcCurlPerformerHeader::follow(bool onoff){
-  fprintf(stderr, "invalid\n");
+  cerr <<  "invalid" << endl;
 }
 
