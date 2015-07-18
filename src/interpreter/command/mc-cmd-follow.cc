@@ -28,7 +28,7 @@ mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
       fprintf(stderr, "%s\n", e.what());
       return MC_LANG_CONTINUE;
     }
-  } else if (token.id == MC_TOKEN_EOL) {
+  } else if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
@@ -38,7 +38,11 @@ mcLanguageState mcCmdFollow::parse(mcScanner& scanner,
     return MC_LANG_CONTINUE;
   }
   bool onoff;
-  performer->follow(onoff);
-  fprintf(stdout, "follow %s\n", (onoff ? "on" : "off"));
+  try {
+    performer->follow(onoff);
+    fprintf(stdout, "follow %s\n", (onoff ? "on" : "off"));
+  } catch (exception& e) {
+    fprintf(stderr, "%s\n", e.what());
+  }
   return MC_LANG_CONTINUE;
 }

@@ -14,85 +14,70 @@ mcCurlPerformerStateRoot::~mcCurlPerformerStateRoot() {
   }
 }
 
-mcLanguageState mcCurlPerformerStateRoot::open(string url, string alias) {
+void mcCurlPerformerStateRoot::open(string url, string alias) {
   string mnymonic = (alias.empty()) ? url : alias;
   if (m_pool.find(mnymonic) == m_pool.end()) {
     mcIStackFrame* stkfrm = new mcCurlPerformerConnection(url, mnymonic);
     m_pool[mnymonic].push_back(stkfrm);
   }
   m_context->set_context(MC_CURL_CONTEXT_CONNECT, &m_pool[mnymonic]);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::close(void) {
+void mcCurlPerformerStateRoot::close(void) {
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::leave(void) {
+void mcCurlPerformerStateRoot::leave(void) {
   fprintf(stderr, "already in root\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::list(void) {
+void mcCurlPerformerStateRoot::list(void) {
   for(map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin() ; it != m_pool.end() ; it++) {
     if(it->second.empty()) continue;
     fprintf(stdout, "%s\n", it->first.c_str());
   }
-  return MC_LANG_CONTINUE;
 }
 
 string mcCurlPerformerStateRoot::mnymonic(void){
-  return "mycurl";
 }
 
-mcLanguageState mcCurlPerformerStateRoot::get(string path, string lst){
+void mcCurlPerformerStateRoot::get(string path, string lst){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::del(string lst){
+void mcCurlPerformerStateRoot::del(string lst){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+void mcCurlPerformerStateRoot::post(string inpath, size_t chunk, string outpath, string lst, string frm){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::put(string inpath, size_t chunk, string outpath, string lst){
+void mcCurlPerformerStateRoot::put(string inpath, size_t chunk, string outpath, string lst){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::verbose_on(void){
+void mcCurlPerformerStateRoot::verbose_on(void){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::verbose_off(void){
+void mcCurlPerformerStateRoot::verbose_off(void){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::verbose(bool& onoff){
+void mcCurlPerformerStateRoot::verbose(bool& onoff){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::follow_on(void){
+void mcCurlPerformerStateRoot::follow_on(void){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::follow_off(void){
+void mcCurlPerformerStateRoot::follow_off(void){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateRoot::follow(bool& onoff){
+void mcCurlPerformerStateRoot::follow(bool& onoff){
   fprintf(stderr, "invalid handle\n");
-  return MC_LANG_CONTINUE;
 }
 

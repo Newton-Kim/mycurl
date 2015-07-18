@@ -33,5 +33,9 @@ mcLanguageState mcCmdOpen::parse(mcScanner& scanner, mcIPerformer* performer) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  return performer->open(url, alias);
+  try {
+    performer->open(url, alias);
+  } catch (exception& e) {
+    fprintf(stderr, "%s\n", e.what());
+  }
 }

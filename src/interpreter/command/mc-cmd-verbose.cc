@@ -16,21 +16,34 @@ mcLanguageState mcCmdVerbose::parse(mcScanner& scanner,
   if (token.id == MC_TOKEN_EOL) {
     //grammatically OK, but nothing need doing.
   } else if (token.id == MC_TOKEN_ON) {
-    performer->verbose_on();
-    token = scanner.tokenize();
-    if (token.id != MC_TOKEN_EOL)
-      fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    try {
+      performer->verbose_on();
+    } catch (exception& e) {
+      fprintf(stderr, "%s\n", e.what());
+      return MC_LANG_CONTINUE;
+    }
   } else if (token.id == MC_TOKEN_OFF) {
-    performer->verbose_off();
-    token = scanner.tokenize();
-    if (token.id != MC_TOKEN_EOL)
-      fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
-  } else {
+    try {
+      performer->verbose_off();
+    } catch (exception& e) {
+      fprintf(stderr, "%s\n", e.what());
+      return MC_LANG_CONTINUE;
+    }
+  } else if (token.id != MC_TOKEN_EOL) {
+    fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
+    return MC_LANG_CONTINUE;
+  }
+  token = scanner.tokenize();
+  if (token.id != MC_TOKEN_EOL) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
   bool onoff;
-  performer->verbose(onoff);
-  fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
+  try {
+    performer->verbose(onoff);
+    fprintf(stdout, "verbose %s\n", (onoff ? "on" : "off"));
+  } catch (exception& e) {
+    fprintf(stderr, "%s\n", e.what());
+  }
   return MC_LANG_CONTINUE;
 }

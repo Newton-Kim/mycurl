@@ -27,7 +27,11 @@ mcLanguageState mcCmdDelete::parse(mcScanner& scanner,
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  performer->del(lst);
+  try {
+    performer->del(lst);
+  } catch (exception& e) {
+    fprintf(stderr, "%s\n", e.what());
+  }
   return MC_LANG_CONTINUE;
 }
 

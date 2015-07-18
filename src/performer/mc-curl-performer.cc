@@ -25,63 +25,63 @@ void mcCurlPerformer::set_context(mcContextState state, vector<mcIStackFrame*>* 
   }
 }
 
-mcLanguageState mcCurlPerformer::open(string url, string alias) {
-  return m_current_state->open(url, alias);
+void mcCurlPerformer::open(string url, string alias) {
+  m_current_state->open(url, alias);
 }
 
-mcLanguageState mcCurlPerformer::close(void) {
-  return m_current_state->close();
+void mcCurlPerformer::close(void) {
+  m_current_state->close();
 }
 
-mcLanguageState mcCurlPerformer::leave(void) {
-  return m_current_state->leave();
+void mcCurlPerformer::leave(void) {
+  m_current_state->leave();
 }
 
-mcLanguageState mcCurlPerformer::list(void) {
-  return m_current_state->list();
+void mcCurlPerformer::list(void) {
+  m_current_state->list();
 }
 
 string mcCurlPerformer::mnymonic(void){
-  return m_current_state->mnymonic();
+  m_current_state->mnymonic();
 }
 
-mcLanguageState mcCurlPerformer::get(string path, string lst){
-  return m_current_state->get(path, lst);
+void mcCurlPerformer::get(string path, string lst){
+  m_current_state->get(path, lst);
 }
 
-mcLanguageState mcCurlPerformer::del(string lst){
-  return m_current_state->del(lst);
+void mcCurlPerformer::del(string lst){
+  m_current_state->del(lst);
 }
 
-mcLanguageState mcCurlPerformer::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  return m_current_state->post(inpath, chunk, outpath, lst, frm);
+void mcCurlPerformer::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+  m_current_state->post(inpath, chunk, outpath, lst, frm);
 }
 
-mcLanguageState mcCurlPerformer::put(string inpath, size_t chunk, string outpath, string lst){
-  return m_current_state->put(inpath, chunk, outpath, lst);
+void mcCurlPerformer::put(string inpath, size_t chunk, string outpath, string lst){
+  m_current_state->put(inpath, chunk, outpath, lst);
 }
 
-mcLanguageState mcCurlPerformer::verbose_on(void){
-  return m_current_state->verbose_on();
+void mcCurlPerformer::verbose_on(void){
+  m_current_state->verbose_on();
 }
 
-mcLanguageState mcCurlPerformer::verbose_off(void){
-  return m_current_state->verbose_off();
+void mcCurlPerformer::verbose_off(void){
+  m_current_state->verbose_off();
 }
 
-mcLanguageState mcCurlPerformer::verbose(bool& onoff){
-  return m_current_state->verbose(onoff);
+void mcCurlPerformer::verbose(bool& onoff){
+  m_current_state->verbose(onoff);
 }
 
-mcLanguageState mcCurlPerformer::follow_on(void){
-  return m_current_state->follow_on();
+void mcCurlPerformer::follow_on(void){
+  m_current_state->follow_on();
 }
 
-mcLanguageState mcCurlPerformer::follow_off(void){
-  return m_current_state->follow_off();
+void mcCurlPerformer::follow_off(void){
+  m_current_state->follow_off();
 }
 
-mcLanguageState mcCurlPerformer::follow(bool& onoff){
-  return m_current_state->follow(onoff);
+void mcCurlPerformer::follow(bool& onoff){
+  m_current_state->follow(onoff);
 }
 

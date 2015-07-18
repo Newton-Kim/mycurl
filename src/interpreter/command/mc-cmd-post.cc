@@ -73,5 +73,10 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     fprintf(stderr, "invalid argument %s\n", token.buffer.c_str());
     return MC_LANG_CONTINUE;
   }
-  return performer->post(inpath, chunk, outpath, lst, frm);
+  try {
+    performer->post(inpath, chunk, outpath, lst, frm);
+  } catch (exception& e) {
+    fprintf(stderr, "%s\n", e.what());
+  }
+  return MC_LANG_CONTINUE;
 }

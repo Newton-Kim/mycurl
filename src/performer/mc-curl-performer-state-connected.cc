@@ -9,28 +9,24 @@ mcCurlPerformerStateConnected::mcCurlPerformerStateConnected(mcICurlPerformerCon
 mcCurlPerformerStateConnected::~mcCurlPerformerStateConnected() {
 }
 
-mcLanguageState mcCurlPerformerStateConnected::open(string url, string alias) {
+void mcCurlPerformerStateConnected::open(string url, string alias) {
   mcIStackFrame* stkfrm = m_stack->back()->open(url, alias);
   if(stkfrm) m_stack->push_back(stkfrm);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::close(void) {
+void mcCurlPerformerStateConnected::close(void) {
   mcIStackFrame* stkfrm = m_stack->back();
   delete stkfrm;
   m_stack->pop_back();
   if (m_stack->empty()) m_context->set_context(MC_CURL_CONTEXT_ROOT);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::leave(void) {
+void mcCurlPerformerStateConnected::leave(void) {
   m_context->set_context(MC_CURL_CONTEXT_ROOT);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::list(void) {
+void mcCurlPerformerStateConnected::list(void) {
   m_stack->back()->list();
-  return MC_LANG_CONTINUE;
 }
 
 string mcCurlPerformerStateConnected::mnymonic(void){
@@ -44,53 +40,43 @@ string mcCurlPerformerStateConnected::mnymonic(void){
   return ret;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::get(string path, string lst){
+void mcCurlPerformerStateConnected::get(string path, string lst){
   m_stack->back()->get(path, lst);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::del(string lst){
+void mcCurlPerformerStateConnected::del(string lst){
   m_stack->back()->del(lst);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+void mcCurlPerformerStateConnected::post(string inpath, size_t chunk, string outpath, string lst, string frm){
   m_stack->back()->post(inpath, chunk, outpath, lst, frm);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::put(string inpath, size_t chunk, string outpath, string lst){
+void mcCurlPerformerStateConnected::put(string inpath, size_t chunk, string outpath, string lst){
   m_stack->back()->put(inpath, chunk, outpath, lst);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::verbose_on(void){
+void mcCurlPerformerStateConnected::verbose_on(void){
   m_stack->back()->verbose(true);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::verbose_off(void){
+void mcCurlPerformerStateConnected::verbose_off(void){
   m_stack->back()->verbose(false);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::verbose(bool& onoff){
+void mcCurlPerformerStateConnected::verbose(bool& onoff){
   onoff = m_stack->back()->verbose();
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::follow_on(void){
+void mcCurlPerformerStateConnected::follow_on(void){
   m_stack->back()->follow(true);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::follow_off(void){
+void mcCurlPerformerStateConnected::follow_off(void){
   m_stack->back()->follow(false);
-  return MC_LANG_CONTINUE;
 }
 
-mcLanguageState mcCurlPerformerStateConnected::follow(bool& onoff){
+void mcCurlPerformerStateConnected::follow(bool& onoff){
   onoff =m_stack->back()->follow();
-  return MC_LANG_CONTINUE;
 }
 
