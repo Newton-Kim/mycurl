@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 void mcCmdPost::help(void) {
-  cout <<  "  Usage: post [< file_in[:number]][ > file_out][ - list][ + form]" << endl;
+  cout <<  "  Usage: post [< file_in[:number]][ > file_out]" << endl;
   cout <<  "  Option:" << endl;
   cout <<  "    posts GET request to the server." << endl;
   cout <<  "    < operator redirects the request body from the file if "
@@ -13,14 +13,10 @@ void mcCmdPost::help(void) {
                   "attached when it is specified." << endl;
   cout <<  "    > operator redirects the response body to the file if "
                   "there is any." << endl;
-  cout << 
-          "    list has headers for the request. Default list is defhdr." << endl;
-  cout << 
-          "    form has headers for the chunks of the request. Default form is deffrm." << endl;
 }
 
 mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
-  string inpath, outpath, lst = "defhdr", frm = "deffrm";
+  string inpath, outpath;
   size_t chunk = 0;
   mcToken token = scanner.tokenize();
   if (token.id == MC_TOKEN_LT) {
@@ -49,32 +45,12 @@ mcLanguageState mcCmdPost::parse(mcScanner& scanner, mcIPerformer* performer) {
     }
     token = scanner.tokenize();
   }
-  if (token.id == MC_TOKEN_HIPEN) {
-    token = scanner.tokenize();
-    if (token.id == MC_TOKEN_STRING) {
-      lst = token.buffer;
-    } else {
-      cerr <<  "list name is missing" << endl;
-      return MC_LANG_CONTINUE;
-    }
-    token = scanner.tokenize();
-  }
-  if (token.id == MC_TOKEN_PLUS) {
-    token = scanner.tokenize();
-    if (token.id == MC_TOKEN_STRING) {
-      frm = token.buffer;
-    } else {
-      cerr <<  "form name is missing" << endl;
-      return MC_LANG_CONTINUE;
-    }
-    token = scanner.tokenize();
-  }
   if (token.id != MC_TOKEN_EOL) {
     cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
-    performer->post(inpath, chunk, outpath, lst, frm);
+    performer->post(inpath, chunk, outpath);
   } catch (exception& e) {
     cerr << e.what() << endl;
   }

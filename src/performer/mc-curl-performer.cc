@@ -45,20 +45,20 @@ string mcCurlPerformer::mnymonic(void){
   return m_current_state->mnymonic();
 }
 
-void mcCurlPerformer::get(string path, string lst){
-  m_current_state->get(path, lst);
+void mcCurlPerformer::get(string path){
+  m_current_state->get(path);
 }
 
-void mcCurlPerformer::del(string lst){
-  m_current_state->del(lst);
+void mcCurlPerformer::del(void){
+  m_current_state->del();
 }
 
-void mcCurlPerformer::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  m_current_state->post(inpath, chunk, outpath, lst, frm);
+void mcCurlPerformer::post(string inpath, bool chunk, string outpath){
+  m_current_state->post(inpath, chunk, outpath);
 }
 
-void mcCurlPerformer::put(string inpath, size_t chunk, string outpath, string lst){
-  m_current_state->put(inpath, chunk, outpath, lst);
+void mcCurlPerformer::put(string inpath, bool chunk, string outpath){
+  m_current_state->put(inpath, chunk, outpath);
 }
 
 void mcCurlPerformer::verbose_on(void){

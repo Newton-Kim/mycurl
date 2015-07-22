@@ -58,9 +58,6 @@ mcCurl::mcCurl(string url, string mnymonic)
 }
 
 mcCurl::~mcCurl() {
-  for (map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.begin();
-       it != m_form.end(); it++)
-    curl_formfree(it->second.second);
   if (m_curl) curl_easy_cleanup(m_curl);
 }
 
@@ -83,30 +80,24 @@ void mcCurl::follow(bool onoff) {
 
 bool mcCurl::follow(void) { return m_follow; }
 
-void mcCurl::set_form(string lst) {
-  map<string, pair<struct curl_httppost*, struct curl_httppost*> >::iterator it = m_form.find(lst);
-  if (it == m_form.end()) return;
-  pair<struct curl_httppost *, struct curl_httppost *> post = it->second;
-  if (post.first) curl_easy_setopt(m_curl, CURLOPT_HTTPPOST, post.first);
-}
-
-void mcCurl::perform(string hdr) {
+void mcCurl::perform(void) {
   curl_slist* slist = NULL;
-  map<string, map<string, string> >::iterator it = m_headers.find(hdr);
-  if(it != m_headers.end()) {
-    map<string, string>& headers = it->second;
-    for(map<string, string>::iterator ith = headers.begin() ; ith != headers.end() ; ith++) {
-      string line = ith->first + ": " + ith->second;
-      slist = curl_slist_append(slist, line.c_str());
+  for(map<string, vector<string> >::iterator ith = m_headers.begin() ; ith != m_headers.end() ; ith++) {
+    string line = ith->first + ": ";
+    vector<string>& subhdr = ith->second;
+    for(vector<string>::iterator it = subhdr.begin() ; it != subhdr.end() ; it++) {
+      if(it != subhdr.begin()) line += ";";
+      line += *it;
     }
-    if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
+    slist = curl_slist_append(slist, line.c_str());
   }
+  if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
   CURLcode ret = curl_easy_perform(m_curl);
   if (ret != CURLE_OK) cerr << curl_easy_strerror(ret);
   if(slist) curl_slist_free_all(slist);
 }
 
-void mcCurl::get(string path, string lst) {
+void mcCurl::get(string path) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   FILE *fd = NULL;
   if (path.size()) {
@@ -118,17 +109,17 @@ void mcCurl::get(string path, string lst) {
     curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
   }
-  perform(lst);
+  perform();
   if (fd) fclose(fd);
 }
 
-void mcCurl::del(string lst) {
+void mcCurl::del() {
   if (!m_curl) throw runtime_error("invalid curl handle");
   curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-  perform(lst);
+  perform();
 }
 
-void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, string frm) {
+void mcCurl::post(string inpath, bool chunk, string outpath) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   curl_easy_setopt(m_curl, CURLOPT_POST, 1);
   mcCurlFile *infd = NULL, *outfd = NULL;
@@ -151,20 +142,12 @@ void mcCurl::post(string inpath, size_t chunk, string outpath, string lst, strin
     curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, stdout);
   }
-  header("Content-Type", "multipart/form-data;boundary=----mycurl", lst);
-  if(chunk) {
-    header("Transfer-Encoding", "chunked", lst);
-  } else {
-    header("Content-Length", infd->fsize(), lst);
-    header("Expect", "", lst);
-  }
-  set_form(frm);
-  perform(lst);
+  perform();
   if (infd) delete infd;
   if (outfd) delete outfd;
 }
 
-void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
+void mcCurl::put(string inpath, bool chunk, string outpath) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   curl_easy_setopt(m_curl, CURLOPT_PUT, 1);
   FILE *infd = NULL;
@@ -187,40 +170,16 @@ void mcCurl::put(string inpath, size_t chunk, string outpath, string lst) {
     curl_easy_setopt(m_curl, CURLOPT_READFUNCTION, NULL);
     curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
   }
-  perform(lst);
+  perform();
   if (infd) fclose(infd);
   if (outfd) delete outfd;
 }
 
-void mcCurl::header(string key, size_t value, string lst) {
-  stringstream ss;
-  ss << value;
-  header(key, ss.str(), lst);
+mcCurlHeader* mcCurl::header(void) {
+  return new mcCurlHeader(m_headers);
 }
 
-void mcCurl::header(string key, string value, string lst) {
-  map<string, map<string, string> >::iterator it = m_headers.find(lst);
-  if(it == m_headers.end()) {
-    map<string, string> headers;
-    headers[key] = value;
-    m_headers[lst] = headers;
-  } else {
-    map<string, string>& headers = it->second;
-    headers[key] = value;
-  }
-}
-
-void mcCurl::form(string key, string value, string lst) {
-  map<string, pair<struct curl_httppost *, struct curl_httppost *> >::iterator it = m_form.find(lst);
-  curl_httppost *post = (it != m_form.end()) ? it->second.first : NULL;
-  curl_httppost *end = (it != m_form.end()) ? it->second.second : NULL;
-  curl_formadd(&post, &end, CURLFORM_COPYNAME, key.c_str(), CURLFORM_COPYCONTENTS, value.c_str(), CURLFORM_END);
-  m_form[lst] = make_pair<struct curl_httppost *, struct curl_httppost *>(post, end);
-}
-
-void mcCurl::list_header(ostream& stream){
-}
-
-void mcCurl::list_form(ostream& stream){
+mcCurlHeader* mcCurl::form(void) {
+  return new mcCurlHeader(m_forms);
 }
 

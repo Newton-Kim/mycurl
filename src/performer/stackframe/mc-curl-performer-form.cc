@@ -1,11 +1,10 @@
 #include "mc-curl-performer-form.h"
-#include <cstdio>
 #include <stdexcept>
 
-mcCurlPerformerForm::mcCurlPerformerForm(mcCurl* curl) : m_curl(curl) {}
+mcCurlPerformerForm::mcCurlPerformerForm(mcCurlHeader* header) : m_header(header) {}
 
 void mcCurlPerformerForm::list(ostream& stream) {
-  m_curl->list_form(stream);
+  m_header->list(stream);
 }
 
 string mcCurlPerformerForm::mnymonic(void){
@@ -16,19 +15,19 @@ mcIStackFrame* mcCurlPerformerForm::open(string url, string alias) {
   return NULL;
 }
 
-void mcCurlPerformerForm::get(string path, string lst){
+void mcCurlPerformerForm::get(string path){
   throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerForm::del(string lst){
+void mcCurlPerformerForm::del(void){
   throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerForm::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+void mcCurlPerformerForm::post(string inpath, bool chunk, string outpath){
   throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerForm::put(string inpath, size_t chunk, string outpath, string lst){
+void mcCurlPerformerForm::put(string inpath, bool chunk, string outpath){
   throw runtime_error("invalid command");
 }
 

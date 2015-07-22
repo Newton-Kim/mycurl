@@ -40,20 +40,20 @@ string mcCurlPerformerStateConnected::mnymonic(void){
   return ret;
 }
 
-void mcCurlPerformerStateConnected::get(string path, string lst){
-  m_stack->back()->get(path, lst);
+void mcCurlPerformerStateConnected::get(string path){
+  m_stack->back()->get(path);
 }
 
-void mcCurlPerformerStateConnected::del(string lst){
-  m_stack->back()->del(lst);
+void mcCurlPerformerStateConnected::del(void){
+  m_stack->back()->del();
 }
 
-void mcCurlPerformerStateConnected::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  m_stack->back()->post(inpath, chunk, outpath, lst, frm);
+void mcCurlPerformerStateConnected::post(string inpath, bool chunk, string outpath){
+  m_stack->back()->post(inpath, chunk, outpath);
 }
 
-void mcCurlPerformerStateConnected::put(string inpath, size_t chunk, string outpath, string lst){
-  m_stack->back()->put(inpath, chunk, outpath, lst);
+void mcCurlPerformerStateConnected::put(string inpath, bool chunk, string outpath){
+  m_stack->back()->put(inpath, chunk, outpath);
 }
 
 void mcCurlPerformerStateConnected::verbose_on(void){

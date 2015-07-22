@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 void mcCmdPut::help(void) {
-  cout <<  "  Usage: put [< file_in[:number]][ > file_out][ - list]" << endl;
+  cout <<  "  Usage: put [< file_in[:number]][ > file_out]" << endl;
   cout <<  "  Option:" << endl;
   cout <<  "    posts GET request to the server." << endl;
   cout <<  "    < operator redirects the request body from the file if "
@@ -13,12 +13,10 @@ void mcCmdPut::help(void) {
                   "attached when specified." << endl;
   cout <<  "    > operator redirects the response body to the file if "
                   "there is any." << endl;
-  cout << 
-          "    list has headers for the request. Default list is defhdr." << endl;
 }
 
 mcLanguageState mcCmdPut::parse(mcScanner& scanner, mcIPerformer* performer) {
-  string inpath, outpath, lst = "defhdr";
+  string inpath, outpath;
   size_t chunk = 0;
   mcToken token = scanner.tokenize();
   if (token.id == MC_TOKEN_LT) {
@@ -47,22 +45,12 @@ mcLanguageState mcCmdPut::parse(mcScanner& scanner, mcIPerformer* performer) {
     }
     token = scanner.tokenize();
   }
-  if (token.id == MC_TOKEN_HIPEN) {
-    token = scanner.tokenize();
-    if (token.id == MC_TOKEN_STRING) {
-      lst = token.buffer;
-    } else {
-      cerr <<  "list name is missing" << endl;
-      return MC_LANG_CONTINUE;
-    }
-    token = scanner.tokenize();
-  }
   if (token.id != MC_TOKEN_EOL) {
     cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
-    performer->put(inpath, chunk, outpath, lst);
+    performer->put(inpath, chunk, outpath);
   } catch (exception& e) {
     cerr << e.what() << endl;
   }

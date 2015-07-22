@@ -2,7 +2,7 @@
 #include <iostream>
 
 void mcCmdGet::help(void) {
-  cout <<  "  Usage: get [> file] [- list]" << endl;
+  cout <<  "  Usage: get [> file]" << endl;
   cout <<  "  Option:" << endl;
   cout <<  "    posts GET request to the server." << endl;
   cout <<  "    > operator redirects the response body to the file if "
@@ -12,7 +12,7 @@ void mcCmdGet::help(void) {
 }
 
 mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
-  string path, lst = "defhdr";
+  string path;
   mcToken token = scanner.tokenize();
   if (token.id == MC_TOKEN_GT) {
     token = scanner.tokenize();
@@ -24,22 +24,12 @@ mcLanguageState mcCmdGet::parse(mcScanner& scanner, mcIPerformer* performer) {
     }
     token = scanner.tokenize();
   }
-  if (token.id == MC_TOKEN_HIPEN) {
-    token = scanner.tokenize();
-    if (token.id == MC_TOKEN_STRING) {
-      lst = token.buffer;
-    } else {
-      cerr <<  "list name is missing" << endl;
-      return MC_LANG_CONTINUE;
-    }
-    token = scanner.tokenize();
-  }
   if (token.id != MC_TOKEN_EOL) {
     cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
-    performer->get(path, lst);
+    performer->get(path);
   } catch (exception& e) {
     cerr << e.what() << endl;
   }

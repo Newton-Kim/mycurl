@@ -1,10 +1,10 @@
 #include "mc-curl-performer-header.h"
-#include <iostream>
+#include <stdexcept>
 
-mcCurlPerformerHeader::mcCurlPerformerHeader(mcCurl* curl) : m_curl(curl) {}
+mcCurlPerformerHeader::mcCurlPerformerHeader(mcCurlHeader* header) : m_header(header) {}
 
 void mcCurlPerformerHeader::list(ostream& stream) {
-  m_curl->list_header(stream);
+  m_header->list(stream);
 }
 
 string mcCurlPerformerHeader::mnymonic(void){
@@ -15,35 +15,35 @@ mcIStackFrame* mcCurlPerformerHeader::open(string url, string alias){
   return NULL;
 }
 
-void mcCurlPerformerHeader::get(string path, string lst){
-  cerr <<  "invalid" << endl;
+void mcCurlPerformerHeader::get(string path){
+  throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerHeader::del(string lst){
-  cerr <<  "invalid" << endl;
+void mcCurlPerformerHeader::del(void){
+  throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerHeader::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  cerr <<  "invalid" << endl;
+void mcCurlPerformerHeader::post(string inpath, bool chunk, string outpath){
+  throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerHeader::put(string inpath, size_t chunk, string outpath, string lst){
-  cerr <<  "invalid" << endl;
+void mcCurlPerformerHeader::put(string inpath, bool chunk, string outpath){
+  throw runtime_error("invalid command");
 }
 
 bool mcCurlPerformerHeader::verbose(void){
-  cerr <<  "invalid" << endl;
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerHeader::verbose(bool onoff){
-  cerr <<  "invalid" << endl;
+  throw runtime_error("invalid command");
 }
 
 bool mcCurlPerformerHeader::follow(void){
-  cerr <<  "invalid" << endl;
+  throw runtime_error("invalid command");
 }
 
 void mcCurlPerformerHeader::follow(bool onoff){
-  cerr <<  "invalid" << endl;
+  throw runtime_error("invalid command");
 }
 

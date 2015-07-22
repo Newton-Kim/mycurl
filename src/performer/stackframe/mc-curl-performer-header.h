@@ -1,13 +1,13 @@
 #pragma once
 #include "mc-curl-stack-frame.h"
-#include "mc-curl.h"
+#include "mc-curl-header.h"
 
 class mcCurlPerformerHeader : public mcIStackFrame{
  private:
-  mcCurl* m_curl;
+  mcCurlHeader* m_header;
 
  public:
-  mcCurlPerformerHeader(mcCurl* curl);
+  mcCurlPerformerHeader(mcCurlHeader* header);
   mcIStackFrame* open(string url, string alias);
   void verbose(bool onoff);
   bool verbose(void);
@@ -15,8 +15,8 @@ class mcCurlPerformerHeader : public mcIStackFrame{
   bool follow(void);
   void list(ostream& stream);
   string mnymonic(void);
-  void get(string path, string lst);
-  void del(string lst);
-  void post(string inpath, size_t chunk, string outpath, string lst, string frm);
-  void put(string inpath, size_t chunk, string outpath, string lst);
+  void get(string path);
+  void del(void);
+  void post(string inpath, bool chunk, string outpath);
+  void put(string inpath, bool chunk, string outpath);
 };

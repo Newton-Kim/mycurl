@@ -29,6 +29,7 @@ OBJS=mycurl.o \
 	interpreter/command/mc-cmd-follow.o \
 	curl/mc-curl.o \
 	curl/mc-curl-file.o \
+	curl/mc-curl-header.o \
 	performer/stackframe/mc-curl-performer-connection.o \
 	performer/stackframe/mc-curl-performer-header.o \
 	performer/stackframe/mc-curl-performer-form.o \

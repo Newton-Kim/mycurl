@@ -28,9 +28,9 @@ class mcCurlPerformer : public mcIPerformer, public mcICurlPerformerContext {
   void leave(void);
   void list(void);
   string mnymonic(void);
-  void get(string path, string lst);
-  void del(string lst);
-  void post(string inpath, size_t chunk, string outpath, string lst, string frm);
-  void put(string inpath, size_t chunk, string outpath, string lst);
+  void get(string path);
+  void del(void);
+  void post(string inpath, bool chunk, string outpath);
+  void put(string inpath, bool chunk, string outpath);
   bool follow(void);
 };

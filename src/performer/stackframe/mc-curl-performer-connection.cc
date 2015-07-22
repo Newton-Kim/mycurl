@@ -1,7 +1,6 @@
 #include "mc-curl-performer-connection.h"
 #include "mc-curl-performer-header.h"
 #include "mc-curl-performer-form.h"
-#include <iostream>
 
 mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
 	m_curl(new mcCurl(url, alias))
@@ -12,6 +11,9 @@ mcCurlPerformerConnection::~mcCurlPerformerConnection() {
 }
 
 mcIStackFrame* mcCurlPerformerConnection::open(string url, string alias) {
+  if(url == "header") {
+  } else if(url == "form") {
+  }
   return NULL;
 }
 
@@ -23,20 +25,20 @@ string mcCurlPerformerConnection::mnymonic(void){
   return m_curl->mnymonic();
 }
 
-void mcCurlPerformerConnection::get(string path, string lst){
-  m_curl->get(path, lst);
+void mcCurlPerformerConnection::get(string path){
+  m_curl->get(path);
 }
 
-void mcCurlPerformerConnection::del(string lst){
-  m_curl->del(lst);
+void mcCurlPerformerConnection::del(void){
+  m_curl->del();
 }
 
-void mcCurlPerformerConnection::post(string inpath, size_t chunk, string outpath, string lst, string frm){
-  m_curl->post(inpath, chunk, outpath, lst, frm);
+void mcCurlPerformerConnection::post(string inpath, bool chunk, string outpath){
+  m_curl->post(inpath, chunk, outpath);
 }
 
-void mcCurlPerformerConnection::put(string inpath, size_t chunk, string outpath, string lst){
-  m_curl->put(inpath, chunk, outpath, lst);
+void mcCurlPerformerConnection::put(string inpath, bool chunk, string outpath){
+  m_curl->put(inpath, chunk, outpath);
 }
 
 bool mcCurlPerformerConnection::verbose(void){

@@ -43,19 +43,19 @@ string mcCurlPerformerStateRoot::mnymonic(void){
   return "mycurl";
 }
 
-void mcCurlPerformerStateRoot::get(string path, string lst){
+void mcCurlPerformerStateRoot::get(string path){
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::del(string lst){
+void mcCurlPerformerStateRoot::del(void){
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::post(string inpath, size_t chunk, string outpath, string lst, string frm){
+void mcCurlPerformerStateRoot::post(string inpath, bool chunk, string outpath){
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::put(string inpath, size_t chunk, string outpath, string lst){
+void mcCurlPerformerStateRoot::put(string inpath, bool chunk, string outpath){
   throw runtime_error("invalid handle");
 }
 

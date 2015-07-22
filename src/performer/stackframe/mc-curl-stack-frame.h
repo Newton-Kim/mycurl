@@ -12,8 +12,8 @@ class mcIStackFrame {
   virtual bool follow(void) = 0;
   virtual void list(ostream& stream) = 0;
   virtual string mnymonic(void) = 0;
-  virtual void get(string path, string lst) = 0;
-  virtual void del(string lst) = 0;
-  virtual void post(string inpath, size_t chunk, string outpath, string lst, string frm) = 0;
-  virtual void put(string inpath, size_t chunk, string outpath, string lst) = 0;
+  virtual void get(string path) = 0;
+  virtual void del(void) = 0;
+  virtual void post(string inpath, bool chunk, string outpath) = 0;
+  virtual void put(string inpath, bool chunk, string outpath) = 0;
 };
