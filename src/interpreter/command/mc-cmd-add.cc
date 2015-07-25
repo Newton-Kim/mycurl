@@ -15,15 +15,21 @@ mcLanguageState mcCmdAdd::parse(mcScanner& scanner,
     return MC_LANG_CONTINUE;
   }
   string key = token.buffer;
+  token = scanner.tokenize();
   if (token.id != MC_TOKEN_STRING) {
 	  cerr << "value is missing" << endl;
     return MC_LANG_CONTINUE;
   }
   string value = token.buffer;
+  token = scanner.tokenize();
   if (token.id != MC_TOKEN_EOL) {
     cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
-  performer->add(key, value);
+  try {
+    performer->add(key, value);
+  } catch (exception& e) {
+    cerr << e.what() << endl;
+  }
   return MC_LANG_CONTINUE;
 }

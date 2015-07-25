@@ -9,12 +9,13 @@ void mcCmdRm::help(void) {
 
 mcLanguageState mcCmdRm::parse(mcScanner& scanner,
                                     mcIPerformer* performer) {
-  mcToken token = scanner.scan();
+  mcToken token = scanner.tokenize();
   if (token.id != MC_TOKEN_STRING) {
 	  cerr << "key is missing" << endl;
     return MC_LANG_CONTINUE;
   }
   string key = token.buffer;
+  token = scanner.tokenize();
   if (token.id != MC_TOKEN_EOL) {
     cerr <<  "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;

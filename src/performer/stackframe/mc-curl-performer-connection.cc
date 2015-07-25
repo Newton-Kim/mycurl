@@ -1,6 +1,5 @@
 #include "mc-curl-performer-connection.h"
 #include "mc-curl-performer-header.h"
-#include "mc-curl-performer-form.h"
 #include <stdexcept>
 
 mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
