@@ -4,14 +4,17 @@
 #include <iostream>
 #include <stdexcept>
 
-mcCurlPerformerStateRoot::mcCurlPerformerStateRoot(mcICurlPerformerContext* context):m_context(context) {
-}
+mcCurlPerformerStateRoot::mcCurlPerformerStateRoot(
+    mcICurlPerformerContext* context)
+    : m_context(context) {}
 
 mcCurlPerformerStateRoot::~mcCurlPerformerStateRoot() {
-  for(map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin() ; it != m_pool.end() ; it++) {
+  for (map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin();
+       it != m_pool.end(); it++) {
     vector<mcIStackFrame*>& stack = it->second;
-    for(vector<mcIStackFrame*>::iterator its = stack.begin() ; its != stack.end() ; its++)
-      delete *its;
+    for (vector<mcIStackFrame*>::iterator its = stack.begin();
+         its != stack.end(); its++)
+      delete* its;
   }
 }
 
@@ -33,53 +36,52 @@ void mcCurlPerformerStateRoot::leave(void) {
 }
 
 void mcCurlPerformerStateRoot::list(void) {
-  for(map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin() ; it != m_pool.end() ; it++) {
-    if(it->second.empty()) continue;
+  for (map<string, vector<mcIStackFrame*> >::iterator it = m_pool.begin();
+       it != m_pool.end(); it++) {
+    if (it->second.empty()) continue;
     cout << it->first << endl;
   }
 }
 
-string mcCurlPerformerStateRoot::mnymonic(void){
-  return "mycurl";
-}
+string mcCurlPerformerStateRoot::mnymonic(void) { return "mycurl"; }
 
-void mcCurlPerformerStateRoot::get(string path){
+void mcCurlPerformerStateRoot::get(string path) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::del(void){
+void mcCurlPerformerStateRoot::del(void) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::post(string inpath, bool chunk, string outpath){
+void mcCurlPerformerStateRoot::post(string inpath, bool chunk, string outpath) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::put(string inpath, bool chunk, string outpath){
+void mcCurlPerformerStateRoot::put(string inpath, bool chunk, string outpath) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::verbose_on(void){
+void mcCurlPerformerStateRoot::verbose_on(void) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::verbose_off(void){
+void mcCurlPerformerStateRoot::verbose_off(void) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::verbose(bool& onoff){
+void mcCurlPerformerStateRoot::verbose(bool& onoff) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::follow_on(void){
+void mcCurlPerformerStateRoot::follow_on(void) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::follow_off(void){
+void mcCurlPerformerStateRoot::follow_off(void) {
   throw runtime_error("invalid handle");
 }
 
-void mcCurlPerformerStateRoot::follow(bool& onoff){
+void mcCurlPerformerStateRoot::follow(bool& onoff) {
   throw runtime_error("invalid handle");
 }
 

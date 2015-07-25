@@ -12,14 +12,14 @@ mcLanguageState mcCmdDelete::parse(mcScanner& scanner,
   string path;
   mcToken token = scanner.tokenize();
   if (token.id != MC_TOKEN_EOL) {
-    cerr <<  "invalid argument " << token.buffer << endl;
+    cerr << "invalid argument " << token.buffer << endl;
     return MC_LANG_CONTINUE;
   }
   try {
     performer->del();
-  } catch (exception& e) {
+  }
+  catch (exception & e) {
     cerr << e.what() << endl;
   }
   return MC_LANG_CONTINUE;
 }
-

@@ -13,7 +13,8 @@ class mcCurlPerformerStateConnected : public mcIPerformer {
   vector<mcIStackFrame*>* m_stack;
 
  public:
-  mcCurlPerformerStateConnected(mcICurlPerformerContext* context, vector<mcIStackFrame*>* stack);
+  mcCurlPerformerStateConnected(mcICurlPerformerContext* context,
+                                vector<mcIStackFrame*>* stack);
   ~mcCurlPerformerStateConnected();
   void open(string url, string alias);
   void close(void);

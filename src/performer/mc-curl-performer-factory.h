@@ -3,6 +3,6 @@
 #include "mc-types.h"
 
 class mcCurlPerformerFactory {
-	public:
-		static mcIPerformer* create(void);
+ public:
+  static mcIPerformer* create(void);
 };

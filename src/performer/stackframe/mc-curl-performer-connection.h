@@ -3,7 +3,7 @@
 #include "mc-curl.h"
 #include <iostream>
 
-class mcCurlPerformerConnection : public mcIStackFrame{
+class mcCurlPerformerConnection : public mcIStackFrame {
  private:
   mcCurl* m_curl;
 

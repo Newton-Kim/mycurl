@@ -2,5 +2,5 @@
 #include "mc-curl-performer.h"
 
 mcIPerformer* mcCurlPerformerFactory::create(void) {
-	return new mcCurlPerformer;
+  return new mcCurlPerformer;
 }

@@ -12,9 +12,8 @@ struct mcSymbolTable {
                 { "put", MC_TOKEN_PUT }, { "post", MC_TOKEN_POST },
                 { "verbose", MC_TOKEN_VERBOSE }, { "follow", MC_TOKEN_FOLLOW },
                 { "add", MC_TOKEN_ADD }, { "rm", MC_TOKEN_RM },
-                { "delete", MC_TOKEN_DELETE },
-                { "on", MC_TOKEN_ON }, { "off", MC_TOKEN_OFF },
-                { NULL, MC_TOKEN_NONE } };
+                { "delete", MC_TOKEN_DELETE }, { "on", MC_TOKEN_ON },
+                { "off", MC_TOKEN_OFF }, { NULL, MC_TOKEN_NONE } };
 
 map<string, mcTokenID> s_map;
 

@@ -11,7 +11,7 @@ using namespace std;
 
 class mcCurl {
  private:
-//  map<string, curl_slist*> m_headers;
+  //  map<string, curl_slist*> m_headers;
   map<string, vector<string> > m_headers;
   map<string, vector<string> > m_forms;
   CURL* m_curl;

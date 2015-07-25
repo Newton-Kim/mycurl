@@ -153,8 +153,7 @@ mcLanguageState mcLanguage::parse(const char* line) {
     case MC_TOKEN_FOLLOW:
     case MC_TOKEN_FORM:
     case MC_TOKEN_ADD:
-    case MC_TOKEN_RM:
-      {
+    case MC_TOKEN_RM: {
       mcCommand* cmd = m_commands[token.id];
       if (!cmd) {
         cerr << token.buffer << " is not available" << endl;
@@ -208,13 +207,13 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
     case MC_TOKEN_VERBOSE:
     case MC_TOKEN_FOLLOW:
       if (m_commands[token.id]) {
-        cout <<  m_commands[token.id]->command() << " command:" << endl;
+        cout << m_commands[token.id]->command() << " command:" << endl;
         m_commands[token.id]->help();
       }
       break;
     case MC_TOKEN_RUN:
-      cout <<  "  Usage: run [file]..." << endl;
-      cout <<  "    runs macro files" << endl;
+      cout << "  Usage: run [file]..." << endl;
+      cout << "    runs macro files" << endl;
       break;
     default:
       cerr << "Invalid command " << token.buffer << endl;
@@ -231,9 +230,9 @@ mcLanguageState mcLanguage::parse_help(mcScanner& scanner) {
 
 void mcLanguage::show_help(void) {
   for (vector<mcCommand*>::iterator it = m_commands.begin();
-      it != m_commands.end(); it++) {
+       it != m_commands.end(); it++) {
     if (*it) {
-      cout <<  "  " << (*it)->command() << " command:" << endl ;
+      cout << "  " << (*it)->command() << " command:" << endl;
       (*it)->help();
     }
   }

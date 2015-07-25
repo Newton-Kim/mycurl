@@ -7,33 +7,32 @@
 
 #define LINE_SIZE 1024
 void show_banner(void) {
-  cout <<  "mycurl %s\n", VERSION;
+  cout << "mycurl %s\n", VERSION;
   {
     time_t rawtime;
-    time (&rawtime);
-    struct tm * timeinfo = localtime(&rawtime);
+    time(&rawtime);
+    struct tm* timeinfo = localtime(&rawtime);
     cout << "Copyright(C) " << timeinfo->tm_year + 1900;
     cout << " Newton Kim (newton.s.kim@gmail.com)" << endl;
-    cout << "License MIT: MIT License(http://opensource.org/licenses/MIT)" << endl;
+    cout << "License MIT: MIT License(http://opensource.org/licenses/MIT)"
+         << endl;
   }
   cout << endl;
 }
 
-void show_version(void) {
-    cout << VERSION << endl;
-}
+void show_version(void) { cout << VERSION << endl; }
 
 void show_help(mcLanguage& language) {
-  cout <<  "Usage: mycurl [option]... [script]..." << endl;
-  cout <<  endl;
-  cout <<  "Option:" << endl;
-  cout <<  "  -h, --help     shows this help screen." << endl;
-  cout <<  "  -v, --version  shows the version." << endl;
-  cout <<  endl;
-  cout <<  "Mycul langugage:" << endl;
+  cout << "Usage: mycurl [option]... [script]..." << endl;
+  cout << endl;
+  cout << "Option:" << endl;
+  cout << "  -h, --help     shows this help screen." << endl;
+  cout << "  -v, --version  shows the version." << endl;
+  cout << endl;
+  cout << "Mycul langugage:" << endl;
   language.show_help();
-  cout <<  endl;
-  cout <<  "Report bugs to <newton.s.kim@gmail.com>" << endl;
+  cout << endl;
+  cout << "Report bugs to <newton.s.kim@gmail.com>" << endl;
 }
 
 int main(int argc, char* argv[]) {

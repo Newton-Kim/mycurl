@@ -2,7 +2,7 @@
 #include "mc-curl-stack-frame.h"
 #include "mc-curl-header.h"
 
-class mcCurlPerformerHeader : public mcIStackFrame{
+class mcCurlPerformerHeader : public mcIStackFrame {
  private:
   mcCurlHeader* m_header;
   string m_mnymonic;

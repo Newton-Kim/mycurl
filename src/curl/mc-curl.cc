@@ -21,31 +21,33 @@ size_t mcCurlReadCallback(char *buffer, size_t size, size_t nitems,
   if (!fd) throw runtime_error("invalid userdata in the write callback");
   return fd->fread(buffer, size, nitems);
 }
-int mcCurlDebugCallback(CURL *handle, curl_infotype type, char *data, size_t size, void *userptr) {
+int mcCurlDebugCallback(CURL *handle, curl_infotype type, char *data,
+                        size_t size, void *userptr) {
   switch (type) {
     case CURLINFO_TEXT:
-      for(size_t i = 0 ; i < size ; i++) {
+      for (size_t i = 0; i < size; i++) {
         cout << data[i];
-        if (data[i] == '\n') cout <<  "* ";
+        if (data[i] == '\n') cout << "* ";
       }
       break;
     case CURLINFO_HEADER_IN:
-      for(size_t i = 0 ; i < size ; i++) {
+      for (size_t i = 0; i < size; i++) {
         cout << data[i];
-        if (data[i] == '\n') cout <<  "< ";
+        if (data[i] == '\n') cout << "< ";
       }
       break;
     case CURLINFO_HEADER_OUT:
-      for(size_t i = 0 ; i < size ; i++) {
+      for (size_t i = 0; i < size; i++) {
         cout << data[i];
-        if (data[i] == '\n') cout <<  "> ";
+        if (data[i] == '\n') cout << "> ";
       }
       break;
     case CURLINFO_DATA_IN:
     case CURLINFO_DATA_OUT:
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
-      for(size_t i = 0 ; i < size ; i++) cout << data[i];
+      for (size_t i = 0; i < size; i++)
+        cout << data[i];
       break;
   }
 }
@@ -67,7 +69,8 @@ void mcCurl::verbose(bool onoff) {
   if (!m_curl) throw runtime_error("invalid curl handle");
   m_verbose = onoff;
   curl_easy_setopt(m_curl, CURLOPT_VERBOSE, (m_verbose ? 1 : 0));
-  curl_easy_setopt(m_curl, CURLOPT_DEBUGFUNCTION, (m_verbose ? mcCurlDebugCallback : NULL));
+  curl_easy_setopt(m_curl, CURLOPT_DEBUGFUNCTION,
+                   (m_verbose ? mcCurlDebugCallback : NULL));
 }
 
 bool mcCurl::verbose(void) { return m_verbose; }
@@ -81,12 +84,14 @@ void mcCurl::follow(bool onoff) {
 bool mcCurl::follow(void) { return m_follow; }
 
 void mcCurl::perform(void) {
-  curl_slist* slist = NULL;
-  for(map<string, vector<string> >::iterator ith = m_headers.begin() ; ith != m_headers.end() ; ith++) {
+  curl_slist *slist = NULL;
+  for (map<string, vector<string> >::iterator ith = m_headers.begin();
+       ith != m_headers.end(); ith++) {
     string line = ith->first + ": ";
-    vector<string>& subhdr = ith->second;
-    for(vector<string>::iterator it = subhdr.begin() ; it != subhdr.end() ; it++) {
-      if(it != subhdr.begin()) line += ";";
+    vector<string> &subhdr = ith->second;
+    for (vector<string>::iterator it = subhdr.begin(); it != subhdr.end();
+         it++) {
+      if (it != subhdr.begin()) line += ";";
       line += *it;
     }
     slist = curl_slist_append(slist, line.c_str());
@@ -94,7 +99,7 @@ void mcCurl::perform(void) {
   if (slist) curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, slist);
   CURLcode ret = curl_easy_perform(m_curl);
   if (ret != CURLE_OK) cerr << curl_easy_strerror(ret);
-  if(slist) curl_slist_free_all(slist);
+  if (slist) curl_slist_free_all(slist);
 }
 
 void mcCurl::get(string path) {
@@ -133,7 +138,7 @@ void mcCurl::post(string inpath, bool chunk, string outpath) {
     curl_easy_setopt(m_curl, CURLOPT_READDATA, stdout);
   }
   if (outpath.size()) {
-//    outfd = fopen(outpath.c_str(), "wb");
+    //    outfd = fopen(outpath.c_str(), "wb");
     outfd = new mcCurlFile(outpath.c_str(), (const char *)"wb", chunk);
     if (!infd) throw runtime_error(strerror(errno));
     curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, mcCurlWriteCallback);
@@ -175,11 +180,6 @@ void mcCurl::put(string inpath, bool chunk, string outpath) {
   if (outfd) delete outfd;
 }
 
-mcCurlHeader* mcCurl::header(void) {
-  return new mcCurlHeader(m_headers);
-}
+mcCurlHeader *mcCurl::header(void) { return new mcCurlHeader(m_headers); }
 
-mcCurlHeader* mcCurl::form(void) {
-  return new mcCurlHeader(m_forms);
-}
-
+mcCurlHeader *mcCurl::form(void) { return new mcCurlHeader(m_forms); }
