@@ -5,9 +5,10 @@
 class mcCurlPerformerHeader : public mcIStackFrame{
  private:
   mcCurlHeader* m_header;
+  string m_mnymonic;
 
  public:
-  mcCurlPerformerHeader(mcCurlHeader* header);
+  mcCurlPerformerHeader(mcCurlHeader* header, string mnymonic);
   mcIStackFrame* open(string url, string alias);
   void verbose(bool onoff);
   bool verbose(void);
@@ -20,5 +21,5 @@ class mcCurlPerformerHeader : public mcIStackFrame{
   void post(string inpath, bool chunk, string outpath);
   void put(string inpath, bool chunk, string outpath);
   void add(string key, string value);
-  void rm(string key, string value);
+  void rm(string key);
 };

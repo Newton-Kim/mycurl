@@ -12,10 +12,15 @@ mcCurlPerformerConnection::~mcCurlPerformerConnection() {
 }
 
 mcIStackFrame* mcCurlPerformerConnection::open(string url, string alias) {
-  if(url == "header") {
-  } else if(url == "form") {
-  }
-  return NULL;
+	mcCurlHeader* header = NULL;
+	if(url == "header") {
+		header = m_curl->header();
+	} else if(url == "form") {
+		header = m_curl->form();
+	} else {
+		throw runtime_error("invalid handle");
+	}
+  return new mcCurlPerformerHeader(header, url);
 }
 
 void mcCurlPerformerConnection::list(ostream& stream) {
@@ -62,7 +67,7 @@ void mcCurlPerformerConnection::add(string key, string value){
   throw runtime_error("invalid command");
 }
 
-void mcCurlPerformerConnection::rm(string key, string value){
+void mcCurlPerformerConnection::rm(string key){
   throw runtime_error("invalid command");
 }
 

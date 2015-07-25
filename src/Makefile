@@ -34,7 +34,6 @@ OBJS=mycurl.o \
 	curl/mc-curl-header.o \
 	performer/stackframe/mc-curl-performer-connection.o \
 	performer/stackframe/mc-curl-performer-header.o \
-	performer/stackframe/mc-curl-performer-form.o \
 	performer/mc-curl-performer-factory.o \
 	performer/mc-curl-performer-state-root.o \
 	performer/mc-curl-performer-state-connected.o \
