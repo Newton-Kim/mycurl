@@ -13,6 +13,8 @@
 #include "command/mc-cmd-delete.h"
 #include "command/mc-cmd-verbose.h"
 #include "command/mc-cmd-follow.h"
+#include "command/mc-cmd-add.h"
+#include "command/mc-cmd-rm.h"
 #include <vector>
 
 using namespace std;
@@ -32,6 +34,8 @@ class mcLanguage {
   mcCmdDelete m_cmd_delete;
   mcCmdVerbose m_cmd_verbose;
   mcCmdFollow m_cmd_follow;
+  mcCmdAdd m_cmd_add;
+  mcCmdRm m_cmd_rm;
   mcLanguageState parse_run(mcScanner& scanner);
   mcLanguageState parse_help(mcScanner& scanner);
   mcLanguageState parse(const char* line);

@@ -47,3 +47,11 @@ void mcCurlPerformerForm::follow(bool onoff){
   throw runtime_error("invalid command");
 }
 
+void mcCurlPerformerForm::add(string key, string value){
+	m_header->add(key, value);
+}
+
+void mcCurlPerformerForm::rm(string key, string value){
+	m_header->rm(key);
+}
+

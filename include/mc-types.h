@@ -28,4 +28,6 @@ class mcIPerformer {
   virtual void follow_on(void) = 0;
   virtual void follow_off(void) = 0;
   virtual void follow(bool& onoff) = 0;
+  virtual void add(string key, string value) = 0;
+  virtual void rm(string key) = 0;
 };

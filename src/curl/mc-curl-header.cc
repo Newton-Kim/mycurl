@@ -13,22 +13,6 @@ void mcCurlHeader::add(string key, string value){
   }
 }
 
-void mcCurlHeader::add(string key, int value){
-  stringstream ss;
-  ss << value;
-  add(key, ss.str());
-}
-
-void mcCurlHeader::add(string hkey, string key, string value){
-  add(hkey, key + "=" + value);
-}
-
-void mcCurlHeader::add(string hkey, string key, int value){
-  stringstream ss;
-  ss << key << "=" << value;
-  add(key, ss.str());
-}
-
 void mcCurlHeader::rm(string key){
   map<string, vector<string> >::iterator it = m_header.find(key);
   if(it != m_header.end()) it->second.clear();

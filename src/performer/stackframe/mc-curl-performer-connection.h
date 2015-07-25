@@ -21,4 +21,6 @@ class mcCurlPerformerConnection : public mcIStackFrame{
   void del(void);
   void post(string inpath, bool chunk, string outpath);
   void put(string inpath, bool chunk, string outpath);
+  void add(string key, string value);
+  void rm(string key, string value);
 };

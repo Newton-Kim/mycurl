@@ -16,4 +16,6 @@ class mcIStackFrame {
   virtual void del(void) = 0;
   virtual void post(string inpath, bool chunk, string outpath) = 0;
   virtual void put(string inpath, bool chunk, string outpath) = 0;
+  virtual void add(string key, string value) = 0;
+  virtual void rm(string key) = 0;
 };

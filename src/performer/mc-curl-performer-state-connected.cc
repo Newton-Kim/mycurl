@@ -77,6 +77,13 @@ void mcCurlPerformerStateConnected::follow_off(void){
 }
 
 void mcCurlPerformerStateConnected::follow(bool& onoff){
-  onoff =m_stack->back()->follow();
+  onoff = m_stack->back()->follow();
 }
 
+void mcCurlPerformerStateConnected::add(string key, string value) {
+	m_stack->back()->add(key, value);
+}
+
+void mcCurlPerformerStateConnected::rm(string key) {
+	m_stack->back()->rm(key);
+}

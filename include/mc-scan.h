@@ -23,6 +23,8 @@ typedef enum {
   MC_TOKEN_VERBOSE,
   MC_TOKEN_FOLLOW,
   MC_TOKEN_FORM,
+  MC_TOKEN_ADD,
+  MC_TOKEN_RM,
   //parsing tokens
   MC_TOKEN_STRING,
   MC_TOKEN_EXCLAMATION,

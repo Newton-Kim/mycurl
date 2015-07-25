@@ -27,6 +27,8 @@ OBJS=mycurl.o \
 	interpreter/command/mc-cmd-delete.o \
 	interpreter/command/mc-cmd-verbose.o \
 	interpreter/command/mc-cmd-follow.o \
+	interpreter/command/mc-cmd-add.o \
+	interpreter/command/mc-cmd-rm.o \
 	curl/mc-curl.o \
 	curl/mc-curl-file.o \
 	curl/mc-curl-header.o \

@@ -83,3 +83,10 @@ void mcCurlPerformerStateRoot::follow(bool& onoff){
   throw runtime_error("invalid handle");
 }
 
+void mcCurlPerformerStateRoot::add(string key, string value) {
+  throw runtime_error("invalid handle");
+}
+
+void mcCurlPerformerStateRoot::rm(string key) {
+  throw runtime_error("invalid handle");
+}

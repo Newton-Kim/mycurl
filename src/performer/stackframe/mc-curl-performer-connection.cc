@@ -1,6 +1,7 @@
 #include "mc-curl-performer-connection.h"
 #include "mc-curl-performer-header.h"
 #include "mc-curl-performer-form.h"
+#include <stdexcept>
 
 mcCurlPerformerConnection::mcCurlPerformerConnection(string url, string alias) :
 	m_curl(new mcCurl(url, alias))
@@ -55,5 +56,13 @@ bool mcCurlPerformerConnection::follow(void){
 
 void mcCurlPerformerConnection::follow(bool onoff){
   m_curl->follow(onoff);
+}
+
+void mcCurlPerformerConnection::add(string key, string value){
+  throw runtime_error("invalid command");
+}
+
+void mcCurlPerformerConnection::rm(string key, string value){
+  throw runtime_error("invalid command");
 }
 

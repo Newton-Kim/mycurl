@@ -31,4 +31,6 @@ class mcCurlPerformerStateConnected : public mcIPerformer {
   void post(string inpath, bool chunk, string outpath);
   void put(string inpath, bool chunk, string outpath);
   bool follow(void);
+  void add(string key, string value);
+  void rm(string key);
 };

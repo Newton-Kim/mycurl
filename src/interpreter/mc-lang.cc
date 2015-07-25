@@ -72,6 +72,8 @@ mcLanguage::mcLanguage(mcIPerformer* performer) : m_performer(performer) {
   m_commands.push_back(&m_cmd_verbose);  //MC_TOKEN_VERBOSE
   m_commands.push_back(&m_cmd_follow);   //MC_TOKEN_FOLLOW
   m_commands.push_back(NULL);            //MC_TOKEN_FORM
+  m_commands.push_back(&m_cmd_add);      //MC_TOKEN_ADD
+  m_commands.push_back(&m_cmd_rm);       //MC_TOKEN_RM
 }
 
 mcLanguageState mcLanguage::run(string path) {
@@ -149,7 +151,10 @@ mcLanguageState mcLanguage::parse(const char* line) {
     case MC_TOKEN_HEADER:
     case MC_TOKEN_VERBOSE:
     case MC_TOKEN_FOLLOW:
-    case MC_TOKEN_FORM: {
+    case MC_TOKEN_FORM:
+    case MC_TOKEN_ADD:
+    case MC_TOKEN_RM:
+      {
       mcCommand* cmd = m_commands[token.id];
       if (!cmd) {
         cerr << token.buffer << " is not available" << endl;

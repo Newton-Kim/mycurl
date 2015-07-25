@@ -47,3 +47,11 @@ void mcCurlPerformerHeader::follow(bool onoff){
   throw runtime_error("invalid command");
 }
 
+void mcCurlPerformerHeader::add(string key, string value){
+	m_header->add(key, value);
+}
+
+void mcCurlPerformerHeader::rm(string key, string value){
+	m_header->rm(key);
+}
+

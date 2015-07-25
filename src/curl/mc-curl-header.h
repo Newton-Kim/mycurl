@@ -13,9 +13,6 @@ class mcCurlHeader {
 	public:
 		mcCurlHeader(map<string, vector<string> >& header);
 		void add(string key, string value);
-		void add(string key, int value);
-		void add(string hkey, string key, string value);
-		void add(string hkey, string key, int value);
 		void rm(string key);
 		void list(ostream& os);
 };

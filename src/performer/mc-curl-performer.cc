@@ -85,3 +85,10 @@ void mcCurlPerformer::follow(bool& onoff){
   m_current_state->follow(onoff);
 }
 
+void mcCurlPerformer::add(string key, string value) {
+  m_current_state->add(key, value);
+}
+
+void mcCurlPerformer::rm(string key) {
+  m_current_state->rm(key);
+}
